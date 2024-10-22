@@ -33,6 +33,27 @@ import com.uvg.proyecto.Data.DataHandler;
  * 7. Improve Menu (add a branch just for the admin where he can add and
  * eliminated doctors and clinics)
  * 
+ * 8. Consider that a patient has a medical history, but medical history should be a distinct class that is part of patient (not inherentence). The class MedicalHistory saves every possible dieseas that a patient might have.
+ * 
+ * 9. IMPORTANT!!! THis is a hospital Management, this implies that is a collection of Clinics within a Hospital, and each clinic has a collection of offices.
+ * Meaning that each Doctor has an Office (not a clinic), the clinic could be related to the speciality of the doctor, suppose that there exist General Practitioner, Pediatrics, Cardiology, Dermatology  in this hospital,
+ * Then each doctor based on their speciality is assigned to the clinic with that category, then within that clinic the doctor is assigned an office to practice his/her respective medicine. 
+ * 
+ * Then the Administrator should be able: 
+ * -create/delete clinics (i.e. add/remove speciality) 
+ * -control the total number of offices in each clinic
+ * -which doctor has  which office (for simplicity the system can randomly assigned a doctor to "free" office; assuming that each office can only have one doctor) 
+ * 
+ * Then when the patient ask for an appointment, the system should ask by the following criteria 
+ * For simplicity (due to the time constraint) assume that every month is November 2024
+ * -November
+ * -30 days.
+ * -Each day of the month has a fixed day of the week, (i.e. 21 --> Thurdsay, so do not include 10,17,24 as times of the day)
+ * (time of day (morning/midday/afternoon), assume that doctors only accept a patient three times per day)
+ * (Ignore this if you find a package that can handle this for you)
+ * 
+ * Ofcourse it has to have a system of validity to ensure that no patient gets the same date.
+ * 
  * 
  * Extra:
  * 3. When the user enters the showMenuDoctor or showMenuPaciente, and wants to
@@ -50,6 +71,8 @@ import com.uvg.proyecto.Data.DataHandler;
  * managed in a seperated class that is implementing inherentence.
  * 
  * 8. Move hospitalName as a variable that the admin can change.
+ * 
+ * 9. Because Doctors likes vacations, add a vaction system to the doctor, where say that the doctor doesn't work on Monday/Tuesdays
  * 
  */
 public class Main {
