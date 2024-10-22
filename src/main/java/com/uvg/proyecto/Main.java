@@ -1,6 +1,8 @@
 package com.uvg.proyecto;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import com.uvg.proyecto.Authenticator.Authenticator;
 import com.uvg.proyecto.Classes.Clinica;
@@ -47,6 +49,8 @@ import com.uvg.proyecto.Data.DataHandler;
  * 7. Make some use of inherentence, such like sickness of the patient is
  * managed in a seperated class that is implementing inherentence.
  * 
+ * 8. Move hospitalName as a variable that the admin can change.
+ * 
  */
 public class Main {
 
@@ -55,7 +59,7 @@ public class Main {
         Doctor,
         Admin,
     }
-
+    private final String hospitalName = "Hospital Chapintenco"; //THis should be moved to the menu for the admin so that the admin can change the name of the hospital if needed.
     public Paciente pacienteLogIn;
     public Doctor doctorLogIn;
     // public static Admin admin;
@@ -74,47 +78,63 @@ public class Main {
 
     public static void main(String[] args) {
         Main app = new Main();
-        // app.mainMenu();
-        Enum<UserType> user = app.login();
-        // switch (user) {
-        //     case Paciente:
+        //app.mainMenu(); //probably not needed anymore.
+        UserType user = app.login();
+        if (user != null) { //this is to avoid the java.lang.NullPointerException when the user would exit the system.
+        switch (user) {
+            case Paciente:
                 
-        //         break;
+                break;
+            case Doctor:
 
-        //     default:
-        //         break;
-        // }
+                break;
+
+            case Admin:
+                
+                break;
+            default:
+                break;
+        }
+    }
     }
 
     // Login and returns us the UserType
-    public Enum<UserType> login() {
+    public UserType login() {
         boolean running = true;
         while (running) {
-            System.out.println("Loging as a \n1. Paciente\n2. Doctor\n3.  Admin");
+            System.out.println("Gestión para " + hospitalName +": \n1. Administrate a Paciente \n2. Soy un Doctor \n3. Soy el Admininistrador \n0. Salir del Sistema.");
             int input = scanner.nextInt();
+            scanner.nextLine(); //remember that with this is NEEDED for the switch to function.
             switch (input) {
                 case 1:
-                    running = false;
                     System.out.println("Escribe el ID del paciente: ");
                     String idPaceinte = scanner.nextLine();
                     Paciente paciente = this.data.getPacienteById(idPaceinte);
                     this.pacienteLogIn = paciente;
-
                     return UserType.Paciente;
+                    
 
                 case 2:
-                    running = false;
-                    System.out.println("Escribe el ID del doctor: ");
+                    System.out.println("Escribe su ID del doctor: ");
                     String idDoctor = scanner.nextLine();
                     Doctor doctor = this.data.getDoctorById(idDoctor);
                     this.doctorLogIn = doctor;
                     return UserType.Doctor;
 
                 case 3:
-                    running = false;
+                    System.out.println("\n[Accesso Denegado] Ingrese clave y usuario del administrador: ");
+                    if (verifyAdmin()) {
+                    System.out.println("Credenciales correctos, ingresando al Menu del Admin: ");
                     return UserType.Admin;
+                    } else {
+                    System.out.println("Credenciales incorrectos, saliendo del sistema.");
+                    }
+                case 0:
+                    System.out.println("Saliendo del Systema...");
+                    running = false;
+                    return null;
                 default:
-                    System.out.println("Only from the given user numbers.");
+                    System.out.println("Solo ingrese los numeros en la pantalla.");
             }
         }
         return null;
