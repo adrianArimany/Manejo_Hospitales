@@ -127,15 +127,15 @@ public class Main {
         while (running) {
             System.out.println("Gestión para " + hospitalName +": \n1. Administrate a Paciente \n2. Soy un Doctor \n3. Soy el Admininistrador \n0. Salir del Sistema.");
             int input = scanner.nextInt();
+            int inputPatient = scanner.nextInt();
             scanner.nextLine(); //remember that with this is NEEDED for the switch to function.
             switch (input) {
-                case 1:
+                case 1:                    
                     System.out.println("Escribe el ID del paciente: "); //remember there has to be the option betweeen allowing to find a patient or create a patient.
                     String idPaceinte = scanner.nextLine();
                     Paciente paciente = this.data.getPacienteById(idPaceinte);
                     this.pacienteLogIn = paciente;
-                    return UserType.Paciente;
-                    
+                    return UserType.Paciente;        
 
                 case 2:
                     System.out.println("Escribe su ID del doctor: ");

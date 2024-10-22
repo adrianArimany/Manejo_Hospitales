@@ -10,6 +10,7 @@ public class Doctor {
     private String id;
     private String nombre;
     private String clinica;
+    //private String office;
 
     /**
      * Constructs a new Doctor with the specified ID, name, and clinic.

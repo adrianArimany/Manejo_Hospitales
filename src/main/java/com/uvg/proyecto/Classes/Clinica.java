@@ -1,12 +1,24 @@
 package com.uvg.proyecto.Classes;
 
 /**
+ * Considerations:
+ * 
+ * The id of the clinic can be set as the dirrection of the clinic, since all the clinics are in the same region
+ * then it would be easier to have the id the set as the number of the clinic.
+ * 
+ * You also need to create a enum for the varios different specielities this hospital manages.
+ * 
+ *  
+ */ 
+
+
+/**
  * Representa una clínica médica.
  * Esta clase implementa Serializable para permitir la serialización de objetos Clinica.
  */
 public class Clinica { 
     private String nombre;
-    private String direccion;
+    //private String officinas;
     private String id;
     
 
@@ -16,10 +28,10 @@ public class Clinica {
      * @param nombre El nombre de la clínica.
      * @param direccion La dirección de la clínica.
      */
-    public Clinica(String id, String nombre, String direccion) { 
+    public Clinica(String id, String nombre, Officinas officinas) { 
         this.id = id;
         this.nombre = nombre;
-        this.direccion = direccion;
+        
     }
 
     /**
@@ -57,23 +69,23 @@ public class Clinica {
         this.nombre = nombre;
     }
 
-    /**
-     * Obtiene la dirección de la clínica.
-     *
-     * @return La dirección de la clínica.
-     */
-    public String getDireccion() {
-        return this.direccion;
-    }
+    // /**
+    //  * Obtiene las officnas de la clínica.
+    //  *
+    //  * @return Las offic de la clínica.
+    //  */
+    // public String getOfficinas() {
+    //     return this.officinas;
+    // }
 
-    /**
-     * Establece la dirección de la clínica.
-     *
-     * @param direccion La nueva dirección de la clínica.
-     */
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
+    // /**
+    //  * Establece la dirección de la clínica.
+    //  *
+    //  * @param direccion La nueva dirección de la clínica.
+    //  */
+    // public void setDireccion(String direccion) {
+    //     this.direccion = direccion;
+    // }
 
     
     /**
@@ -83,6 +95,6 @@ public class Clinica {
      */
     @Override
     public String toString() {
-        return nombre + "," + direccion;
+        return nombre + "," + id;
     }
 }
