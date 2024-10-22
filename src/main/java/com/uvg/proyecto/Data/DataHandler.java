@@ -21,9 +21,9 @@ public class DataHandler {
 
 
     private static final String DELIMITER = ",";
-    private static final String CLINICA_FILE = "clinicas.csv";
-    private static final String DOCTOR_FILE = "doctores.csv";
-    private static final String PACIENTE_FILE = "pacientes.csv";
+    private static final String CLINICA_FILE = "src/main/java/com/uvg/proyecto/CSV/clinicas.csv";
+    private static final String DOCTOR_FILE = "src/main/java/com/uvg/proyecto/CSV/doctores.csv";
+    private static final String PACIENTE_FILE = "src/main/java/com/uvg/proyecto/CSV/pacientes.csv";
 
     /**
      * Generic method to read from file

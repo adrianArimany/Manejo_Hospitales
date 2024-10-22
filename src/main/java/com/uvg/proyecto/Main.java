@@ -20,61 +20,125 @@ import com.uvg.proyecto.Data.DataHandler;
  * 
  * 3. Do not allow repeated id for patients or doctors or clinics.
  * 
- * 4. Most methods in Main.java are not using the methods that already exist in DataHandler.
+ * 4. Most methods in Main.java are not using the methods that already exist in
+ * DataHandler.
  * 
- * 5. Please move your files to their respective folder.
+ * 5. Please move your files to their respective folder. (completed)
  * 
- * 6. Implement something that would make sure that if a "," is added the csv wouldn't treated as a new coloumn.
+ * 6. Implement something that would make sure that if a "," is added the csv
+ * wouldn't treated as a new coloumn.
  * 
- * 7. 
+ * 7. Improve Menu (add a branch just for the admin where he can add and
+ * eliminated doctors and clinics)
+ * 
+ * 
  * Extra:
- * 3. When the user enters the showMenuDoctor or showMenuPaciente, and wants to return, it should send him to the main Menu. 
+ * 3. When the user enters the showMenuDoctor or showMenuPaciente, and wants to
+ * return, it should send him to the main Menu.
  * 
  * 4. Add a password system to gain access to registered doctors.
  * 
- * 5. If a doctor is to be eliminated, add a password to gain access to this option (Completed but the password should be better secured...).
+ * 5. If a doctor is to be eliminated, add a password to gain access to this
+ * option (Completed but the password should be better secured...).
  * 
- * 6. when the patient or doctor enter their menus, that menu is dedicated to that doctor or that patient, rather than making it a comunual system.
+ * 6. when the patient or doctor enter their menus, that menu is dedicated to
+ * that doctor or that patient, rather than making it a comunual system.
  * 
- * 7. Make some use of inherentence, such like sickness of the patient is managed in a seperated class that is implementing inherentence.
+ * 7. Make some use of inherentence, such like sickness of the patient is
+ * managed in a seperated class that is implementing inherentence.
  * 
  */
 public class Main {
 
+    public enum UserType {
+        Paciente,
+        Doctor,
+        Admin,
+    }
+
+    public Paciente pacienteLogIn;
+    public Doctor doctorLogIn;
+    // public static Admin admin;
+
     public final Scanner scanner = new Scanner(System.in);
 
-
     /**
-     * this is the system main password to access to some of the features of the system.
-     */ 
-    //private static final String ADMIN_PASSWORD = "admin"; //please look away. 
+     * this is the system main password to access to some of the features of the
+     * system.
+     */
+    // private static final String ADMIN_PASSWORD = "admin"; //please look away.
     /**
      * Nombre de la clase que guarda los datos CSV.
-     */ 
+     */
     private final DataHandler data = new DataHandler();
 
-    
     public static void main(String[] args) {
         Main app = new Main();
-        app.mainMenu();
+        // app.mainMenu();
+        Enum<UserType> user = app.login();
+        // switch (user) {
+        //     case Paciente:
+                
+        //         break;
+
+        //     default:
+        //         break;
+        // }
     }
+
+    // Login and returns us the UserType
+    public Enum<UserType> login() {
+        boolean running = true;
+        while (running) {
+            System.out.println("Loging as a \n1. Paciente\n2. Doctor\n3.  Admin");
+            int input = scanner.nextInt();
+            switch (input) {
+                case 1:
+                    running = false;
+                    System.out.println("Escribe el ID del paciente: ");
+                    String idPaceinte = scanner.nextLine();
+                    Paciente paciente = this.data.getPacienteById(idPaceinte);
+                    this.pacienteLogIn = paciente;
+
+                    return UserType.Paciente;
+
+                case 2:
+                    running = false;
+                    System.out.println("Escribe el ID del doctor: ");
+                    String idDoctor = scanner.nextLine();
+                    Doctor doctor = this.data.getDoctorById(idDoctor);
+                    this.doctorLogIn = doctor;
+                    return UserType.Doctor;
+
+                case 3:
+                    running = false;
+                    return UserType.Admin;
+                default:
+                    System.out.println("Only from the given user numbers.");
+            }
+        }
+        return null;
+    }
+
     /**
-     * Método principal que controla el flujo del programa y muestra un menú interactivo.
+     * Método principal que controla el flujo del programa y muestra un menú
+     * interactivo.
      *
      * 
      */
     private void mainMenu() {
         boolean running = true;
-        
+
         while (running) {
             System.out.println("Buenos Dias al sistema Hospitalario.");
-            System.out.println("1. Soy Doctor o Administrador"); //Sends to password-user
-            System.out.println("2. Administrar a los Paciente del hospital."); //Sends to find for old pentiente or new patient 
+            System.out.println("1. Soy Doctor o Administrador"); // Sends to password-user
+            System.out.println("2. Administrar a los Paciente del hospital."); // Sends to find for old pentiente or new
+                                                                               // patient
             System.out.println("0. Salir del sistema");
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                    showMenuDoctorGeneral(); //for new and old doctors.
+                    showMenuDoctorGeneral(); // for new and old doctors.
                     break;
                 case "2":
                     showMenuPersona(); // for either new or old patients.
@@ -87,7 +151,7 @@ public class Main {
                     System.out.println("Opción no válida. Intenta de nuevo.");
             }
         }
-        //scanner.close(); (finish the menus, then put this at the end.)
+        // scanner.close(); (finish the menus, then put this at the end.)
     }
 
     /**
@@ -97,17 +161,17 @@ public class Main {
         boolean running = true;
         while (running) {
             System.out.println("Es usted ya paciente? o es usted nuevo al sistema?");
-            System.out.println("1. Es Paciente Nuevo"); 
-            System.out.println("2. Es Paciente Registrado"); 
+            System.out.println("1. Es Paciente Nuevo");
+            System.out.println("2. Es Paciente Registrado");
             System.out.println("0. regresar");
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                    agregarPaciente(); //crea nuevo paciente, 
-                    showMenuPaciente(); //Manda al menu del paciente.
+                    agregarPaciente(); // crea nuevo paciente,
+                    showMenuPaciente(); // Manda al menu del paciente.
                     break;
                 case "2":
-                    showMenuPacienteProtectRegistrado(); //paciente viejo manda a find id.
+                    showMenuPacienteProtectRegistrado(); // paciente viejo manda a find id.
                     running = false;
                     break;
                 case "0":
@@ -118,7 +182,7 @@ public class Main {
                     System.out.println("Opción no válida. Intenta de nuevo.");
             }
         }
-    }   
+    }
 
     /**
      * Muestra el menú para Paciente 'Protect' registrado,
@@ -147,7 +211,6 @@ public class Main {
 
     }
 
-
     /**
      * Muestra el menú para Paciente todo paciente.
      */
@@ -174,24 +237,25 @@ public class Main {
                     break;
                 default:
                     System.out.println("Opción no válida.");
-            }   
+            }
         }
     }
+
     private void showMenuDoctorGeneral() {
         boolean running = true;
         while (running) {
             System.out.println("Es usted doctor registrado? o es usted nuevo al sistema?");
-            System.out.println("1. Soy Doctor registrado"); 
-            System.out.println("2. Soy Doctor nuevo"); 
+            System.out.println("1. Soy Doctor registrado");
+            System.out.println("2. Soy Doctor nuevo");
             System.out.println("0. regresar");
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                    showMenuDoctorProtectRegistrado(); //paciente viejo manda a find id.
+                    showMenuDoctorProtectRegistrado(); // paciente viejo manda a find id.
                     break;
                 case "2":
-                    agregarDoctor(); //crea nuevo doctor, 
-                    showMenuDoctor(); //Manda a menu de doctores.
+                    agregarDoctor(); // crea nuevo doctor,
+                    showMenuDoctor(); // Manda a menu de doctores.
                     break;
                 case "0":
                     System.out.println("Regresando...");
@@ -227,7 +291,7 @@ public class Main {
 
     }
 
-     /**
+    /**
      * Muestra el menú para Paciente todo paciente.
      */
     private void showMenuDoctor() {
@@ -262,14 +326,14 @@ public class Main {
                     break;
                 case "5":
                     buscarPaciente();
-                    break;    
+                    break;
                 case "0":
                     System.out.println("Regresando...");
                     running = false;
                     break;
                 default:
                     System.out.println("Opción no válida.");
-            }   
+            }
         }
     }
 
@@ -280,17 +344,17 @@ public class Main {
     private boolean buscarPaciente() {
         System.out.print("Ingrese ID del paciente: ");
         String id = scanner.nextLine();
-    
+
         // Call the leerPacientes() method from DataHandler using the instance data.
         List<Paciente> pacientes = data.readPacientes();
-        
+
         // Check if the patient exists
         for (Paciente paciente : pacientes) {
             if (paciente.getId().equals(id)) {
                 System.out.println(paciente);
                 return true;
             }
-        } 
+        }
         System.out.println("Paciente no encontrado.");
         return false;
     }
@@ -314,7 +378,8 @@ public class Main {
         System.out.print("Ingrese cita médica del paciente: ");
         String citaMedica = scanner.nextLine();
 
-        Paciente paciente = new Paciente(id, nombre, doctorId, clinicaId); //fix this, why is there three methods called like that.
+        Paciente paciente = new Paciente(id, nombre, doctorId, clinicaId); // fix this, why is there three methods
+                                                                           // called like that.
         paciente.agregarHistorialMedico(historialMedico);
         paciente.agregarEnfermedad(enfermedades);
         paciente.agregarCitaMedica(citaMedica);
@@ -349,7 +414,7 @@ public class Main {
             System.out.println("Ocurrió un error al eliminar el doctor.");
         }
     }
-    
+
     /**
      * Busca un doctor por su ID e imprime su información.
      * type boolean so that it can be used as an identificator.
@@ -363,7 +428,7 @@ public class Main {
                 System.out.println(doctor);
                 return true;
             }
-        } 
+        }
         System.out.println("Doctor no encontrado.");
         return false;
     }
@@ -393,7 +458,7 @@ public class Main {
         List<Doctor> doctores = data.readDoctores();
         boolean eliminado = false;
         List<Doctor> updatedDoctores = new ArrayList<>();
-        
+
         for (Doctor doctor : doctores) {
             if (!doctor.getId().equals(id)) {
                 updatedDoctores.add(doctor);
@@ -401,10 +466,10 @@ public class Main {
                 eliminado = true;
             }
         }
-        boolean success = data.writeDoctores(updatedDoctores); 
-        // Use DataHandler to write the updated list of doctors back to the file, and catch any error.
+        boolean success = data.writeDoctores(updatedDoctores);
+        // Use DataHandler to write the updated list of doctors back to the file, and
+        // catch any error.
 
-        
         if (eliminado && success) {
             System.out.println("Doctor eliminado con éxito.");
         } else if (!eliminado) {
@@ -417,35 +482,37 @@ public class Main {
     /**
      * Muestra el historial médico de un paciente a cargo de un doctor específico.
      */
-    private void verHistorialMedico() { //still needs improvement, I think this is not doing what is supposed to be doing.
+    private void verHistorialMedico() { // still needs improvement, I think this is not doing what is supposed to be
+                                        // doing.
         System.out.print("Ingrese ID del doctor: ");
         String doctorId = scanner.nextLine();
-            
+
         // Check if doctor ID exists and retrieve the doctor
         Doctor doctor = data.getDoctorById(doctorId);
-        if (doctor == null) { //can't this not be done in dataHandler?
+        if (doctor == null) { // can't this not be done in dataHandler?
             System.out.println("Doctor no encontrado.");
             return;
         }
-        
-        System.out.print("Ingrese ID del paciente: "); 
+
+        System.out.print("Ingrese ID del paciente: ");
         String pacienteId = scanner.nextLine();
-            
+
         // Check if patient ID exists and retrieve the patient
         Paciente paciente = data.getPacienteById(pacienteId);
         if (paciente == null) {
             System.out.println("Paciente no encontrado.");
             return;
         }
-        
+
         // Capture the returned medical history string
         String historialMedico = doctor.verHistorialMedico(paciente);
-        
+
         // Now you can decide where to print it or use it
         System.out.println(historialMedico); // Example: printing it here
     }
+
     /**
-     * Muestra información sobre todas las clínicas. 
+     * Muestra información sobre todas las clínicas.
      */
     private void infoClinica() {
         List<Clinica> clinicas = data.readClinicas();
@@ -474,10 +541,9 @@ public class Main {
         System.out.println("Clínica agregada con éxito.");
     }
 
-
-
     /**
      * Is the method to verify the admin password,
+     * 
      * @return true = correct password; false = incorrect password.
      */
     private boolean verifyAdmin() {
@@ -485,16 +551,14 @@ public class Main {
         while (attempts > 0) {
             System.out.println("Please enter the admin username.");
             String inputUsername = scanner.nextLine();
-            
+
             System.out.println("Please enter the admin password.");
             String inputPassword = scanner.nextLine();
-            
-
 
             if (Authenticator.verifyCredentials(inputUsername, inputPassword)) {
                 return true;
             }
-            attempts--; //remember the -- is like saying doing a substraction for each loop irritation.
+            attempts--; // remember the -- is like saying doing a substraction for each loop irritation.
             if (attempts > 0) {
                 System.out.println("The password or username are incorrect, try again.");
             }
@@ -503,7 +567,5 @@ public class Main {
         System.out.println("The maximum number of attempts has succeded.");
         return false;
     }
-
-
 
 }
