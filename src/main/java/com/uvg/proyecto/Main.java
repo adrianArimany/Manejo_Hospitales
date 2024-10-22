@@ -130,7 +130,7 @@ public class Main {
             scanner.nextLine(); //remember that with this is NEEDED for the switch to function.
             switch (input) {
                 case 1:
-                    System.out.println("Escribe el ID del paciente: ");
+                    System.out.println("Escribe el ID del paciente: "); //remember there has to be the option betweeen allowing to find a patient or create a patient.
                     String idPaceinte = scanner.nextLine();
                     Paciente paciente = this.data.getPacienteById(idPaceinte);
                     this.pacienteLogIn = paciente;
