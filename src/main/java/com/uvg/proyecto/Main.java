@@ -38,8 +38,6 @@ public class Main {
 
     public final Scanner scanner = new Scanner(System.in);
 
-    //private final StorageHandler data = new StorageHandler();
-
     public static void main(String[] args) {
         Main app = new Main();
         app.MenuBegins();
