@@ -4,20 +4,20 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="gASkY3hg7c3eQzyyl7-c-1" value="Doctor" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="gASkY3hg7c3eQzyyl7-c-1" value="Doctor" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="140" y="210" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="gASkY3hg7c3eQzyyl7-c-2" value="Paciente" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="gASkY3hg7c3eQzyyl7-c-2" value="Paciente" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="330" y="210" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="gASkY3hg7c3eQzyyl7-c-3" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="gASkY3hg7c3eQzyyl7-c-3" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="520" y="210" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
     <diagram id="o2j1_0L-AQ9fnhxYw5-Y" name="Page-2">
-        <mxGraphModel dx="1265" dy="511" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1265" dy="592" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>

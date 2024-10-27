@@ -2,6 +2,8 @@ package com.uvg.proyecto;
 
 import java.util.Scanner;
 
+import org.antlr.v4.runtime.InputMismatchException;
+
 import com.uvg.proyecto.Authenticator.Authenticator;
 import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
@@ -11,66 +13,12 @@ import com.uvg.proyecto.Data.StorageHandler;
  * Clase principal para gestionar pacientes, doctores y clínicas
  * a través de un menú interactivo.
  * -------------------------------------
- * Things to do:
+ * @Todo
  * Priority:
- * 1. Add java doc documentation
- * 
- * 2. Add more functionalities to paciente and doctor.
- * 
- * 3. Do not allow repeated id for patients or doctors or clinics.
- * 
- * 4. Most methods in Main.java are not using the methods that already exist in
- * DataHandler.
- * 
- * 5. Please move your files to their respective folder. (completed)
- * 
- * 6. Implement something that would make sure that if a "," is added the csv
- * wouldn't treated as a new coloumn.
- * 
- * 7. Improve Menu (add a branch just for the admin where he can add and
- * eliminated doctors and clinics)
- * 
- * 8. Consider that a patient has a medical history, but medical history should be a distinct class that is part of patient (not inherentence). The class MedicalHistory saves every possible dieseas that a patient might have.
- * 
- * 9. IMPORTANT!!! THis is a hospital Management, this implies that is a collection of Clinics within a Hospital, and each clinic has a collection of offices.
- * Meaning that each Doctor has an Office (not a clinic), the clinic could be related to the speciality of the doctor, suppose that there exist General Practitioner, Pediatrics, Cardiology, Dermatology  in this hospital,
- * Then each doctor based on their speciality is assigned to the clinic with that category, then within that clinic the doctor is assigned an office to practice his/her respective medicine. 
- * 
- * Then the Administrator should be able: 
- * -create/delete clinics (i.e. add/remove speciality) 
- * -control the total number of offices in each clinic
- * -which doctor has  which office (for simplicity the system can randomly assigned a doctor to "free" office; assuming that each office can only have one doctor) 
- * 
- * Then when the patient ask for an appointment, the system should ask by the following criteria 
- * For simplicity (due to the time constraint) assume that every month is November 2024
- * -November
- * -30 days.
- * -Each day of the month has a fixed day of the week, (i.e. 21 --> Thurdsay, so do not include 10,17,24 as times of the day)
- * (time of day (morning/midday/afternoon), assume that doctors only accept a patient three times per day)
- * (Ignore this if you find a package that can handle this for you)
- * 
- * Ofcourse it has to have a system of validity to ensure that no patient gets the same date.
- * 
- * 
- * Extra:
- * 3. When the user enters the showMenuDoctor or showMenuPaciente, and wants to
- * return, it should send him to the main Menu.
- * 
- * 4. Add a password system to gain access to registered doctors.
- * 
- * 5. If a doctor is to be eliminated, add a password to gain access to this
- * option (Completed but the password should be better secured...).
- * 
- * 6. when the patient or doctor enter their menus, that menu is dedicated to
- * that doctor or that patient, rather than making it a comunual system.
- * 
- * 7. Make some use of inherentence, such like sickness of the patient is
- * managed in a seperated class that is implementing inherentence.
- * 
- * 8. Move hospitalName as a variable that the admin can change.
- * 
- * 9. Because Doctors likes vacations, add a vaction system to the doctor, where say that the doctor doesn't work on Monday/Tuesdays
- * 
+ * - The system only runs one iterriation, then it quits!!! (fixed) 
+ * - The system doesn't create new patients or doctors (fixed) change the storageHandler.initIds() now returns +1 to whatever was the highest.
+ * - When I run method in admin, rather than returning the previous menu, it send me back to the MenuBegins(). 
+ * - When a patient/doctor is removed, its id is removed, but when you create a new doctor/patient rather than refilling the deleted id, it generates the highest id.
  */
 public class Main {
 
@@ -85,40 +33,58 @@ public class Main {
     private Doctor loginDoc;
     private StorageHandler storageHandler;
 
-    // public static Admin admin;
 
     public final Scanner scanner = new Scanner(System.in);
 
-    private final StorageHandler data = new StorageHandler();
+    //private final StorageHandler data = new StorageHandler();
 
     public static void main(String[] args) {
         Main app = new Main();
         app.MenuBegins();
+        
     }
 
     public void MenuBegins() {
-        this.storageHandler = new StorageHandler();
-        this.storageHandler.initIds();
-        UserType user = login();
-        while (user != null && !exitSystem) { 
-            switch (user) {
-                case Paciente:
-                    this.pacienteMenu();
-                    break;
-                case Doctor:
-                    this.doctorMenu();
-                    break;
-                case Admin:
-                    this.adminMenu();
-                    break;
-                default:
-                    break;
+        try {
+            this.storageHandler = new StorageHandler();
+            this.storageHandler.initIds();
+            UserType user = login();
+            while (user != null && !exitSystem) {
+                switch (user) {
+                    case Paciente:
+                        if (loginPac != null) {
+                            this.pacienteMenu(loginPac);
+                        } else {
+                            System.out.println("Error: Paciente not found.");
+                        }
+                        break;
+                    case Doctor:
+                        if (loginDoc != null) {
+                            this.doctorMenu(loginDoc);
+                        } else {
+                            System.out.println("Error: Doctor not found.");
+                        }
+                        break;
+                    case Admin:
+                        adminMenu();
+                        break;
+                    default:
+                        System.out.println("Error: Invalid user type.");
+                        break;
+                }
+                if (!exitSystem) {
+                    user = login(); // Prompt for re-login only if the system is not exiting
+                }
             }
-            if (!exitSystem) {
-                user = login();  // Prompt for re-login only if the system is not exiting
-            }
-            }
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input.");
+            scanner.nextLine(); // clear the invalid input
+        } catch (NullPointerException e) {
+            System.out.println("Error: Null reference encountered.");
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
         }
+    }
 
     // Login and returns us the UserType
     public UserType login() {
@@ -134,16 +100,24 @@ public class Main {
                 case 2:
                     System.out.println("Escribe su ID del doctor: ");
                     int idDoctor = scanner.nextInt();
-                    this.loginDoc = this.data.getDoctorById(idDoctor);
+                    this.loginDoc = this.storageHandler.getDoctorById(idDoctor);
+                    if (this.loginDoc == null) { 
+                        System.out.println("No se encontró un doctor con ID: " + idDoctor);
+                        break;  // Allow the user to reattempt login
+                    }
                     return UserType.Doctor;
 
                 case 3:
                     System.out.println("\n[Accesso Denegado] Ingrese clave y usuario del administrador: ");
-                    if (verifyAdmin()) {
-                    System.out.println("Credenciales correctos, ingresando al Menu del Admin: ");
-                    return UserType.Admin;
-                    } else {
-                    System.out.println("Credenciales incorrectos, saliendo del sistema.");
+                    try {
+                        if (verifyAdmin()) {
+                            System.out.println("Credenciales correctos, ingresando al Menu del Admin: ");
+                            return UserType.Admin;
+                        } else {
+                            System.out.println("Credenciales incorrectos, saliendo del sistema.");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
                     }
                 case 0:
                     System.out.println("Saliendo del Systema...");
@@ -166,77 +140,81 @@ public class Main {
      * @return UserType.Paciente if the login or registration is successful, null otherwise.
      */
     public UserType loginPaciente() {
-        System.out.println("1. Paciente Nuevo \n2. Paciente Registrado");
-        int input = scanner.nextInt();
-        scanner.nextLine();
-        switch (input) {
-            case 1:
-                System.out.println("Ingrese el nombre del paciente: ");
-                String nombre = scanner.nextLine();
-                this.loginPac = new Paciente(nombre);
-                this.storageHandler.createPaciente(this.loginPac);
-                System.out.println("Paciente agregado");
-                return UserType.Paciente;
-            case 2:
-                System.out.println("Escribe el ID del paciente: "); 
-                int idPaceinte = scanner.nextInt();
-                this.loginPac = this.data.getPacienteById(idPaceinte);
-                return UserType.Paciente;
-            default:
-                System.out.println("Solo ingrese los numeros en la pantalla.");
+        try {
+            System.out.println("1. Paciente Nuevo \n2. Paciente Registrado");
+            int input = scanner.nextInt();
+            scanner.nextLine();
+            switch (input) {
+                case 1:
+                    System.out.println("Ingrese el nombre del paciente: ");
+                    String nombre = scanner.nextLine();
+                    this.loginPac = new Paciente(nombre);
+                    this.storageHandler.createPaciente(this.loginPac);
+                    System.out.println("Paciente agregado");
+                    return UserType.Paciente;
+                case 2:
+                    System.out.println("Escribe el ID del paciente: "); 
+                    int idPaceinte = scanner.nextInt();
+                    this.loginPac = this.storageHandler.getPacienteById(idPaceinte);
+                    return UserType.Paciente;
+                default:
+                    System.out.println("Solo ingrese los numeros en la pantalla.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Debe ingresar un numero entero.");
         }
         return null;
     }
     
 
 
-    public void pacienteMenu() {
-        System.out.println("Menu para el paciente: (Nombre y id del paciente) \n1. Agendar Cita \n2. Revisar Citas \n3. Historial medico \n4. Revisar prescriptions \n0. Regresar");
+    public void pacienteMenu(Paciente loginPac) {
+        System.out.println("Bienbenido, " + loginPac.getNombre() +  " (ID: " + loginPac.getId() + ")");
+        System.out.println("\n 1. Agendar Cita \n2. Revisar Citas \n3. Historial medico \n4. Revisar Prescripciones \n0. Regresar");
         int input = scanner.nextInt();
         scanner.nextLine();
         switch (input) {
             case 1:
-                
+                //Agendar Citas
                 break;
             case 2:
-                
+                //Revisar Citas
                 break;
                 
             case 3:
-
+                //Historial Medico
                 break;
 
             case 4:
-
+                //Revisar Prescripciones
                 break;
             case 0:
-            exitSystem = true;  // Signal to exit the system
-            this.login();
-            break;
+                return;
             default:
                 System.out.println("Solo ingrese los numeros en la pantalla.");
         }
     }
 
-    public void doctorMenu() {
-        System.out.println("Menu para el doctor (Nombre/id doctor) \n1. Revisar Citas Pendientes \n2. Ver historal Medico de un Paciente \n3. Revisar Prescripciones de un Paciente \n0. Regresar");
+    public void doctorMenu(Doctor loginDoc) {
+        System.out.println("Bienbenido Dr." + loginDoc.getNombre() +  " (ID: " + loginPac.getId() + ")");
+        System.out.println("\n 1. Revisar Citas Pendientes \n2. Ver historal Medico de un Paciente \n3. Revisar Prescripciones de un Paciente \n4. Agregar prescripcion a un paciente  \n0. Regresar");
         int input = scanner.nextInt();
         scanner.nextLine();
         switch (input) {
             case 1:
-                
+                //Revisar citas pendientes
                 break;
             case 2:
-                
+                //revisar historial medico de un paciente
                 break;
             case 3:
-
+                //revisar prescripcion de un paciente
                 break;
-            
+            case 4:
+                //agregar prescripcion a un paciente
+                break;
             case 0:
-            exitSystem = true;  // Signal to exit the system
-            this.login();
-            break;
+                return;
             default:
                 System.out.println("Solo ingrese los numeros en la pantalla.");
         }
@@ -244,7 +222,7 @@ public class Main {
 
 
     public void adminMenu() {
-        System.out.println("Menu para el Administrador \n1. Administrar Doctores \n2. Administrar Clinicas \n0. Regresar");
+        System.out.println("Menu para el Administrador \n1. Administrar Doctores \n2. Administrar Clinicas \n3. Administrar a los Pacientes \n0. Regresar");
         int input = scanner.nextInt();
         scanner.nextLine();
         switch (input) {
@@ -255,14 +233,40 @@ public class Main {
             case 2:
                 adminClinica();
                 break;
-            case 0:
-                exitSystem = true;  // Signal to exit the system
-                this.login();
+            case 3:
+                adminPaciente();
                 break;
+
+            case 0:
+                return;
             default:
                 System.out.println("Solo ingrese los numeros en la pantalla.");
         }
     }
+
+    public void adminPaciente() {
+        System.out.println("Menu para el Administrador Pacientes \n1. Eliminar Paciente del sistema \n0. Regresar");
+        int input = scanner.nextInt();
+        scanner.nextLine();
+        switch (input) {
+            case 1:
+                System.out.println("Cual es el ID del paciente a Eliminar: ");
+                int id = scanner.nextInt();
+                boolean isDeleted  = storageHandler.deletePatient(id);
+                if (isDeleted) {
+                    System.out.println("Paciente con id: " + id + ". Eliminado del sistema.");
+                } else {
+                    System.out.println("Paciente con id: " + id + ". No existe en el sistema.");
+                }
+                break;
+            case 0:
+                adminMenu();
+                return;
+            default:
+                System.out.println("Solo ingrese los numeros en la pantalla.");
+        }
+    }
+
 
     public void adminDoc() {
         System.out.println("Administracion para Doctores: \n1. Agregar Doctores \n2. Eliminar Doctores \n3. Mover a un Doctor \n0. Regresar");
@@ -270,21 +274,39 @@ public class Main {
         scanner.nextLine();
         switch (input) {
             case 1:
-                
+                System.out.println("Nombre del Doctor:");
+                String nombre = scanner.nextLine();
+                if (nombre == null || nombre.trim().isEmpty()) {
+                    System.out.println("Nombre no puede estar vacío.");
+                    break;
+                }
+                Doctor newDoctor = new Doctor(nombre);
+                if (this.storageHandler.createDoctor(newDoctor)) {
+                    System.out.println("Doctor agregado");
+                } else {
+                    System.out.println("El doctor ya existe o hubo un error al agregar.");
+                }
                 break;
             case 2:
-
+                System.out.println("ID del Doctor a eliminar:");
+                try {
+                    int doctorId = scanner.nextInt();
+                    scanner.nextLine();
+                    this.storageHandler.deleteDoctor(doctorId);
+                    System.out.println("Doctor con ID " + doctorId + " eliminado.");
+                } catch (InputMismatchException e) {
+                    System.out.println("ID inválido. Por favor, ingrese un número.");
+                    scanner.nextLine(); // clear the invalid input
+                }
                 break;
-
             case 3:
-                
+                System.out.println("Funcionalidad mover doctor no implementada.");
                 break;
             case 0:
-                exitSystem = true;
                 adminMenu();
-                break;
+                return;
             default:
-                break;
+                System.out.println("Solo ingrese los numeros en la pantalla.");
         }
     }
 
@@ -304,11 +326,10 @@ public class Main {
                 
                 break;
             case 0:
-                exitSystem = true;
                 adminMenu();
-                break;
+                return;
             default:
-                break;
+                System.out.println("Solo ingrese los numeros en la pantalla.");
         }
     }
 

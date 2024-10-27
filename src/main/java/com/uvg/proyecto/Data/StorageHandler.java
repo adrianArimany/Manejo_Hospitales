@@ -1,13 +1,14 @@
 package com.uvg.proyecto.Data;
 
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -17,7 +18,7 @@ import com.uvg.proyecto.Classes.Clinica;
 import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
 import com.uvg.proyecto.Classes.Prescription;
-import java.time.LocalDate;
+import com.uvg.proyecto.Utils.IdGenerator;
 
 public class StorageHandler {
     private final String PATIENT_FILE = "src/main/java/com/uvg/proyecto/JSON/patient.json";
@@ -121,19 +122,18 @@ public class StorageHandler {
         // Get all pacientes
         ArrayList<Paciente> pacientes = this.getAllPatients();
 
-        // Remove paciente with same id
+        // Remove paciente with the specified id
         boolean removed = pacientes.removeIf(paciente -> paciente.getId() == id);
 
-        // If there was no pacientes removed then return false
-        if (!removed)
-            return false;
+        // If a paciente was removed, release the ID and save changes to file
+        if (removed) {
+            IdGenerator.releasePatientId(id);  // Reuse the ID for future patients
+            return this.savePacientes(pacientes);
+        }
 
-        // try to save to file
-        if (this.savePacientes(pacientes))
-            return true;
-
-        return false;
+        return false;  // Return false if no paciente was removed
     }
+
 
     public ArrayList<Paciente> getDrPacientes(Doctor doc) {
         ArrayList<Integer> pacientesIds = doc.getPacientesId();
@@ -292,15 +292,13 @@ public class StorageHandler {
         // Remove doctor with same id
         boolean removed = doctors.removeIf(doc -> doc.getId() == id);
 
-        // If there was no doctor removed then return false
-        if (!removed)
-            return false;
+       // If a doctor was removed, release the ID and save changes to file
+        if (removed) {
+            IdGenerator.releaseDoctorId(id);  // Reuse the ID for future doctors
+            return this.saveDoctors(doctors);
+        }
 
-        // try to save to file
-        if (this.saveDoctors(doctors))
-            return true;
-
-        return false;
+        return false;  // Return false if no doctor was removed
     }
 
     private boolean updateDoctor(Doctor doc) {
@@ -380,26 +378,49 @@ public class StorageHandler {
         return citas;
     }
 
-    public boolean initIds() {
-        ArrayList<Paciente> pacientes = this.getAllPatients();
-        ArrayList<Doctor> doctors = this.getAllDoctors();
+    // public boolean initIds() {
+    //     ArrayList<Paciente> pacientes = this.getAllPatients();
+    //     ArrayList<Doctor> doctors = this.getAllDoctors();
         
-        int pacienteId = 0;
-        for(Paciente paciente: pacientes) {
-            if (paciente.getId() > pacienteId) {
-                pacienteId = paciente.getId();
-            }
-        }
+    //     int pacienteId = 0;
+    //     for(Paciente paciente: pacientes) {
+    //         if (paciente.getId() > pacienteId) {
+    //             pacienteId = paciente.getId();
+    //         }
+    //     }
 
-        int doctorId = 0;
-        for(Doctor doctor: doctors) {
-            if (doctor.getId() > doctorId) {
-                doctorId = doctor.getId();
-            }
-        }
+    //     int doctorId = 0;
+    //     for(Doctor doctor: doctors) {
+    //         if (doctor.getId() > doctorId) {
+    //             doctorId = doctor.getId();
+    //         }
+    //     }
 
-        return true;
+    //     return true;
+    // }
+    public boolean initIds() {
+    ArrayList<Paciente> pacientes = this.getAllPatients();
+    ArrayList<Doctor> doctors = this.getAllDoctors();
+    
+    int highestPacienteId = 0;
+    for (Paciente paciente : pacientes) {
+        if (paciente.getId() > highestPacienteId) {
+            highestPacienteId = paciente.getId();
+        }
     }
+
+    int highestDoctorId = 0;
+    for (Doctor doctor : doctors) {
+        if (doctor.getId() > highestDoctorId) {
+            highestDoctorId = doctor.getId();
+        }
+    }
+
+    // Initialize the IdGenerator with the highest existing IDs + 1
+    IdGenerator.initIds(highestPacienteId + 1, highestDoctorId + 1, 0);
+    return true;
+}
+
 
     public ArrayList<Paciente> showAllPacientes() {
         return this.getAllPatients();
