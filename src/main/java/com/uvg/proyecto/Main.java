@@ -20,7 +20,7 @@ import com.uvg.proyecto.Data.StorageHandler;
  * - When I run method in admin, rather than returning the previous menu, it send me back to the MenuBegins().  (fixed) added a while loop.
  * - I need to double exit the menu of the admin to fully exit that menu ( )
  * - When a patient/doctor is removed, its id is removed, but when you create a new doctor/patient rather than refilling the deleted id, it generates the highest id. (  )
- * - Error: Null reference encountered. When enter as a Doctor. ( )
+ * - Error: Null reference encountered. When enter as a Doctor. (fixed) the issue was in a system.out.println I was calling a loginPac rather than loginDoc.
  */
 public class Main {
 
