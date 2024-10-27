@@ -212,4 +212,10 @@ public class StorageHandlerTest {
         assertEquals(clinic.getId(), "1");
         assertEquals(clinic.getNombre(), "testClinic");
     }
+
+    // Clinicas
+    @Test
+    public void createClinic() {
+        
+    }
 }
