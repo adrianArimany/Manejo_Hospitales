@@ -29,6 +29,11 @@ public class Main {
         Doctor,
         Admin,
     }
+    public enum adminType {
+        AdminDoc,
+        AdminPac,
+        AdmincClininc,
+    }
     private final String hospitalName = "Hospital Chapintenco"; //THis should be moved to the menu for the admin so that the admin can change the name of the hospital if needed.
     private Paciente loginPac;
     private boolean exitSystem = false;
@@ -233,15 +238,16 @@ public class Main {
         }
     }
 
+    
 
     public void adminMenu() {
         boolean inAdminMenu = true;
-        while (inAdminMenu) {
+        UserType user = login();
+        while (user != null) {
             System.out.println("Menu para el Administrador \n1. Administrar Doctores \n2. Administrar Clinicas \n3. Administrar a los Pacientes \n0. Regresar");
-            int input = scanner.nextInt();
             scanner.nextLine();
-            switch (input) {
-                case 1:
+            switch (user) {
+                case AdminDoc:
                     adminDoc();
                     break;
             
@@ -260,6 +266,28 @@ public class Main {
             }
         }
         }
+
+    public adminType logInAdmin() {
+        System.out.println("Gestión para " + hospitalName +": \n1. Administrate a Paciente \n2. Soy un Doctor \n3. Soy el Admininistrador \n0. Salir del Sistema.");
+        int input = scanner.nextInt();
+        scanner.nextLine(); //remember that with this is NEEDED for the switch to function.
+        switch (input) {
+            case 1:
+                
+                return adminType.AdminDoc;
+
+            case 2:
+
+                return adminType.AdminPac;
+            case 3:
+
+                return adminType.AdmincClininc;
+            default:
+                System.out.println("Solo ingrese los numeros en la pantalla.");
+        }
+        return null;
+    }
+
 
     public void adminPaciente() {
         System.out.println("Menu para el Administrador Pacientes \n1. Eliminar Paciente del sistema \n0. Regresar");
