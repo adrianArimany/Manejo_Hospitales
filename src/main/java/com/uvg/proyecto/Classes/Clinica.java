@@ -18,7 +18,6 @@ package com.uvg.proyecto.Classes;
  */
 public class Clinica { 
     private String nombre;
-    //private String officinas;
     private String id;
     
 
@@ -28,7 +27,7 @@ public class Clinica {
      * @param nombre El nombre de la clínica.
      * @param direccion La dirección de la clínica.
      */
-    public Clinica(String id, String nombre, Officinas officinas) { 
+    public Clinica(String id, String nombre) { 
         this.id = id;
         this.nombre = nombre;
         
