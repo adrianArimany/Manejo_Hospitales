@@ -61,8 +61,8 @@ public class Main {
                         }
                         break;
                     case Doctor:
-                        if (loginDoc != null) {
-                            this.doctorMenu(loginDoc);
+                        if (this.loginDoc != null) {
+                            this.doctorMenu(this.loginDoc);
                         } else {
                             System.out.println("Error: Doctor not found.");
                         }
@@ -204,8 +204,8 @@ public class Main {
     public void doctorMenu(Doctor loginDoc) {
         boolean inDoctor = true;
         while (inDoctor) {
-        System.out.println("Bienbenido Dr." + loginDoc.getNombre() +  " (ID: " + loginPac.getId() + ")");
-        System.out.println("\n 1. Revisar Citas Pendientes \n2. Ver historal Medico de un Paciente \n3. Revisar Prescripciones de un Paciente \n4. Agregar prescripcion a un paciente \n5. Ver a todos mis paceintes.  \n0. Regresar");
+        System.out.println("Bienbenido Dr." + loginDoc.getNombre() +  " (ID: " + loginDoc.getId() + ")");
+        System.out.println("\n1. Revisar Citas Pendientes \n2. Ver historal Medico de un Paciente \n3. Revisar Prescripciones de un Paciente \n4. Agregar prescripcion a un paciente \n5. Ver a todos mis paceintes.  \n0. Regresar");
         int input = scanner.nextInt();
         scanner.nextLine();
         switch (input) {
@@ -262,6 +262,8 @@ public class Main {
         }
 
     public void adminPaciente() {
+        boolean inAdminPaciente = true;
+        while (inAdminPaciente) {
         System.out.println("Menu para el Administrador Pacientes \n1. Eliminar Paciente del sistema \n0. Regresar");
         int input = scanner.nextInt();
         scanner.nextLine();
@@ -277,10 +279,12 @@ public class Main {
                 }
                 break;
             case 0:
+                inAdminPaciente = false;
                 adminMenu();
                 return;
             default:
                 System.out.println("Solo ingrese los numeros en la pantalla.");
+        }
         }
     }
 
@@ -288,7 +292,7 @@ public class Main {
     public void adminDoc() {
         boolean inAdminDoc = true;
         while (inAdminDoc) {
-        System.out.println("Administracion para Doctores: \n1. Agregar Doctores \n2. Eliminar Doctores \n3. Mover a un Doctor \n0. Regresar");
+        System.out.println("Administracion para Doctores: \n1. Agregar Doctores \n2. Eliminar Doctores \n3. Editar info de un Doctor \n0. Regresar");
         int input = scanner.nextInt();
         scanner.nextLine();
         switch (input) {
@@ -319,7 +323,7 @@ public class Main {
                 }
                 break;
             case 3:
-                System.out.println("Funcionalidad mover doctor no implementada.");
+                System.out.println("Funcionalidad Editar a un Doctor no implementada");
                 break;
             case 0:
                 inAdminDoc = false;
@@ -332,7 +336,9 @@ public class Main {
     }
 
     public void adminClinica() {
-        System.out.println("Administracion para Clinicas  \n1. Agregar Clinca \n2. Eliminar Clinica \n0. regresar");
+        boolean inAdminClincia = true;
+        while (inAdminClincia) {
+        System.out.println("Administracion para Clinicas  \n1. Agregar Clinca \n2. Eliminar Clinica \n3. Mover a un Doctor \n0. regresar");
         int input = scanner.nextInt();
         scanner.nextLine();
         switch (input) {
@@ -344,13 +350,15 @@ public class Main {
                 break;
 
             case 3:
-                //still planning
+                //Mover Doctor.
                 break;
             case 0:
+                inAdminClincia = false;
                 adminMenu();
                 return;
             default:
                 System.out.println("Solo ingrese los numeros en la pantalla.");
+        }
         }
     }
 
