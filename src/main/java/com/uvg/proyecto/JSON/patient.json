@@ -1,21 +1,28 @@
 [
   {
     "id": 1,
-    "nombre": "ricardo",
+    "nombre": "Pedro",
     "doctoresId": [],
     "citas": [],
     "prescriptions": []
   },
   {
     "id": 2,
-    "nombre": "pedro",
+    "nombre": "Ricardo",
     "doctoresId": [],
     "citas": [],
     "prescriptions": []
   },
   {
     "id": 3,
-    "nombre": "Ricardo",
+    "nombre": "Adrian",
+    "doctoresId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 4,
+    "nombre": "Sofia",
     "doctoresId": [],
     "citas": [],
     "prescriptions": []

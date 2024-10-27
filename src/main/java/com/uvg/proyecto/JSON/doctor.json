@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": 1,
+    "nombre": "Fransisco",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 2,
+    "nombre": "Santiago",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 3,
+    "nombre": "Jose Manuel",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 4,
+    "nombre": "Adrian",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 5,
+    "nombre": "vernando",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  }
+]

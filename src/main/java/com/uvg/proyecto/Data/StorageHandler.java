@@ -141,9 +141,14 @@ public class StorageHandler {
         // Get patients from their ids
         ArrayList<Paciente> pacientes = this.getAllPatients();
 
-        pacientes.stream().filter(paciente -> pacientesIds.contains(paciente.getId()));
+        ArrayList<Paciente> pacientesDelDoc = new ArrayList<>();
+        for (Paciente paciente : pacientes) {
+            if (pacientesIds.contains(paciente.getId())) {
+                pacientesDelDoc.add(paciente);
+            }
+        }
 
-        return pacientes;
+        return pacientesDelDoc;
     }
 
     /**
@@ -355,7 +360,6 @@ public class StorageHandler {
         ArrayList<Paciente> pacientes = this.getAllPatients();
         return pacientes.stream().filter(paciente -> paciente.getId() == id).findFirst().orElse(null);
     }
-
 /**
  * Retrieves a Doctor object by ID.
  *
@@ -378,26 +382,6 @@ public class StorageHandler {
         return citas;
     }
 
-    // public boolean initIds() {
-    //     ArrayList<Paciente> pacientes = this.getAllPatients();
-    //     ArrayList<Doctor> doctors = this.getAllDoctors();
-        
-    //     int pacienteId = 0;
-    //     for(Paciente paciente: pacientes) {
-    //         if (paciente.getId() > pacienteId) {
-    //             pacienteId = paciente.getId();
-    //         }
-    //     }
-
-    //     int doctorId = 0;
-    //     for(Doctor doctor: doctors) {
-    //         if (doctor.getId() > doctorId) {
-    //             doctorId = doctor.getId();
-    //         }
-    //     }
-
-    //     return true;
-    // }
     public boolean initIds() {
     ArrayList<Paciente> pacientes = this.getAllPatients();
     ArrayList<Doctor> doctors = this.getAllDoctors();
