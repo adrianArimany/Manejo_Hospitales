@@ -17,7 +17,6 @@ public class Doctor {
     private ArrayList<Integer> pacientesId;
     private ArrayList<Cita> citas;
     private ArrayList<Prescription> prescriptions;
-    // private String office;
 
     /**
      * Constructs a new Doctor with the specified ID, name, and clinic.

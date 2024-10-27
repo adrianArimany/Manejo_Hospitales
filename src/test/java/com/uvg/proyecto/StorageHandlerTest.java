@@ -71,6 +71,8 @@ public class StorageHandlerTest {
 
     @Test
     public void createDoctor() {
+        storageHandler.deleteDoctor(testDoc.getId());
+
         boolean isDoctorCreated = storageHandler.createDoctor(testDoc);
         assertTrue(isDoctorCreated, "Doctor must be created");
 
@@ -147,10 +149,15 @@ public class StorageHandlerTest {
     public void drAddCita() {
         boolean isCitaAdded = storageHandler.drAddCita(testDoc, testPaciente, "2021-06-01");
         assertTrue(isCitaAdded, "Cita must be added to the doctor");
+
+        
     }
 
     @Test
     public void drViewAppointments() {
+        storageHandler.createDoctor(testDoc);
+        storageHandler.createPaciente(testPaciente);
+
         storageHandler.addPacienteToDoctor(testDoc, testPaciente);
         storageHandler.drAddCita(testDoc, testPaciente, "2021-06-01");
 

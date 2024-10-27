@@ -1,6 +1,5 @@
 package com.uvg.proyecto.Classes;
 
-import java.io.Serializable;
 
 /**
  * Esta clase maneja existe solamente para manejar a los pacientes del hospotal.
@@ -17,8 +16,7 @@ import java.util.List;
 import com.uvg.proyecto.Data.UserTypes;
 import com.uvg.proyecto.Utils.IdGenerator;
 
-public class Paciente implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Paciente {
     private int id;
     private String nombre;
     private String doctor;

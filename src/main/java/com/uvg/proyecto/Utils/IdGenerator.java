@@ -35,18 +35,18 @@ public class IdGenerator {
     }
 
 
-    /**
-     * Initializes the ID counters for patients, doctors, and clinics.
-     *
-     * @param patientId the starting ID for patients
-     * @param doctorId the starting ID for doctors
-     * @param clinicId the starting ID for clinics
-     */
-    public static void initIds(int patientId, int doctorId, int clinicId) {
-        IdGenerator.patientId = patientId;
-        IdGenerator.doctorId = doctorId;
-        IdGenerator.clinicId = clinicId;
-    }
+    // /**
+    //  * Initializes the ID counters for patients, doctors, and clinics.
+    //  *
+    //  * @param patientId the starting ID for patients
+    //  * @param doctorId the starting ID for doctors
+    //  * @param clinicId the starting ID for clinics
+    //  */
+    // public static void initIds(int patientId, int doctorId, int clinicId) {
+    //     IdGenerator.patientId = patientId;
+    //     IdGenerator.doctorId = doctorId;
+    //     IdGenerator.clinicId = clinicId;
+    // }
 
     /**
      * Initializes the ID counters for patients, doctors, clinics, citas, and prescriptions.

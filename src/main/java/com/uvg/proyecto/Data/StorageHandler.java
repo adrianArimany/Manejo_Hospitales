@@ -146,6 +146,20 @@ public class StorageHandler {
         return pacientes;
     }
 
+    /**
+     * Adds a Paciente to a Doctor's list of Pacientes.
+     * 
+     * This method first checks if the Paciente already exists under the Doctor.
+     * If the Paciente does not exist, it adds the Paciente to the Doctor's list
+     * and updates the Doctor's record. Then it adds the Doctor to the Paciente's
+     * list of Doctors and updates the Paciente's record.
+     * 
+     * @param doc The Doctor to add the Paciente to.
+     * @param paciente The Paciente to add to the Doctor.
+     * @return true if the Paciente was successfully added to the Doctor and both
+     *         records were updated, false if the Paciente already exists under the
+     *         Doctor or if saving failed.
+     */
     public boolean addPacienteToDoctor(Doctor doc, Paciente paciente) {
         // Check if paciente already exists under the doctor
         ArrayList<Paciente> pacientesDelDoc = this.getDrPacientes(doc);
