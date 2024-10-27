@@ -222,6 +222,7 @@ public class Main {
             case 5:
                 System.out.println("Pacientes:");
                 System.out.println(this.storageHandler.getDrPacientes(this.loginDoc));
+                break;
             case 0:
                 inDoctor = false;
                 return;

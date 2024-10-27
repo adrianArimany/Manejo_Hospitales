@@ -26,5 +26,12 @@
     "doctoresId": [],
     "citas": [],
     "prescriptions": []
+  },
+  {
+    "id": 5,
+    "nombre": "Ariel",
+    "doctoresId": [],
+    "citas": [],
+    "prescriptions": []
   }
 ]

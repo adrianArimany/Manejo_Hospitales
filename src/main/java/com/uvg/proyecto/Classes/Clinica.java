@@ -68,24 +68,6 @@ public class Clinica {
         this.nombre = nombre;
     }
 
-    // /**
-    //  * Obtiene las officnas de la clínica.
-    //  *
-    //  * @return Las offic de la clínica.
-    //  */
-    // public String getOfficinas() {
-    //     return this.officinas;
-    // }
-
-    // /**
-    //  * Establece la dirección de la clínica.
-    //  *
-    //  * @param direccion La nueva dirección de la clínica.
-    //  */
-    // public void setDireccion(String direccion) {
-    //     this.direccion = direccion;
-    // }
-
     
     /**
      * Devuelve una representación en cadena de la clínica.
