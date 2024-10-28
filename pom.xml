@@ -83,18 +83,39 @@
       </plugin>
 
       <!-- Plugin to package the application into a JAR and specify the Main class -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.0</version>
-        <configuration>
-          <archive>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <version>3.6.0</version>
+    <configuration>
+        <archive>
             <manifest>
-              <mainClass>com.uvg.proyecto.Main</mainClass> <!-- Specify the main class here -->
+                <mainClass>com.uvg.proyecto.Main</mainClass>
             </manifest>
-          </archive>
-        </configuration>
-      </plugin>
+        </archive>
+        <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+    </configuration>
+    <executions>
+        <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+                <goal>single</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+
+      <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>3.1.0</version>
+    <configuration>
+        <mainClass>com.uvg.proyecto.Main</mainClass>
+    </configuration>
+</plugin>
 
       <!-- Plugin to install the built artifact to the local repository -->
       <plugin>
