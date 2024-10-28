@@ -1,7 +1,5 @@
 package com.uvg.proyecto.Classes;
 
-import java.time.LocalDate;
-
 import com.uvg.proyecto.Data.UserTypes;
 import com.uvg.proyecto.Utils.IdGenerator;
 
@@ -9,9 +7,9 @@ public class Cita {
     public int id;
     public int doctor;
     public int paciente;
-    public LocalDate date;
+    public String date;
 
-    public Cita(int doctor, int paciente, LocalDate date) {
+    public Cita(int doctor, int paciente, String date) {
         this.id = IdGenerator.generateId(UserTypes.Cita);
         this.doctor = doctor;
         this.paciente = paciente;
@@ -54,11 +52,11 @@ public class Cita {
         this.paciente = paciente;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

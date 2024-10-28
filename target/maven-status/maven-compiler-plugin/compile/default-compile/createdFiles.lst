@@ -1,6 +1,13 @@
-com/uvg/proyecto/Authenticator/Authenticator.class
 com/uvg/proyecto/Classes/Doctor.class
-com/uvg/proyecto/Main.class
 com/uvg/proyecto/Classes/Paciente.class
-com/uvg/proyecto/Data/DataHandler.class
+com/uvg/proyecto/Utils/IdGenerator$1.class
+com/uvg/proyecto/Classes/Prescription.class
+com/uvg/proyecto/Classes/Admin.class
+com/uvg/proyecto/Authenticator/Authenticator.class
+com/uvg/proyecto/Main$UserType.class
+com/uvg/proyecto/Data/UserTypes.class
+com/uvg/proyecto/Main.class
+com/uvg/proyecto/Utils/IdGenerator.class
 com/uvg/proyecto/Classes/Clinica.class
+com/uvg/proyecto/Data/StorageHandler.class
+com/uvg/proyecto/Classes/Cita.class

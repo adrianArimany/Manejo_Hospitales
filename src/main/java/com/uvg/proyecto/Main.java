@@ -2,12 +2,12 @@ package com.uvg.proyecto;
 
 import java.util.Scanner;
 
-import org.antlr.v4.runtime.InputMismatchException;
-
 import com.uvg.proyecto.Authenticator.Authenticator;
 import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
 import com.uvg.proyecto.Data.StorageHandler;
+
+
 
 /**
  * Clase principal para gestionar pacientes, doctores y clínicas
@@ -76,9 +76,6 @@ public class Main {
                     user = login(); // Prompt for re-login only if the system is not exiting
                 }
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Error: Invalid input.");
-            scanner.nextLine(); // clear the invalid input
         } catch (NullPointerException e) {
             System.out.println("Error: Null reference encountered.");
         } catch (Exception e) {
@@ -160,7 +157,7 @@ public class Main {
                 default:
                     System.out.println("Solo ingrese los numeros en la pantalla.");
             }
-        } catch (InputMismatchException e) {
+        } catch (Exception e) {
             System.out.println("Error: Debe ingresar un numero entero.");
         }
         return null;
@@ -316,7 +313,7 @@ public class Main {
                     scanner.nextLine();
                     this.storageHandler.deleteDoctor(doctorId);
                     System.out.println("Doctor con ID " + doctorId + " eliminado.");
-                } catch (InputMismatchException e) {
+                } catch (Exception e) {
                     System.out.println("ID inválido. Por favor, ingrese un número.");
                     scanner.nextLine(); // clear the invalid input
                 }

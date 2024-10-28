@@ -1,33 +1,5 @@
 [
   {
-    "id": 1,
-    "nombre": "Pedro",
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
-    "id": 2,
-    "nombre": "Ricardo",
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
-    "id": 3,
-    "nombre": "Adrian",
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
-    "id": 4,
-    "nombre": "Sofia",
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
     "id": 5,
     "nombre": "Ariel",
     "doctoresId": [],

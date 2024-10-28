@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -339,9 +338,7 @@ public class StorageHandler {
     }
 
     public boolean drAddCita(Doctor doc, Paciente paciente, String date) {
-        // String date into localdate
-        LocalDate localDate = LocalDate.parse(date);
-        Cita cita = new Cita(doc.getId(), paciente.getId(), localDate);
+        Cita cita = new Cita(doc.getId(), paciente.getId(), date);
         doc.addCita(cita);
         this.updateDoctor(doc);
         paciente.addCita(cita);
