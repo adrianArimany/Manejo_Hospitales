@@ -33,5 +33,12 @@
     "doctoresId": [],
     "citas": [],
     "prescriptions": []
+  },
+  {
+    "id": 6,
+    "nombre": "pEDRO",
+    "doctoresId": [],
+    "citas": [],
+    "prescriptions": []
   }
 ]
