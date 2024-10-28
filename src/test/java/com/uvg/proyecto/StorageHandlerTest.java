@@ -219,5 +219,7 @@ public class StorageHandlerTest {
         ArrayList<Integer> doctorId = new ArrayList<>();
         Clinica newClinic = new Clinica(1, "prueva 1", doctorId);
         
+        //boolean isClinicCreated = storageHandler.createNewClinic(newClinic);
+        //assertTrue(isClinicCreated, "Clinic must be created");
     }
 }

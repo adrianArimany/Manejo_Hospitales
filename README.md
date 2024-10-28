@@ -1,5 +1,11 @@
 # Proyecto UVG Manejo de Hospitales
+
+## Creado por
 - Adrian Arimany
+-
+-
+-
+-
 
 ## Configuracion
 1. Tener instalado [java version 21](https://www.oracle.com/java/technologies/downloads/) (IMPORTANTE!!)

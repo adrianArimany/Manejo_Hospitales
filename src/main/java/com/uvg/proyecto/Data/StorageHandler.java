@@ -27,7 +27,7 @@ public class StorageHandler {
     private Gson gson;
 
     public StorageHandler() {
-        GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
+        GsonBuilder builder = new GsonBuilder().setDateFormat("yyyy-MM-dd").setPrettyPrinting();
         gson = builder.create();
         // Check if files exist or create them
         this.checkFilesOrCreatesThem();

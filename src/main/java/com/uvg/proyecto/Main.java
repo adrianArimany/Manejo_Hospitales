@@ -6,6 +6,7 @@ import com.uvg.proyecto.Authenticator.Authenticator;
 import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
 import com.uvg.proyecto.Data.StorageHandler;
+import com.uvg.proyecto.Utils.IdGenerator;
 
 
 
@@ -64,6 +65,9 @@ public class Main {
                         } else {
                             System.out.println("Error: Doctor not found.");
                         }
+
+                        
+
                         break;
                     case Admin:
                         this.adminMenu();
@@ -384,5 +388,13 @@ public class Main {
         System.out.println("The maximum number of attempts has succeded.");
         return false;
     }
+
+    // Get clinica types
+    // for (int i = 0; i < IdGenerator.TiposDeClinica.size(); i++) {
+    //     System.out.println(String.format("%d. %s", (i + 1), (IdGenerator.TiposDeClinica.get(i))));
+    // }
+    // int input = Integer.parseInt(scanner.nextLine()) - 1
+    // IdGenerator.TiposDeClinica.get(input); 
+    // Finish clinica types
 
 }
