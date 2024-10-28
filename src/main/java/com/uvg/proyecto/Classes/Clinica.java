@@ -1,5 +1,7 @@
 package com.uvg.proyecto.Classes;
 
+import java.util.ArrayList;
+
 /**
  * Considerations:
  * 
@@ -18,8 +20,16 @@ package com.uvg.proyecto.Classes;
  */
 public class Clinica { 
     private String nombre;
-    private String id;
+    private int id;
+    private ArrayList<Integer> doctorId;
     
+
+
+    public Clinica(int id, String nombre, ArrayList<Integer> doctorId) {
+        this.id = id;
+        this.nombre = nombre;
+        this.doctorId = doctorId;
+    }
 
     /**
      * Constructor para crear una nueva instancia de Clinica.
@@ -27,18 +37,22 @@ public class Clinica {
      * @param nombre El nombre de la clínica.
      * @param direccion La dirección de la clínica.
      */
-    public Clinica(String id, String nombre) { 
+    public Clinica(int id, String nombre) { 
         this.id = id;
         this.nombre = nombre;
         
     }
+
+
+
+    
 
     /**
      * Obtiene el id de la clínica.
      *
      * @return the id of the clinic
      */
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -46,7 +60,7 @@ public class Clinica {
      * Stablished the id of the clinic.
      * @param id new id for the clinic
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -203,7 +203,7 @@ public class StorageHandlerTest {
     @Test
     public void addClinicToDoctor() {
         // Crea la clinica y la agrega al doctor testDoc
-        Clinica newClinic = new Clinica("1","testClinic");
+        Clinica newClinic = new Clinica(1,"testClinic");
         boolean isClinicAdded = storageHandler.addClinicToDoctor(testDoc, newClinic);
         assertTrue(isClinicAdded, "Clinic must be added to the doctor");
 
@@ -216,6 +216,8 @@ public class StorageHandlerTest {
     // Clinicas
     @Test
     public void createClinic() {
+        ArrayList<Integer> doctorId = new ArrayList<>();
+        Clinica newClinic = new Clinica(1, "prueva 1", doctorId);
         
     }
 }
