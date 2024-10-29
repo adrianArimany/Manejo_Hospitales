@@ -2,6 +2,9 @@ package com.uvg.proyecto.Classes;
 
 import java.util.ArrayList;
 
+import com.uvg.proyecto.Data.UserTypes;
+import com.uvg.proyecto.Utils.IdGenerator;
+
 /**
  * Considerations:
  * 
@@ -19,26 +22,26 @@ import java.util.ArrayList;
  * Clinica.
  */
 public class Clinica {
-    private String nombre;
+    private String especialidad;
     private int id;
     private ArrayList<Integer> doctorId;
 
-    public Clinica(int id, String nombre, ArrayList<Integer> doctorId) {
-        this.id = id;
-        this.nombre = nombre;
+    public Clinica(String especialidad, ArrayList<Integer> doctorId) {
+        this.id = IdGenerator.generateId(UserTypes.Clinica);
+        this.especialidad = especialidad;
         this.doctorId = doctorId;
     }
 
     /**
      * Constructor para crear una nueva instancia de Clinica.
      *
-     * @param nombre    El nombre de la clínica.
+     * @param especialidad    El especialidad de la clínica.
      * @param direccion La dirección de la clínica.
      */
-    public Clinica(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-
+    public Clinica(String especialidad) {
+        this.id = IdGenerator.generateId(UserTypes.Clinica);
+        this.especialidad = especialidad;
+        this.doctorId = new ArrayList<Integer>(); 
     }
 
     /**
@@ -60,31 +63,38 @@ public class Clinica {
     }
 
     /**
-     * Obtiene el nombre de la clínica.
+     * Obtiene el especialidad de la clínica.
      *
-     * @return El nombre de la clínica.
+     * @return El especialidad de la clínica.
      */
-    public String getNombre() {
-        return this.nombre;
+    public String getEspecialidad() {
+        return this.especialidad;
     }
 
     /**
-     * Establece el nombre de la clínica.
+     * Establece el especialidad de la clínica.
      *
-     * @param nombre El nuevo nombre de la clínica.
+     * @param especialidad El nuevo especialidad de la clínica.
      */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
 
-    /**
-     * Devuelve una representación en cadena de la clínica.
-     *
-     * @return Una cadena que contiene el nombre y la dirección de la clínica,
-     *         separados por una coma.
-     */
+    public ArrayList<Integer> getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(int doctorId) {
+        this.doctorId.add(doctorId);
+    }
+
+    public void setArrayDoctorId(ArrayList<Integer> doctorId) {
+        this.doctorId = doctorId;
+    }
+
+
     @Override
     public String toString() {
-        return nombre + "," + id;
+        return "Clinica [especialidad=" + especialidad + ", id=" + id + ", doctorId=" + doctorId + "]";
     }
 }

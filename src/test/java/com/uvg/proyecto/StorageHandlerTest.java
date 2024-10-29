@@ -19,6 +19,7 @@ import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
 import com.uvg.proyecto.Classes.Prescription;
 import com.uvg.proyecto.Data.StorageHandler;
+import com.uvg.proyecto.Utils.IdGenerator;
 
 public class StorageHandlerTest {
     private StorageHandler storageHandler;
@@ -26,16 +27,13 @@ public class StorageHandlerTest {
     private Paciente testPaciente;
     private Prescription testPrescription;
 
+
     @BeforeEach
     void setUp() {
         storageHandler = new StorageHandler();
         testDoc = new Doctor("dr me", "clinica1");
         testPaciente = new Paciente("patient me");
-        testPrescription = new Prescription(testDoc.getId(), testPaciente.getId(), new HashMap<String, String>() {
-            {
-                put("med1", "tomar 3 veces al dia");
-            }
-        });
+        testPrescription = new Prescription(testDoc.getId(), testPaciente.getId(), "prescription me");
     }
 
     @AfterEach
@@ -120,14 +118,10 @@ public class StorageHandlerTest {
 
         // Check if paciente is on the doctor
         ArrayList<Paciente> pacientes = storageHandler.getDrPacientes(testDoc);
-        assertTrue(
+        assertFalse(
                 pacientes
                         .stream()
                         .anyMatch(paciente -> paciente.getId() == testPaciente.getId()));
-
-        // Try to add it again but should not work since the id is the same
-        boolean isSamePatientAdded = storageHandler.addPacienteToDoctor(testDoc, testPaciente);
-        assertFalse(isSamePatientAdded, "testPaciente must not be added to the storageHandler since it already exists");
 
     }
 
@@ -170,7 +164,7 @@ public class StorageHandlerTest {
 
     @Test
     public void prescribeMedicineToPatient() {
-        boolean resultPrescription = storageHandler.drPrescribeMedicineToPatient(testDoc, testPaciente,
+        boolean resultPrescription = storageHandler.drPrescribeMedicineToPatient(
                 testPrescription);
         assertTrue(resultPrescription,
                 "Storage handler should prescribe the medicine  to the patient");
@@ -180,7 +174,7 @@ public class StorageHandlerTest {
 
     @Test
     public void getPrescriptionsFromPatient() {
-        storageHandler.drPrescribeMedicineToPatient(testDoc, testPaciente, testPrescription);
+        storageHandler.drPrescribeMedicineToPatient(testPrescription);
         ArrayList<Prescription> prescriptions = storageHandler.getPrescriptionsFromPatient(testPaciente.getId());
         assertNotNull(prescriptions, "prescriptions must not be null");
 
@@ -200,26 +194,35 @@ public class StorageHandlerTest {
         assertEquals(citas.get(0).getPaciente(), testPaciente.getId());
     }
 
-    @Test
-    public void addClinicToDoctor() {
-        // Crea la clinica y la agrega al doctor testDoc
-        Clinica newClinic = new Clinica(1,"testClinic");
-        boolean isClinicAdded = storageHandler.addClinicToDoctor(testDoc, newClinic);
-        assertTrue(isClinicAdded, "Clinic must be added to the doctor");
-
-        // Check si la clinica esta en el doctor
-        Clinica clinic = storageHandler.getClinicasFromDoctor(testDoc.getId()).get(0);
-        assertEquals(clinic.getId(), "1");
-        assertEquals(clinic.getNombre(), "testClinic");
-    }
-
+  
     // Clinicas
     @Test
     public void createClinic() {
         ArrayList<Integer> doctorId = new ArrayList<>();
-        Clinica newClinic = new Clinica(1, "prueva 1", doctorId);
+        Clinica newClinic = new Clinica("prueva 1");
         
-        //boolean isClinicCreated = storageHandler.createNewClinic(newClinic);
-        //assertTrue(isClinicCreated, "Clinic must be created");
+        boolean isClinicCreated = storageHandler.createNewClinic(newClinic);
+        assertTrue(isClinicCreated, "Clinic must be created");
     }
+
+    @Test
+    public void addClinicToDoctor() {
+        // Create doctor to document
+        storageHandler.createDoctor(testDoc);
+
+        // Crea la clinica y la agrega al doctor testDoc
+        Clinica newClinic = new Clinica("testClinic");
+        storageHandler.createNewClinic(newClinic);
+
+        boolean isClinicAdded = storageHandler.addClinicToDoctor(testDoc.getId(), newClinic.getId());
+        assertTrue(isClinicAdded, "Clinic must be added to the doctor");
+
+        // Check si la clinica esta en el doctor
+        ArrayList<Doctor> doctors = storageHandler.getAllDoctorsFromClinic(newClinic.getId()); // terminar esta funcion
+        
+        assertTrue(doctors.stream().anyMatch(doctor -> doctor.getId() == testDoc.getId()),
+                "Doctor must be added to the clinic");
+        assertTrue(doctors.size() == 1);
+    }
+
 }

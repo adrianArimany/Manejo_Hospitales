@@ -1,16 +1,35 @@
 [
   {
-    "id": 1,
-    "nombre": "Pedro",
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
     "id": 2,
     "nombre": "Adrian",
     "doctoresId": [],
     "citas": [],
     "prescriptions": []
+  },
+  {
+    "id": 1,
+    "nombre": "Pedro",
+    "doctoresId": [],
+    "citas": [],
+    "prescriptions": [
+      {
+        "id": 0,
+        "doctor": 1,
+        "paciente": 1,
+        "medicines": "medicina"
+      },
+      {
+        "id": 2,
+        "doctor": 1,
+        "paciente": 1,
+        "medicines": "tailenol"
+      },
+      {
+        "id": 9,
+        "doctor": 1,
+        "paciente": 1,
+        "medicines": "flewjflejwlfew jfew "
+      }
+    ]
   }
 ]

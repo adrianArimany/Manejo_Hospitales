@@ -12,13 +12,6 @@ public class IdGenerator {
     public static int citaId = 0;
     public static int prescriptionId = 0;
 
-    public static ArrayList<String> TiposDeClinica = new ArrayList() {
-        {
-            add("General");
-            add("Ortodoncia");
-        }
-    };
-    
     private static PriorityQueue<Integer> availablePatientIds = new PriorityQueue<>();
     private static PriorityQueue<Integer> availableDoctorIds = new PriorityQueue<>();
     private static PriorityQueue<Integer> availableClinicIds = new PriorityQueue<>();
@@ -92,6 +85,8 @@ public class IdGenerator {
      * @param patientId the starting ID for patients
      * @param doctorId the starting ID for doctors
      * @param clinicId the starting ID for clinics
+     * 
+     * ()!!
      */
     public static void initIds(int patientId, int doctorId, int clinicId) {
         IdGenerator.patientId = patientId;

@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "especialidad": "General",
+    "id": 1,
+    "doctorId": []
+  },
+  {
+    "especialidad": "Pediatra",
+    "id": 2,
+    "doctorId": [
+      1
+    ]
+  }
+]

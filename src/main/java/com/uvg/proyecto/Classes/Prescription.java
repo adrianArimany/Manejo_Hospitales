@@ -9,7 +9,7 @@ public class Prescription {
     public int id;
     public int doctor;
     public int paciente;
-    public HashMap<String, String> medicines;
+    public String medicines;
 
     public Prescription(){
         this.id = IdGenerator.generateId(UserTypes.Prescription);
@@ -20,14 +20,14 @@ public class Prescription {
         this.paciente = paciente;
     }
 
-    public Prescription(int id, int doctor, int paciente, HashMap<String, String> medicines) {
+    public Prescription(int id, int doctor, int paciente, String medicines) {
         this.id = id;
         this.doctor = doctor;
         this.paciente = paciente;
         this.medicines = medicines;
     }
 
-    public Prescription(int doctor, int paciente, HashMap<String, String> medicines) {
+    public Prescription(int doctor, int paciente, String medicines) {
         this.id = IdGenerator.generateId(UserTypes.Prescription);
         this.doctor = doctor;
         this.paciente = paciente;
@@ -59,11 +59,11 @@ public class Prescription {
         this.paciente = paciente;
     }
 
-    public HashMap<String, String> getMedicines() {
+    public String getMedicines() {
         return medicines;
     }
 
-    public void setMedicines(HashMap<String, String> medicines) {
+    public void setMedicines(String medicines) {
         this.medicines = medicines;
     }
 

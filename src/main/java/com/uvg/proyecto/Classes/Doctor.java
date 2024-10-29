@@ -18,22 +18,6 @@ public class Doctor {
     private ArrayList<Cita> citas;
     private ArrayList<Prescription> prescriptions;
 
-    /**
-     * Constructs a new Doctor with the specified ID, name, and clinic.
-     *
-     * @param id      the ID of the doctor
-     * @param nombre  the name of the doctor
-     * @param clinica the clinic of the doctor
-     */
-    public Doctor(int id, String nombre, String clinica) {
-        this.id = id;
-        this.nombre = nombre;
-        this.clinica = clinica;
-        this.pacientesId = new ArrayList<>();
-        this.citas = new ArrayList<>();
-        this.prescriptions = new ArrayList<>();
-    }
-
     public Doctor(String nombre, String clinica) {
         this.id = IdGenerator.generateId(UserTypes.Doctor);
         this.nombre = nombre;

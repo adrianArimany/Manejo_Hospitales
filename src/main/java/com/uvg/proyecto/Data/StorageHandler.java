@@ -1,6 +1,5 @@
 package com.uvg.proyecto.Data;
 
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -31,6 +30,7 @@ public class StorageHandler {
         gson = builder.create();
         // Check if files exist or create them
         this.checkFilesOrCreatesThem();
+        this.initIds();
     }
 
     private void checkFilesOrCreatesThem() {
@@ -88,17 +88,17 @@ public class StorageHandler {
         return true;
     }
 
-/**
- * Adds a new Paciente to the storage if it does not already exist.
- * 
- * This method first retrieves all existing Paciente records and checks if a 
- * Paciente with the given ID already exists. If the Paciente does not exist,
- * it adds the new Paciente to the list and saves the updated list to the file.
- * 
- * @param paciente The Paciente object to be added.
- * @return true if the Paciente was successfully added and saved, false if 
- *         a Paciente with the same ID already exists or if saving failed.
- */
+    /**
+     * Adds a new Paciente to the storage if it does not already exist.
+     * 
+     * This method first retrieves all existing Paciente records and checks if a
+     * Paciente with the given ID already exists. If the Paciente does not exist,
+     * it adds the new Paciente to the list and saves the updated list to the file.
+     * 
+     * @param paciente The Paciente object to be added.
+     * @return true if the Paciente was successfully added and saved, false if
+     *         a Paciente with the same ID already exists or if saving failed.
+     */
     public boolean createPaciente(Paciente paciente) {
         // Get all pacientes
         ArrayList<Paciente> pacientes = this.getAllPatients();
@@ -126,13 +126,12 @@ public class StorageHandler {
 
         // If a paciente was removed, release the ID and save changes to file
         if (removed) {
-            IdGenerator.releasePatientId(id);  // Reuse the ID for future patients
+            IdGenerator.releasePatientId(id); // Reuse the ID for future patients
             return this.savePacientes(pacientes);
         }
 
-        return false;  // Return false if no paciente was removed
+        return false; // Return false if no paciente was removed
     }
-
 
     public ArrayList<Paciente> getDrPacientes(Doctor doc) {
         ArrayList<Integer> pacientesIds = doc.getPacientesId();
@@ -158,7 +157,7 @@ public class StorageHandler {
      * and updates the Doctor's record. Then it adds the Doctor to the Paciente's
      * list of Doctors and updates the Paciente's record.
      * 
-     * @param doc The Doctor to add the Paciente to.
+     * @param doc      The Doctor to add the Paciente to.
      * @param paciente The Paciente to add to the Doctor.
      * @return true if the Paciente was successfully added to the Doctor and both
      *         records were updated, false if the Paciente already exists under the
@@ -186,8 +185,17 @@ public class StorageHandler {
         return true;
     }
 
-    public boolean drPrescribeMedicineToPatient(Doctor doc, Paciente paciente, Prescription prescription) {
+    public boolean drPrescribeMedicineToPatient(Prescription prescription) {
+        // get pacciente from presciption
+        ArrayList<Paciente> pacientes = this.getAllPatients();
+        // get doctor from presciprtion
+        ArrayList<Doctor> doctores = this.getAllDoctors();
+        
+        Paciente paciente = pacientes.stream().filter(p -> p.getId() == prescription.getPaciente()).findFirst().orElse(null);
+        if (paciente == null) return false;
         paciente.addPrescription(prescription);
+        Doctor doc = doctores.stream().filter(d -> d.getId() == prescription.getDoctor()).findFirst().orElse(null);
+        if (doc == null) return false;
         doc.addPrescription(prescription);
 
         boolean isDoctorUpdated = this.updateDoctor(doc);
@@ -230,6 +238,24 @@ public class StorageHandler {
                 return new ArrayList<>();
             }
             return new ArrayList<>(List.of(doctors));
+        } catch (IOException e) {
+            System.err.println("Error reading from file: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    private ArrayList<Clinica> getAllClinics() {
+        File file = new File(CLINICA_FILE);
+        if (!file.exists()) {
+            return new ArrayList<>();
+        }
+
+        try (Reader reader = new FileReader(file)) {
+            Clinica[] clinicas = gson.fromJson(reader, Clinica[].class);
+            if (clinicas == null) {
+                return new ArrayList<>();
+            }
+            return new ArrayList<>(List.of(clinicas));
         } catch (IOException e) {
             System.err.println("Error reading from file: " + e.getMessage());
             return new ArrayList<>();
@@ -288,7 +314,6 @@ public class StorageHandler {
         return false;
     }
 
-
     public boolean deleteDoctor(int id) {
         // Get all doctors
         ArrayList<Doctor> doctors = this.getAllDoctors();
@@ -296,13 +321,13 @@ public class StorageHandler {
         // Remove doctor with same id
         boolean removed = doctors.removeIf(doc -> doc.getId() == id);
 
-       // If a doctor was removed, release the ID and save changes to file
+        // If a doctor was removed, release the ID and save changes to file
         if (removed) {
-            IdGenerator.releaseDoctorId(id);  // Reuse the ID for future doctors
+            IdGenerator.releaseDoctorId(id); // Reuse the ID for future doctors
             return this.saveDoctors(doctors);
         }
 
-        return false;  // Return false if no doctor was removed
+        return false; // Return false if no doctor was removed
     }
 
     private boolean updateDoctor(Doctor doc) {
@@ -337,6 +362,11 @@ public class StorageHandler {
         return false;
     }
 
+    
+    /**
+     * 
+     * Esto pero los parametros son id
+     */
     public boolean drAddCita(Doctor doc, Paciente paciente, String date) {
         Cita cita = new Cita(doc.getId(), paciente.getId(), date);
         doc.addCita(cita);
@@ -353,17 +383,18 @@ public class StorageHandler {
      * @param id The ID of the patient to retrieve.
      * @return The Paciente object if found, null otherwise.
      */
-    public Paciente getPacienteById(int id){
+    public Paciente getPacienteById(int id) {
         ArrayList<Paciente> pacientes = this.getAllPatients();
         return pacientes.stream().filter(paciente -> paciente.getId() == id).findFirst().orElse(null);
     }
-/**
- * Retrieves a Doctor object by ID.
- *
- * @param id The ID of the doctor to retrieve.
- * @return The Doctor object if found, null otherwise.
- */
-    public Doctor getDoctorById(int id){
+
+    /**
+     * Retrieves a Doctor object by ID.
+     *
+     * @param id The ID of the doctor to retrieve.
+     * @return The Doctor object if found, null otherwise.
+     */
+    public Doctor getDoctorById(int id) {
         ArrayList<Doctor> doctors = this.getAllDoctors();
         return doctors.stream().filter(doctor -> doctor.getId() == id).findFirst().orElse(null);
     }
@@ -380,44 +411,119 @@ public class StorageHandler {
     }
 
     public boolean initIds() {
-    ArrayList<Paciente> pacientes = this.getAllPatients();
-    ArrayList<Doctor> doctors = this.getAllDoctors();
-    
-    int highestPacienteId = 0;
-    for (Paciente paciente : pacientes) {
-        if (paciente.getId() > highestPacienteId) {
-            highestPacienteId = paciente.getId();
+        ArrayList<Paciente> pacientes = this.getAllPatients();
+        ArrayList<Doctor> doctors = this.getAllDoctors();
+        ArrayList<Clinica> clinicas = this.getAllClinics();
+
+        int highestPacienteId = 0;
+        for (Paciente paciente : pacientes) {
+            if (paciente.getId() > highestPacienteId) {
+                highestPacienteId = paciente.getId();
+            }
         }
-    }
 
-    int highestDoctorId = 0;
-    for (Doctor doctor : doctors) {
-        if (doctor.getId() > highestDoctorId) {
-            highestDoctorId = doctor.getId();
+        int highestDoctorId = 0;
+        for (Doctor doctor : doctors) {
+            if (doctor.getId() > highestDoctorId) {
+                highestDoctorId = doctor.getId();
+            }
         }
+
+        int highestClinicasId = 0;
+        for (Clinica clinica : clinicas) {
+            if (clinica.getId() > highestClinicasId) {
+                highestClinicasId = clinica.getId();
+            }
+        }
+        // Initialize the IdGenerator with the highest existing IDs + 1
+        IdGenerator.initIds(highestPacienteId + 1, highestDoctorId + 1, highestClinicasId + 1);
+        return true;
     }
-
-    // Initialize the IdGenerator with the highest existing IDs + 1
-    IdGenerator.initIds(highestPacienteId + 1, highestDoctorId + 1, 0);
-    return true;
-}
-
 
     public ArrayList<Paciente> showAllPacientes() {
         return this.getAllPatients();
     }
-    
+
     public ArrayList<Doctor> showAllDoctors() {
         return this.getAllDoctors();
     }
 
-	public boolean addClinicToDoctor(Doctor testDoc, Clinica clinica) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'addClinicToDoctor'");
-	}
+    public boolean addClinicToDoctor(int testDocId, int clinicaId) {
+        // read all doctors
+        ArrayList<Doctor> doctores = this.getAllDoctors();
+        // read all clinics
+        ArrayList<Clinica> clinicas = this.getAllClinics();
+        // find doctor with matching id
+        Doctor doctorFound = doctores.stream().filter(doctor -> doctor.getId() == testDocId).findFirst().orElse(null);
+        if (doctorFound == null) return false;
+        // find clinic with matching id 
+        Clinica clinicaFound = clinicas.stream().filter(clinica -> clinica.getId() == clinicaId).findFirst().orElse(null); 
+        if (clinicaFound == null) return false;
 
-    public ArrayList<Clinica> getClinicasFromDoctor(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getClinicasFromDoctor'");
+        // Check if doctor already in clinic
+        if (doctorFound.getClinica() == clinicaFound.getEspecialidad()) return false;
+
+        // If doctor in another clinic, remove it from that clinic
+        if (doctorFound.getClinica() != null) {
+            // get all clinics
+            // clinica.getEspecialidad
+            Clinica oldClinic = clinicas.stream().filter(clinica -> clinica.getEspecialidad().equalsIgnoreCase(doctorFound.getClinica())).findFirst().orElse(null);
+            // doctorFound.getClinica()
+            if (oldClinic != null) {
+                ArrayList<Integer> newidsWithoutDoctor = new ArrayList<>(oldClinic.getDoctorId().stream().filter(doctorIDold -> doctorIDold != doctorFound.getId()).toList());
+                oldClinic.setArrayDoctorId(newidsWithoutDoctor);
+
+            }
+        }
+
+        // doctor add clinic
+        doctorFound.setClinica(clinicaFound.getEspecialidad());
+        // clinic add doctor
+        clinicaFound.setDoctorId(doctorFound.getId());
+
+        // Save to memory the updated values
+        boolean isDoctorSaved = this.saveDoctors(doctores);
+        boolean isClinicaSaved = this.saveClinica(clinicas);
+
+        return (isClinicaSaved && isDoctorSaved);
     }
+
+    public ArrayList<Doctor> getAllDoctorsFromClinic(int clinicaId) {
+        // read all clinics
+        ArrayList<Clinica> clinicas = this.getAllClinics();
+        //find id from clinic
+        Clinica clinicaFound = clinicas.stream().filter(clinica -> clinica.getId()==clinicaId).findFirst().orElse(null);
+        if (clinicaFound == null) return new ArrayList<>();
+        //return all doctors in that clinic
+
+        // mapper doctorsId --> Doctors!
+        // get all doctors
+        ArrayList<Doctor> allDoctors = this.getAllDoctors();
+        // keep doctors if their ID is in the clinicaFound doctorsID
+        ArrayList<Integer> doctorsId = clinicaFound.getDoctorId();
+        
+        List<Doctor> doctorsFoundInClinca = allDoctors.stream().filter(doctor -> doctorsId.contains(doctor.getId())).toList();
+        
+        return new ArrayList<>(doctorsFoundInClinca);
+    }
+
+    public boolean createNewClinic(Clinica clinica) {
+        // Read all clinics from file
+        ArrayList<Clinica> clinicas = this.getAllClinics();
+
+        // Add new clinic to clinics
+        clinicas.add(clinica);
+
+        return this.saveClinica(clinicas);
+    }
+
+    public boolean eliminarClinica(int idClinica){
+        ArrayList<Clinica> clinicas = this.getAllClinics();
+        clinicas.removeIf(clinica -> clinica.getId() == idClinica);
+        return this.saveClinica(clinicas);
+    }
+
+    public ArrayList<Clinica> getAllClinicas() {
+        return this.getAllClinics();
+    }   
 }
