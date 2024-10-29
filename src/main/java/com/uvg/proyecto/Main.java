@@ -5,6 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.uvg.proyecto.Authenticator.Authenticator;
+import com.uvg.proyecto.Classes.Clinica;
 import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
 import com.uvg.proyecto.Classes.Prescription;
@@ -95,7 +96,6 @@ public class Main {
         }
     }
 
-    // Login and returns us the UserType
     public UserType login() {
         int input = 0;
         do {
@@ -221,7 +221,6 @@ public class Main {
                 case 3:
                     //Historial Medico
                     break;
-
                 case 4:
                     try {
                         ArrayList<Prescription> prescriptions = this.storageHandler.getPrescriptionsFromPatient(loginPac.getId());
@@ -268,13 +267,25 @@ public class Main {
                     this.storageHandler.drViewCitas(loginDoc);
                     break;
                 case 2:
-                    //revisar historial medico de un paciente
+                    //revisar historial medico de un paciente                   
                     break;
                 case 3:
                     //revisar prescripcion de un paciente
+                    System.out.println("Ingrese el ID del paciente: ");
+                    int pacienteHistorialId = Integer.parseInt(scanner.nextLine());
+                    ArrayList<Prescription> prescriptions = this.storageHandler.getPrescriptionsFromPatient(pacienteHistorialId);
+                    for (Prescription prescription : prescriptions) {
+                        System.out.println(prescription.toString());
+                    }
                     break;
                 case 4:
                     //agregar prescripcion a un paciente
+                    System.out.println("Ingrese el ID del paciente: ");
+                    int pacientePrescripcionId = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Ingrese la prescripcion: ");
+                    String prescripcion = scanner.nextLine();
+                    Prescription newPrescription = new Prescription(this.loginDoc.getId(), pacientePrescripcionId, prescripcion);
+                    this.storageHandler.drPrescribeMedicineToPatient(newPrescription);
                     break;
                 case 5:
                     System.out.println("Pacientes:");
@@ -384,12 +395,29 @@ public class Main {
         switch (input) {
             case 1:
                 System.out.println("Nombre del Doctor:");
-                String nombre = scanner.nextLine();
-                if (nombre == null || nombre.trim().isEmpty()) {
+                String nombreDoc = scanner.nextLine();
+                if (nombreDoc == null || nombreDoc.trim().isEmpty()) {
                     System.out.println("Nombre no puede estar vacío.");
                     break;
                 }
-                Doctor newDoctor = new Doctor(nombre);
+                //scanner lista de clinicas a elejir.
+                System.out.println("Especialidad del Doctor: ");
+                // Agarar todas las clinicas
+                ArrayList<Clinica> clinicasParaMostrarAlUsuario = this.storageHandler.getAllClinicas();
+                Doctor newDoctor;
+                if (clinicasParaMostrarAlUsuario.size() > 0){
+                    for (int i = 0; i < clinicasParaMostrarAlUsuario.size(); i++) {
+                        System.out.println((i+1) + ": " + clinicasParaMostrarAlUsuario.get(i).getEspecialidad());
+                    }
+
+                    // user pone el input una especilaidad
+                    int userInputIdClinica = Integer.parseInt(scanner.nextLine()) - 1 ;          
+                    
+                    newDoctor = new Doctor(nombreDoc, clinicasParaMostrarAlUsuario.get(userInputIdClinica).getEspecialidad());
+                }else{
+                    // Si no hay clinicas para la especialidad entonces no se agrega la especialidad
+                    newDoctor = new Doctor(nombreDoc);
+                }
                 if (this.storageHandler.createDoctor(newDoctor)) {
                     System.out.println("Doctor agregado");
                 } else {
@@ -405,7 +433,7 @@ public class Main {
                     System.out.println("Doctor con ID " + doctorId + " eliminado.");
                 } catch (Exception e) {
                     System.out.println("ID inválido. Por favor, ingrese un número.");
-                    scanner.nextLine(); // clear the invalid input
+                    scanner.nextLine();
                 }
                 break;
             case 3:
@@ -430,12 +458,35 @@ public class Main {
                 switch (input) {
                     case 1:
                         // Agregar Clinica
+                        System.out.println("Agregar Clinica Especialidad: ");
+                        String especialidad = scanner.nextLine();
+                        Clinica newClinca = new Clinica(especialidad);
+                        boolean isClinicaCreated = this.storageHandler.createNewClinic(newClinca);
+                        if (isClinicaCreated) {
+                            System.out.println("Clinica creada con exito.");
+                        } else {
+                            System.out.println("Error al crear la clinica.");
+                        }
                         break;
                     case 2:
                         // Eliminar Clinica
+                        System.out.println("ID de la Clinica a Eliminar: ");
+                        int idClinica = Integer.parseInt(scanner.nextLine());
+                        this.storageHandler.eliminarClinica(idClinica);
+                        System.out.println("Clinica con ID " + idClinica + " eliminada.");
                         break;
                     case 3:
-                        // Mover Doctor.
+                        // Add Doctor to clinic
+                        System.out.println("ID de la clinica: ");
+                        int idClinicaDoc = Integer.parseInt(scanner.nextLine());
+                        System.out.println("ID del doctor a mover: ");
+                        int idDoctorClinica = Integer.parseInt(scanner.nextLine());
+                        boolean isDocMoved = this.storageHandler.addClinicToDoctor(idDoctorClinica, idClinicaDoc);
+                        if (isDocMoved) {
+                            System.out.println("El doctor se movio de clinica con exito.");
+                        } else {
+                            System.out.println("Error al mover el doctor");
+                        }
                         break;
                     case 0:
                         System.out.println("Regresando al Menu Administrador..");
@@ -481,13 +532,4 @@ public class Main {
         System.out.println("The maximum number of attempts has succeded.");
         return false;
     }
-
-    // Get clinica types
-    // for (int i = 0; i < IdGenerator.TiposDeClinica.size(); i++) {
-    //     System.out.println(String.format("%d. %s", (i + 1), (IdGenerator.TiposDeClinica.get(i))));
-    // }
-    // int input = Integer.parseInt(scanner.nextLine()) - 1
-    // IdGenerator.TiposDeClinica.get(input); 
-    // Finish clinica types
-
 }
