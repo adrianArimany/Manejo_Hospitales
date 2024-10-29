@@ -1,14 +1,14 @@
 [
   {
-    "id": 5,
-    "nombre": "Ariel",
+    "id": 1,
+    "nombre": "Pedro",
     "doctoresId": [],
     "citas": [],
     "prescriptions": []
   },
   {
-    "id": 6,
-    "nombre": "pEDRO",
+    "id": 2,
+    "nombre": "Adrian",
     "doctoresId": [],
     "citas": [],
     "prescriptions": []

@@ -1,10 +1,13 @@
 package com.uvg.proyecto;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.uvg.proyecto.Authenticator.Authenticator;
 import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
+import com.uvg.proyecto.Classes.Prescription;
 import com.uvg.proyecto.Data.StorageHandler;
 import com.uvg.proyecto.Utils.IdGenerator;
 
@@ -22,6 +25,12 @@ import com.uvg.proyecto.Utils.IdGenerator;
  * - I need to double exit the menu of the admin to fully exit that menu ( )
  * - When a patient/doctor is removed, its id is removed, but when you create a new doctor/patient rather than refilling the deleted id, it generates the highest id. (  )
  * - Error: Null reference encountered. When enter as a Doctor. (fixed) the issue was in a system.out.println I was calling a loginPac rather than loginDoc.
+ * - The try-catch in the menuBegins is not working when the user types something that is not a number ().
+ * - When NumberFormatException is caught in pacienteMenu or doctorMenu the system returns the user to the previous menu rather than keeping him on the current menu (fixed) added input = -1 in the catch.
+ * 
+ * 
+ * Extras:
+ * -When the Admin for some reason don't elminates a doctor for whatever reason, allow the admin to have another attempt. (  )
  */
 public class Main {
 
@@ -65,9 +74,6 @@ public class Main {
                         } else {
                             System.out.println("Error: Doctor not found.");
                         }
-
-                        
-
                         break;
                     case Admin:
                         this.adminMenu();
@@ -80,55 +86,58 @@ public class Main {
                     user = login(); // Prompt for re-login only if the system is not exiting
                 }
             }
-        } catch (NullPointerException e) {
-            System.out.println("Error: Null reference encountered.");
-        } catch (Exception e) {
-            System.out.println("An unexpected error occurred: " + e.getMessage());
+        } catch (NumberFormatException e) {
+                System.out.println("Error: Invalid input. Please enter a number.");
+        }  finally {
+            if (scanner != null) {
+                scanner.close();
+            }
         }
     }
 
     // Login and returns us the UserType
     public UserType login() {
-        boolean running = true;
-        while (running) {
-            System.out.println("Gestión para " + hospitalName +": \n1. Administrate a Paciente \n2. Soy un Doctor \n3. Soy el Admininistrador \n0. Salir del Sistema.");
-            int input = scanner.nextInt();
-            scanner.nextLine(); //remember that with this is NEEDED for the switch to function.
-            switch (input) {
-                case 1:                    
-                    return loginPaciente();
-                    
-                case 2:
-                    System.out.println("Escribe su ID del doctor: ");
-                    int idDoctor = Integer.parseInt(scanner.nextLine());
-                    this.loginDoc = this.storageHandler.getDoctorById(idDoctor);
-                    if (this.loginDoc == null) { 
-                        System.out.println("No se encontró un doctor con ID: " + idDoctor);
-                        break;  // Allow the user to reattempt login
-                    }
-                    return UserType.Doctor;
-
-                case 3:
-                    System.out.println("\n[Accesso Denegado] Ingrese clave y usuario del administrador: ");
-                    try {
+        int input = 0;
+        do {
+            try {
+                System.out.println("Gestión para " + hospitalName +": \n1. Administrate a Paciente \n2. Soy un Doctor \n3. Soy el Admininistrador \n0. Salir del Sistema.");
+                input = scanner.nextInt();
+                scanner.nextLine(); //remember that with this is NEEDED for the switch to function.
+                switch (input) {
+                    case 1:
+                        return loginPaciente();
+                    case 2:
+                        System.out.println("Escribe su ID del doctor: ");
+                        int idDoctor = Integer.parseInt(scanner.nextLine());
+                        this.loginDoc = this.storageHandler.getDoctorById(idDoctor);
+                        if (this.loginDoc == null) {
+                            System.out.println("No se encontró un doctor con ID: " + idDoctor);
+                            break;  // Allow the user to reattempt login
+                        }
+                        return UserType.Doctor;
+                    case 3:
+                        System.out.println("\n[Accesso Denegado] Ingrese clave y usuario del administrador: ");
                         if (verifyAdmin()) {
                             System.out.println("Credenciales correctos, ingresando al Menu del Admin: ");
                             return UserType.Admin;
                         } else {
                             System.out.println("Credenciales incorrectos, saliendo del sistema.");
                         }
-                    } catch (Exception e) {
-                        System.out.println("Error: " + e.getMessage());
-                    }
-                case 0:
-                    System.out.println("Saliendo del Systema...");
-                    running = false;
-                    return null;
-                default:
-                    System.out.println("Solo ingrese los numeros en la pantalla.");
-            }
-        }
-        return null;
+                    case 0:
+                        System.out.println("Saliendo del Systema...");
+                        return null;
+                    default:
+                        System.out.println("Solo ingrese los numeros en la pantalla.");
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Error: Null reference encountered.");
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Invalid input. Please enter a number.");
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            } 
+        } while (input != 0); 
+        return null; 
     }
 
     /**
@@ -141,28 +150,43 @@ public class Main {
      * @return UserType.Paciente if the login or registration is successful, null otherwise.
      */
     public UserType loginPaciente() {
+        int input = -1;
         try {
             System.out.println("1. Paciente Nuevo \n2. Paciente Registrado");
-            int input = scanner.nextInt();
+            input = scanner.nextInt();
             scanner.nextLine();
             switch (input) {
                 case 1:
                     System.out.println("Ingrese el nombre del paciente: ");
                     String nombre = scanner.nextLine();
                     this.loginPac = new Paciente(nombre);
-                    this.storageHandler.createPaciente(this.loginPac);
-                    System.out.println("Paciente agregado");
-                    return UserType.Paciente;
+                    if (this.storageHandler.createPaciente(this.loginPac)) {
+                        System.out.println("Paciente agregado");
+                        return UserType.Paciente;
+                    } else {
+                        System.out.println("Error: No se pudo agregar el paciente.");
+                    }
+                    break;
                 case 2:
-                    System.out.println("Escribe el ID del paciente: "); 
-                    int idPaceinte = scanner.nextInt();
-                    this.loginPac = this.storageHandler.getPacienteById(idPaceinte);
-                    return UserType.Paciente;
+                    System.out.println("Escribe el ID del paciente: ");
+                    int idPaciente = scanner.nextInt();
+                    this.loginPac = this.storageHandler.getPacienteById(idPaciente);
+                    if (this.loginPac != null) {
+                        System.out.println("Login exitoso");
+                        return UserType.Paciente;
+                    } else {
+                        System.out.println("Paciente no encontrado.");
+                    }
+                    break;
                 default:
                     System.out.println("Solo ingrese los numeros en la pantalla.");
             }
-        } catch (Exception e) {
+        } catch (InputMismatchException e) {
             System.out.println("Error: Debe ingresar un numero entero.");
+            input = -1;
+            scanner.nextLine(); // clear the invalid input
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
         }
         return null;
     }
@@ -170,130 +194,192 @@ public class Main {
 
 
     public void pacienteMenu(Paciente loginPac) {
-        boolean inPaciente = true;
-        while (inPaciente) {
-        System.out.println("Bienbenido, " + loginPac.getNombre() +  " (ID: " + loginPac.getId() + ")");
-        System.out.println("\n 1. Agendar Cita \n2. Revisar Citas \n3. Historial medico \n4. Revisar Prescripciones \n0. Regresar");
-        int input = scanner.nextInt();
-        scanner.nextLine();
-        switch (input) {
-            case 1:
-                //Agendar Citas
-                break;
-            case 2:
-                this.storageHandler.getPacienteCitas(loginPac.getId());
-                break;
-                
-            case 3:
-                //Historial Medico
-                break;
+        if (loginPac == null) {
+            System.out.println("Error: Paciente no encontrado. Regresando al menu principal.");
+            return;
+        }
+        int input = -1;
+        do {
+            System.out.println("Bienvenido, " + loginPac.getNombre() +  " (ID: " + loginPac.getId() + ")");
+            System.out.println("\n 1. Agendar Cita \n2. Revisar Citas \n3. Historial medico \n4. Revisar Prescripciones \n0. Regresar");
+            try {
+                input = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debe ingresar un numero entero.");
+                input = -1;
+                scanner.nextLine();
+                continue;
+            }
+            switch (input) {
+                case 1:
+                    //Agendar Citas
+                    break;
+                case 2:
+                    this.storageHandler.getPacienteCitas(loginPac.getId());
+                    break;
+                case 3:
+                    //Historial Medico
+                    break;
 
-            case 4:
-                this.storageHandler.getPrescriptionsFromPatient(loginPac.getId());
-                break;
-            case 0:
-                inPaciente = false;
-                return;
-            default:
-                System.out.println("Solo ingrese los numeros en la pantalla.");
-        }
-        }
+                case 4:
+                    try {
+                        ArrayList<Prescription> prescriptions = this.storageHandler.getPrescriptionsFromPatient(loginPac.getId());
+                        if (prescriptions == null || prescriptions.isEmpty()) {
+                            System.out.println("No hay prescripciones para este paciente.");
+                        } else {
+                            for (Prescription p : prescriptions) {
+                                System.out.println(p.toString());
+                            }
+                        }
+                    } catch (NullPointerException e) {
+                        System.out.println("Error: No se encontraron prescripciones para este paciente.");
+                    }
+                    break;
+                case 0:
+                    System.out.println("Regresando al menu Pricipal..");
+                    return;
+                default:
+                    System.out.println("Solo ingrese los numeros en la pantalla.");
+            }
+        } while (input != 0);
     }
 
     public void doctorMenu(Doctor loginDoc) {
-        boolean inDoctor = true;
-        while (inDoctor) {
-        System.out.println("Bienbenido Dr." + loginDoc.getNombre() +  " (ID: " + loginDoc.getId() + ")");
-        System.out.println("\n1. Revisar Citas Pendientes \n2. Ver historal Medico de un Paciente \n3. Revisar Prescripciones de un Paciente \n4. Agregar prescripcion a un paciente \n5. Ver a todos mis paceintes.  \n0. Regresar");
-        int input = scanner.nextInt();
-        scanner.nextLine();
-        switch (input) {
-            case 1:
-                this.storageHandler.drViewCitas(loginDoc);
-                break;
-            case 2:
-                //revisar historial medico de un paciente
-                break;
-            case 3:
-                //revisar prescripcion de un paciente
-                break;
-            case 4:
-                //agregar prescripcion a un paciente
-                break;
-            case 5:
-                System.out.println("Pacientes:");
-                System.out.println(this.storageHandler.getDrPacientes(this.loginDoc));
-                break;
-            case 0:
-                inDoctor = false;
-                return;
-            default:
-                System.out.println("Solo ingrese los numeros en la pantalla.");
+        if (loginDoc == null) {
+            System.out.println("Error: Doctor no encontrado. Regresando al menu principal.");
+            return;
         }
-        }
+        int input = -1;
+        do {
+            System.out.println("Bienbenido Dr." + loginDoc.getNombre() +  " (ID: " + loginDoc.getId() + ")");
+            System.out.println("\n1. Revisar Citas Pendientes \n2. Ver historal Medico de un Paciente \n3. Revisar Prescripciones de un Paciente \n4. Agregar prescripcion a un paciente \n5. Ver a todos mis paceintes.  \n0. Regresar");
+            try {
+                input = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debe ingresar un numero entero.");
+                input = -1;
+                scanner.nextLine();
+                continue;
+            }
+            switch (input) {
+                case 1:
+                    this.storageHandler.drViewCitas(loginDoc);
+                    break;
+                case 2:
+                    //revisar historial medico de un paciente
+                    break;
+                case 3:
+                    //revisar prescripcion de un paciente
+                    break;
+                case 4:
+                    //agregar prescripcion a un paciente
+                    break;
+                case 5:
+                    System.out.println("Pacientes:");
+                    try {
+                        ArrayList<Paciente> pacientes = this.storageHandler.getDrPacientes(loginDoc);
+                        if (pacientes == null || pacientes.isEmpty()) {
+                            System.out.println("No hay pacientes asignados a este doctor.");
+                        } else {
+                            for (Paciente p : pacientes) {
+                                System.out.println(p.toString());
+                            }
+                        }
+                    } catch (NullPointerException e) {
+                        System.out.println("Error: No se encontraron pacientes asignados a este doctor.");
+                    }
+                    break;
+                case 0:
+                    System.out.println("Regresando al menu Pricipal..");
+                    return;
+                default:
+                    System.out.println("Solo ingrese los numeros en la pantalla.");
+            }
+        } while (input != 0);
     }
 
 
     public void adminMenu() {
-        boolean inAdminMenu = true;
-        while (inAdminMenu) {
-            System.out.println("Menu para el Administrador \n1. Administrar Doctores \n2. Administrar Clinicas \n3. Administrar a los Pacientes \n0. Regresar");
+        int input = -1;
+        do {
+            try {
+                System.out.println("Mewu para el Administrador \n1. Administrar Doctores \n2. Administrar Clinicas \n3. Administrar a los Pacientes \n0. Regresar");
+                input = scanner.nextInt();
+                scanner.nextLine();
+                switch (input) {
+                    case 1:
+                        adminDoc();
+                        break;
+                
+                    case 2:
+                        adminClinica();
+                        break;
+                    case 3:
+                        adminPaciente();
+                        break;
+
+                    case 0:
+                        System.out.println("Regresando al menu Pricipal..");
+                        return;
+                    default:
+                        System.out.println("Solo ingrese los numeros en la pantalla.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debe ingresar un numero entero.");
+                input = -1;
+                scanner.nextLine();
+            } catch (NullPointerException e) {
+                System.out.println("Error: No se encontraron los datos del administrador.");
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            }
+        } while (input != 0);
+    }
+
+    public void adminPaciente() {
+        boolean inAdminPaciente = true;
+        while (inAdminPaciente) {
+            System.out.println("Menu para el Administrador Pacientes \n1. Eliminar Paciente del sistema \n0. Regresar");
             int input = scanner.nextInt();
             scanner.nextLine();
             switch (input) {
                 case 1:
-                    adminDoc();
+                    try {
+                        System.out.println("Cual es el ID del paciente a Eliminar: ");
+                        int id = scanner.nextInt();
+                        scanner.nextLine();
+                        boolean isDeleted  = this.storageHandler.deletePatient(id);
+                        if (isDeleted) {
+                            System.out.println("Paciente con id: " + id + ". Eliminado del sistema.");
+                        } else {
+                            System.out.println("Paciente con id: " + id + ". No existe en el sistema.");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Error: Debe ingresar un numero entero.");
+                    } catch (NullPointerException e) {
+                        System.out.println("Error: No se encontraron los datos del paciente.");
+                    } catch (Exception e) {
+                        System.out.println("An unexpected error occurred: " + e.getMessage());
+                    }
                     break;
-            
-                case 2:
-                    adminClinica();
-                    break;
-                case 3:
-                    adminPaciente();
-                    break;
-
                 case 0:
-                    inAdminMenu = false;
+                    inAdminPaciente = false;
+                    System.out.println("Regresando al Menu Administrador..");
                     return;
                 default:
                     System.out.println("Solo ingrese los numeros en la pantalla.");
             }
         }
-        }
-
-    public void adminPaciente() {
-        boolean inAdminPaciente = true;
-        while (inAdminPaciente) {
-        System.out.println("Menu para el Administrador Pacientes \n1. Eliminar Paciente del sistema \n0. Regresar");
-        int input = scanner.nextInt();
-        scanner.nextLine();
-        switch (input) {
-            case 1:
-                System.out.println("Cual es el ID del paciente a Eliminar: ");
-                int id = scanner.nextInt();
-                boolean isDeleted  = this.storageHandler.deletePatient(id);
-                if (isDeleted) {
-                    System.out.println("Paciente con id: " + id + ". Eliminado del sistema.");
-                } else {
-                    System.out.println("Paciente con id: " + id + ". No existe en el sistema.");
-                }
-                break;
-            case 0:
-                inAdminPaciente = false;
-                adminMenu();
-                return;
-            default:
-                System.out.println("Solo ingrese los numeros en la pantalla.");
-        }
-        }
     }
 
 
     public void adminDoc() {
-        boolean inAdminDoc = true;
-        while (inAdminDoc) {
+        int input = -1;
+        do {
         System.out.println("Administracion para Doctores: \n1. Agregar Doctores \n2. Eliminar Doctores \n3. Editar info de un Doctor \n0. Regresar");
-        int input = scanner.nextInt();
+        input = scanner.nextInt();
         scanner.nextLine();
         switch (input) {
             case 1:
@@ -326,40 +412,47 @@ public class Main {
                 System.out.println("Funcionalidad Editar a un Doctor no implementada");
                 break;
             case 0:
-                inAdminDoc = false;
-                adminMenu();
+                System.out.println("Regresando al Menu Administrador..");
                 return;
             default:
                 System.out.println("Solo ingrese los numeros en la pantalla.");
         }
-        }
+        } while (input != 0);
     }
 
     public void adminClinica() {
-        boolean inAdminClincia = true;
-        while (inAdminClincia) {
-        System.out.println("Administracion para Clinicas  \n1. Agregar Clinca \n2. Eliminar Clinica \n3. Mover a un Doctor \n0. regresar");
-        int input = scanner.nextInt();
-        scanner.nextLine();
-        switch (input) {
-            case 1:
-                //Agregar Clinica
-                break;
-            case 2:
-                //Eliminar Clinica
-                break;
-
-            case 3:
-                //Mover Doctor.
-                break;
-            case 0:
-                inAdminClincia = false;
-                adminMenu();
-                return;
-            default:
-                System.out.println("Solo ingrese los numeros en la pantalla.");
-        }
-        }
+        int input = -1;
+        do {
+            try {
+                System.out.println("Administracion para Clinicas  \n1. Agregar Clinca \n2. Eliminar Clinica \n3. Mover a un Doctor \n0. regresar");
+                input = scanner.nextInt();
+                scanner.nextLine();
+                switch (input) {
+                    case 1:
+                        // Agregar Clinica
+                        break;
+                    case 2:
+                        // Eliminar Clinica
+                        break;
+                    case 3:
+                        // Mover Doctor.
+                        break;
+                    case 0:
+                        System.out.println("Regresando al Menu Administrador..");
+                        return;
+                    default:
+                        System.out.println("Solo ingrese los numeros en la pantalla.");
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Error: No se encontraron los datos de las clinicas.");
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debe ingresar un numero entero.");
+                input = -1;
+                scanner.nextLine(); // clear the invalid input
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            }
+        } while (input != 0);
     }
 
     /**

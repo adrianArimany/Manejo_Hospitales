@@ -1,7 +1,14 @@
 [
   {
-    "id": 5,
-    "nombre": "vernando",
+    "id": 1,
+    "nombre": "Pedro",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 2,
+    "nombre": "Fernando",
     "pacientesId": [],
     "citas": [],
     "prescriptions": []
