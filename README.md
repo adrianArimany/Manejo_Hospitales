@@ -36,7 +36,7 @@ mvn exec:java -Dexec.mainClass="com.uvg.proyecto.Main"
 ### Program Explanation:
 
 This program is inteded to be used primarly for hospitals, but have the following in mind:
-1. The program is intended for staff onyl from the hospital (i.e. patients aren't to use the program at any point).
+1. The program is intended for staff only from the hospital (i.e. patients aren't to use the program at any point).
 2. The program has three main classes: Paciente, Doctor, and Clinica. Each with a corresponding json file.
 3. The json files are handled in storageHandler.
 
