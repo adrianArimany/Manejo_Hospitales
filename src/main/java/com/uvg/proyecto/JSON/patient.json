@@ -48,7 +48,21 @@
         "doctor": 1,
         "paciente": 1,
         "medicines": "Cocaina"
+      },
+      {
+        "id": 36,
+        "doctor": 2,
+        "paciente": 1,
+        "medicines": "paracetamol"
       }
     ]
+  },
+  {
+    "id": 4,
+    "nombre": "Richie Lemon",
+    "historialMedico": [],
+    "doctoresId": [],
+    "citas": [],
+    "prescriptions": []
   }
 ]
