@@ -1,6 +1,5 @@
 package com.uvg.proyecto.Classes;
 
-import java.util.HashMap;
 
 import com.uvg.proyecto.Data.UserTypes;
 import com.uvg.proyecto.Utils.IdGenerator;
