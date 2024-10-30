@@ -13,6 +13,7 @@ import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
 import com.uvg.proyecto.Classes.Prescription;
 import com.uvg.proyecto.Data.StorageHandler;
+import com.uvg.proyecto.Data.PropertiesFile;
 
 
 
@@ -44,12 +45,11 @@ public class Main {
         Doctor,
         Admin,
     }
-    private final String hospitalName = "Hospital Chapintenco"; //THis should be moved to the menu for the admin so that the admin can change the name of the hospital if needed.
     private Paciente loginPac;
     private boolean exitSystem = false;
     private Doctor loginDoc;
     private StorageHandler storageHandler;
-
+    private PropertiesFile config = new PropertiesFile();
 
     public final Scanner scanner = new Scanner(System.in);
 
@@ -119,7 +119,7 @@ public class Main {
         int input = -1;
         do {
             try {
-                System.out.println("Gestión para " + hospitalName +": \n1. Administrate a Paciente \n2. Soy un Doctor \n3. Soy el Admininistrador \n0. Salir del Sistema.");
+                System.out.println("Gestión para " + config.getHospitalName() +": \n1. Administrate a Paciente \n2. Soy un Doctor \n3. Soy el Admininistrador \n0. Salir del Sistema.");
                 input = Integer.parseInt(scanner.nextLine());
                 switch (input) {
                     case 1:
@@ -151,7 +151,7 @@ public class Main {
                             System.out.println("Credenciales correctos, ingresando al Menu del Admin: ");
                             return UserType.Admin;
                         } else {
-                            System.out.println("Credenciales incorrectos, por terminos de seguridad para " + hospitalName + " el sistema se va a desconectar.");
+                            System.out.println("Credenciales incorrectos. No puede ingresar a la administracion de " + config.getHospitalName() + ". Regresando menu anterior.");
                         }
                         break;
                     case 0:
@@ -412,7 +412,7 @@ public class Main {
         int input = -1;
         do {
             try {
-                System.out.println("Mewu para el Administrador \n1. Administrar Doctores \n2. Administrar Clinicas \n3. Administrar a los Pacientes \n0. Regresar");
+                System.out.println("Mewu para el Administrador \n1. Administrar Doctores \n2. Administrar Clinicas \n3. Administrar a los Pacientes\n4. Cambiar el nombre del Hospital\n5. Cambiar username y password del admin \n0. Regresar");
                 input = scanner.nextInt();
                 scanner.nextLine();
                 switch (input) {
@@ -426,7 +426,12 @@ public class Main {
                     case 3:
                         adminPaciente();
                         break;
-
+                    case 4:
+                        changeNameHospital();
+                        break;
+                    case 5:
+                        changeUserPass(); 
+                        break;
                     case 0:
                         System.out.println("Regresando al menu Pricipal..");
                         return;
@@ -601,13 +606,31 @@ public class Main {
             }
         } while (input != 0);
     }
+    private void changeNameHospital() {
+        System.out.println("Escriba el nombre del Hospital: ");
+        String newName = scanner.nextLine();
 
+        config.changeHospitalName(newName);
+        System.out.println("El nuevo nombre del Hospital es: " + config.getHospitalName());
+    }
+    private void changeUserPass() {
+        System.out.println("Ingrese el nuevo username del admin: ");
+        String newUsername = scanner.nextLine();
+        
+        System.out.println("Ingrese el nuevo password del admin: ");
+        String newPassword = scanner.nextLine();
+        config.changeUsername(newUsername);
+        config.changePassword(newPassword);
+        System.out.println(config.changeUsername(newUsername));
+        System.out.println(config.changePassword(newPassword));
+    }
     /**
      * Is the method to verify the admin password,
      * 
      * @return true = correct password; false = incorrect password.
      */
     private boolean verifyAdmin() {
+        Authenticator authenticator = new Authenticator();
         int attempts = 2; // the number of times the the user can attempt to answer the password.
         while (attempts > 0) {
             System.out.println("Please enter the admin username.");
@@ -616,7 +639,7 @@ public class Main {
             System.out.println("Please enter the admin password.");
             String inputPassword = scanner.nextLine();
 
-            if (Authenticator.verifyCredentials(inputUsername, inputPassword)) {
+            if (authenticator.verifyCredentials(inputUsername, inputPassword)) {
                 return true;
             }
             attempts--; // remember the -- is like saying doing a substraction for each loop irritation.

@@ -17,16 +17,6 @@
     "prescriptions": []
   },
   {
-    "id": 4,
-    "nombre": "German Nines",
-    "historialMedico": [
-      "efww f ewfwe fwe fwewf ewf wef wefwe we fwe we we fwe w ew wef we"
-    ],
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
     "id": 1,
     "nombre": "Pedro",
     "historialMedico": [
