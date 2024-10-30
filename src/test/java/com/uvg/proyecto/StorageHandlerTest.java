@@ -224,5 +224,11 @@ public class StorageHandlerTest {
                 "Doctor must be added to the clinic");
         assertTrue(doctors.size() == 1);
     }
-
+    @Test
+    public void addHistorialMedicoToPatint() {
+        //Create historial medico to document (create function in storageHandler)
+        //storageHandler.createHistorialMedico(paciente, );
+        //Create 
+        
+    }
 }

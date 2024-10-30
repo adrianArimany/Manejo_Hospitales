@@ -70,8 +70,13 @@ public class Paciente {
         this.doctoresId = new ArrayList<>();
         this.citas = new ArrayList<>();
         this.prescriptions = new ArrayList<>();
+        this.historialMedico = new ArrayList<>();
     }
-
+    // public Paciente(String nombre, String historialMedico) {
+    //     this.id = IdGenerator.generateId(UserTypes.Paciente);
+    //     this.nombre = nombre;
+    //     this.historialMedico = new ArrayList<>();
+    // }
     /**
      * Obtiene el ID del paciente.
      *
@@ -147,7 +152,9 @@ public class Paciente {
     public List<String> getHistorialMedico() {
         return historialMedico;
     }
-
+    public void  setHistorialMedico(List<String>  historialMedico) {
+        this.historialMedico = historialMedico;
+    }
     public void agregarHistorialMedico(String historial) {
         this.historialMedico.add(historial);
     }

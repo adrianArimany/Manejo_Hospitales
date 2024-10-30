@@ -185,6 +185,29 @@ public class StorageHandler {
         return true;
     }
 
+
+    public boolean createHistorialMedico(int pacienteId, String historialMedico) {
+        // Find the paciente to update
+        Paciente paciente = this.getPacienteById(pacienteId);
+
+        if (paciente == null)
+            return false;
+
+        // Check that historialMedico is not null
+        if (paciente.getHistorialMedico() == null) {
+            paciente.setHistorialMedico(new ArrayList<>());
+        }
+
+        paciente.agregarHistorialMedico(historialMedico);
+        return this.updatePatient(paciente);
+    }
+
+    public boolean editHistorialMedico(int paccienteId, String historialMedico) {
+        
+        
+        
+        return false;
+    }
     public boolean drPrescribeMedicineToPatient(Prescription prescription) {
         // get pacciente from presciption
         ArrayList<Paciente> pacientes = this.getAllPatients();
@@ -362,10 +385,10 @@ public class StorageHandler {
         return false;
     }
 
-    
+
     /**
      * 
-     * Esto pero los parametros son id
+     * @Todo Esto pero los parametros son id
      */
     public boolean drAddCita(Doctor doc, Paciente paciente, String date) {
         Cita cita = new Cita(doc.getId(), paciente.getId(), date);

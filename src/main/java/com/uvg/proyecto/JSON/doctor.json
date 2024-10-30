@@ -23,6 +23,12 @@
         "doctor": 1,
         "paciente": 1,
         "medicines": "flewjflejwlfew jfew "
+      },
+      {
+        "id": 15,
+        "doctor": 1,
+        "paciente": 1,
+        "medicines": "Cocaina"
       }
     ]
   }
