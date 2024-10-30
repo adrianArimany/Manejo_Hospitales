@@ -1,11 +1,11 @@
 [
   {
-    "especialidad": "General",
+    "especialidad": "General Practioner",
     "id": 1,
     "doctorId": []
   },
   {
-    "especialidad": "Pediatra",
+    "especialidad": "Pediatrician",
     "id": 2,
     "doctorId": [
       1,

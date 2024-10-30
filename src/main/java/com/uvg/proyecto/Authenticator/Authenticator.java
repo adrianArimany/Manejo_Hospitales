@@ -3,8 +3,6 @@ package com.uvg.proyecto.Authenticator;
 import com.uvg.proyecto.Data.PropertiesFile;
 
 public class Authenticator {
-    //private static final String USERNAME = "admin";
-    //private static final String PASSWORD = "password";
     PropertiesFile propertiesFile = new PropertiesFile();
 
     /**
