@@ -266,7 +266,7 @@ public class Main {
                     }
                     break;
                 case 4:
-                    //Revisar Prescripciones
+                    //Revisar Prescripciones (missing the functionaliyy to edit or leave as it is in case that the patient already has a prescription)
                     try {
                         ArrayList<Prescription> prescriptions = this.storageHandler.getPrescriptionsFromPatient(loginPac.getId());
                         if (prescriptions == null || prescriptions.isEmpty()) {
