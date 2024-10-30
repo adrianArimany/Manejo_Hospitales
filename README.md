@@ -48,4 +48,6 @@ These can be changed in system;
 
 (to changed them manually go to /src/main/java/com/uvg/proyecto/Properties/hospitalData.properties)
 
+### Extra Info:
 
+The Design Analysis and UML and other diagrams can be found in /root/diagrams/..
