@@ -41,8 +41,10 @@ This program is inteded to be used primarly for hospitals, but have the followin
 3. The json files are handled in storageHandler.
 
 4. Some parts of the program are managed by an administrator, which there is a username and password to access the admin menu. 
-The current username: admin
-The current password: admin
-These can be changed in system; to changed them manually go to /src/main/java/com/uvg/proyecto/Properties/hospitalData.properties
+* The current username: admin
+* The current password: admin
+These can be changed in system; 
+
+(to changed them manually go to /src/main/java/com/uvg/proyecto/Properties/hospitalData.properties)
 
 
