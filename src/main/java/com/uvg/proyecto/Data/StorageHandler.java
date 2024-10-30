@@ -202,10 +202,22 @@ public class StorageHandler {
         return this.updatePatient(paciente);
     }
 
-    public boolean editHistorialMedico(int paccienteId, String historialMedico) {
+    /**@Todo finish it. 
+     * This is suppose to edit the historial medico in case the patient already has one.
+     * @param pacienteId
+     * @param historialMedico
+     * @return
+     */
+    public boolean editHistorialMedico(int pacienteId, String historialMedico) {
+        // //finds the paciente to update
+        // Paciente paciente = this.getPacienteById(pacienteId);
         
+        // if (paciente == null || paciente.getHistorialMedico().isEmpty())
+        //     return false;
         
-        
+            
+
+
         return false;
     }
     public boolean drPrescribeMedicineToPatient(Prescription prescription) {

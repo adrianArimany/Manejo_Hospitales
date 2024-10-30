@@ -3,6 +3,8 @@ package com.uvg.proyecto;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Logger; //Gives a better detail about where the error was found (i.e. class or method)
+import java.util.logging.Level;
 
 import com.uvg.proyecto.Authenticator.Authenticator;
 import com.uvg.proyecto.Classes.Cita;
@@ -23,15 +25,15 @@ import com.uvg.proyecto.Data.StorageHandler;
  * - The system only runs one iterriation, then it quits!!! (fixed) 
  * - The system doesn't create new patients or doctors (fixed) change the storageHandler.initIds() now returns +1 to whatever was the highest.
  * - When I run method in admin, rather than returning the previous menu, it send me back to the MenuBegins().  (fixed) added a while loop.
- * - I need to double exit the menu of the admin to fully exit that menu ( )
+ * - I need to double exit the menu of the admin to fully exit that menu (fixed) I recalled the adminMenu every time I exited a submenu.
  * - When a patient/doctor is removed, its id is removed, but when you create a new doctor/patient rather than refilling the deleted id, it generates the highest id. (  )
  * - Error: Null reference encountered. When enter as a Doctor. (fixed) the issue was in a system.out.println I was calling a loginPac rather than loginDoc.
- * - The try-catch in the menuBegins is not working when the user types something that is not a number ().
+ * - The try-catch in the menuBegins is not working when the user types something that is not a number (fixed) login() was not closing properly hence I couldn't catch the error.
  * - When NumberFormatException is caught in pacienteMenu or doctorMenu the system returns the user to the previous menu rather than keeping him on the current menu (fixed) added input = -1 in the catch.
  * 
  * 
  * Extras:
- * -When the Admin for some reason don't elminates a doctor for whatever reason, allow the admin to have another attempt. (  )
+ * -When the Admin for some reason don't elminates a doctor for whatever reason, allow the admin to have another attempt. (add a while loop)
  */
 public class Main {
 
@@ -50,13 +52,21 @@ public class Main {
     public final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        Logger logger = Logger.getLogger(Main.class.getName()); //used to catch any unprecented error in the program, especially useful when running by "real" users. 
         Main app = new Main();
-        try { 
+        try {
             app.MenuBegins();
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
+            logger.log(Level.SEVERE, "Unexpected error in main method", e); //In case a SEBVERE error is counter, (i.e. one that requires immidiate attention.)
         } finally {
             if (app.scanner != null) {
-                app.scanner.close();
-            } 
+                try {
+                    app.scanner.close();
+                } catch (Exception e) {
+                    logger.log(Level.WARNING, "Error closing scanner", e); //In case that the scanner isn't fully closed, this captures and logs the error for future fixing.
+                }
+            }
         }
     }
 
@@ -141,6 +151,7 @@ public class Main {
                         } else {
                             System.out.println("Credenciales incorrectos, por terminos de seguridad para " + hospitalName + " el sistema se va a desconectar.");
                         }
+                        break;
                     case 0:
                         System.out.println("Saliendo del Systema...");
                         return null;
@@ -149,8 +160,9 @@ public class Main {
                 }
             } catch (NullPointerException e) {
                 System.out.println("Error: Null reference encountered.");
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Invalid input. Please enter a number.");
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Debe ingresar un número entero.");
+                scanner.nextLine();
             } catch (Exception e) {
                 System.out.println("An unexpected error occurred: " + e.getMessage());
             } 
@@ -237,7 +249,7 @@ public class Main {
                     //Agendar Citas
                     break;
                 case 2:
-                    //revisar citas
+                    //revisar citas (todavia falta)
                     this.storageHandler.getPacienteCitas(loginPac.getId());
                     break;
                 case 3:
@@ -295,6 +307,7 @@ public class Main {
             }
             switch (input) {
                 case 1:
+                    //revisar citas pendientes (todavia falta)
                     try {
                         ArrayList<Cita> citas = this.storageHandler.drViewCitas(loginDoc);
                         if (citas == null || citas.isEmpty()) {
