@@ -33,7 +33,9 @@ import com.uvg.proyecto.Data.StorageHandler;
  * 
  * 
  * Extras:
- * -When the Admin for some reason don't elminates a doctor for whatever reason, allow the admin to have another attempt. (add a while loop)
+ * -When the Admin for some reason don't elminates a doctor for whatever reason, allow the admin to have another attempt. (add a while loop [not done yet])
+ * - Add a more in-depth Logger to the program, especially that captures any potential error, (  )
+ * - Use logger.info, logger.fine, logger.error to better control the errors in the system. (  )
  */
 public class Main {
 
@@ -52,13 +54,13 @@ public class Main {
     public final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Logger logger = Logger.getLogger(Main.class.getName()); //used to catch any unprecented error in the program, especially useful when running by "real" users. 
+        Logger logger = Logger.getLogger(Main.class.getName()); //used to catch any unprecented error that is in the program, especially useful when running by "real" users. 
         Main app = new Main();
         try {
             app.MenuBegins();
         } catch (Exception e) {
             System.out.println("An unexpected error occurred: " + e.getMessage());
-            logger.log(Level.SEVERE, "Unexpected error in main method", e); //In case a SEBVERE error is counter, (i.e. one that requires immidiate attention.)
+            logger.log(Level.SEVERE, "Unexpected error in main method", e); //In case a SEVERE error is counter, (i.e. one that requires immidiate attention.)
         } finally {
             if (app.scanner != null) {
                 try {
