@@ -495,7 +495,7 @@ public class Main {
         scanner.nextLine();
         switch (input) {
             case 1:
-                System.out.println("Nombre del Doctor:");
+                System.out.println("Nombre completo del Doctor:");
                 String nombreDoc = scanner.nextLine();
                 if (nombreDoc == null || nombreDoc.trim().isEmpty()) {
                     System.out.println("Nombre no puede estar vacío.");
@@ -506,21 +506,33 @@ public class Main {
                 // Agarar todas las clinicas
                 ArrayList<Clinica> clinicasParaMostrarAlUsuario = this.storageHandler.getAllClinicas();
                 Doctor newDoctor;
-                if (clinicasParaMostrarAlUsuario.size() > 0){
+                if (clinicasParaMostrarAlUsuario.size() > 0) {
+                    System.out.println("0. Sin especialidad");
                     for (int i = 0; i < clinicasParaMostrarAlUsuario.size(); i++) {
                         System.out.println((i+1) + ": " + clinicasParaMostrarAlUsuario.get(i).getEspecialidad());
                     }
 
-                    // user pone el input una especilaidad
-                    int userInputIdClinica = Integer.parseInt(scanner.nextLine()) - 1 ;          
-                    
-                    newDoctor = new Doctor(nombreDoc, clinicasParaMostrarAlUsuario.get(userInputIdClinica).getEspecialidad());
-                }else{
+                    // user pone el input una especialidad
+                    int userInputIdClinica = Integer.parseInt(scanner.nextLine()) - 1;
+
+                    // Check for input out of range
+                    if (userInputIdClinica < -1 || userInputIdClinica >= clinicasParaMostrarAlUsuario.size()) {
+                        System.out.println("Error: El ID de la clinica no es valido.");
+                        break;
+                    }
+
+                    if (userInputIdClinica == -1) {
+                        newDoctor = new Doctor(nombreDoc);
+                        System.out.println("Dr." + newDoctor.getNombre() + " no fue asignado a una clinca.");
+                    } else {
+                        newDoctor = new Doctor(nombreDoc, clinicasParaMostrarAlUsuario.get(userInputIdClinica).getEspecialidad());
+                    }
+                } else {
                     // Si no hay clinicas para la especialidad entonces no se agrega la especialidad
                     newDoctor = new Doctor(nombreDoc);
                 }
                 if (this.storageHandler.createDoctor(newDoctor)) {
-                    System.out.println("Doctor agregado");
+                    System.out.println("Doctor agregado, con ID: " + newDoctor.getId());
                 } else {
                     System.out.println("El doctor ya existe o hubo un error al agregar.");
                 }

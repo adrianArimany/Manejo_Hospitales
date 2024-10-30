@@ -46,5 +46,36 @@
         "medicines": "paracetamol"
       }
     ]
+  },
+  {
+    "id": 3,
+    "nombre": "Fatima Del Toro",
+    "clinica": "Pediatra",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 4,
+    "nombre": "Felipe",
+    "clinica": "Pediatra",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 5,
+    "nombre": "Rodirgo Arimany",
+    "clinica": "General",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 6,
+    "nombre": "bobby fisher",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
   }
 ]
