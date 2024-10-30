@@ -1,4 +1,4 @@
-# Proyecto UVG Manejo de Hospitales
+# UVG PROYECT - Hospital Management System (userbased.)
 
 ## Creado por
 - Adrian Arimany 
