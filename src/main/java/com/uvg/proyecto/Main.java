@@ -425,7 +425,7 @@ public class Main {
         int input = -1;
         do {
             try {
-                System.out.println("Mewu para el Administrador \n1. Administrar Doctores \n2. Administrar Clinicas \n3. Administrar a los Pacientes\n4. Cambiar el nombre del Hospital\n5. Cambiar username y password del admin \n0. Regresar");
+                System.out.println("Menu for the administration: \n1. Administrate Doctors \n2. Administrate Clinics \n3. Administrate the patients \n4. Change the name of the hospital \n5. Change the username and password of the admin \n0. Return");
                 input = scanner.nextInt();
                 scanner.nextLine();
                 switch (input) {
@@ -446,17 +446,17 @@ public class Main {
                         changeUserPass(); 
                         break;
                     case 0:
-                        System.out.println("Regresando al menu Pricipal..");
+                        System.out.println("Returning to the original menu..");
                         return;
                     default:
-                        System.out.println("Solo ingrese los numeros en la pantalla.");
+                        System.out.println("Only enter the valid number on the screen.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Error: Debe ingresar un numero entero.");
+                System.out.println("Error: enter a whole number.");
                 input = -1;
                 scanner.nextLine();
             } catch (NullPointerException e) {
-                System.out.println("Error: No se encontraron los datos del administrador.");
+                System.out.println("Error: The admin data was not found.");
             } catch (Exception e) {
                 System.out.println("An unexpected error occurred: " + e.getMessage());
             }
@@ -466,35 +466,35 @@ public class Main {
     public void adminPaciente() {
         boolean inAdminPaciente = true;
         while (inAdminPaciente) {
-            System.out.println("Menu para el Administrador Pacientes \n1. Eliminar Paciente del sistema \n0. Regresar");
+            System.out.println("Menu to administrate the Patient \n1. Eliminate the patient from the system \n0. Return to admin menu.");
             int input = scanner.nextInt();
             scanner.nextLine();
             switch (input) {
                 case 1:
                     try {
-                        System.out.println("Cual es el ID del paciente a Eliminar: ");
+                        System.out.println("What is the ID of the patient: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         boolean isDeleted  = this.storageHandler.deletePatient(id);
                         if (isDeleted) {
-                            System.out.println("Paciente con id: " + id + ". Eliminado del sistema.");
+                            System.out.println("Patient with id: " + id + ". Eliminated from the sistem.");
                         } else {
-                            System.out.println("Paciente con id: " + id + ". No existe en el sistema.");
+                            System.out.println("Patient with id: " + id + ". Doesn't exist in the system.");
                         }
                     } catch (InputMismatchException e) {
-                        System.out.println("Error: Debe ingresar un numero entero.");
+                        System.out.println("Error: you must enter a valid whole number.");
                     } catch (NullPointerException e) {
-                        System.out.println("Error: No se encontraron los datos del paciente.");
+                        System.out.println("Error: The patient numbers where not found.");
                     } catch (Exception e) {
                         System.out.println("An unexpected error occurred: " + e.getMessage());
                     }
                     break;
                 case 0:
                     inAdminPaciente = false;
-                    System.out.println("Regresando al Menu Administrador..");
+                    System.out.println("Returning to the admin menu..");
                     return;
                 default:
-                    System.out.println("Solo ingrese los numeros en la pantalla.");
+                    System.out.println("Only enter the numbers on the terminal.");
             }
         }
     }
@@ -503,24 +503,24 @@ public class Main {
     public void adminDoc() {
         int input = -1;
         do {
-        System.out.println("Administracion para Doctores: \n1. Agregar Doctores \n2. Eliminar Doctores \n3. Editar info de un Doctor \n0. Regresar");
+        System.out.println("Menu to Administrate Doctors \n1. Add Doctor \n2. Eliminate Doctor \n3. Edit the info of a Doctor \n0. Return");
         input = scanner.nextInt();
         scanner.nextLine();
         switch (input) {
             case 1:
-                System.out.println("Nombre completo del Doctor:");
+                System.out.println("Full name of the Doctor:");
                 String nombreDoc = scanner.nextLine();
                 if (nombreDoc == null || nombreDoc.trim().isEmpty()) {
-                    System.out.println("Nombre no puede estar vacío.");
+                    System.out.println("The name can't be empty.");
                     break;
                 }
                 //scanner lista de clinicas a elejir.
-                System.out.println("Especialidad del Doctor: ");
+                System.out.println("The Speciality of the Doctor: ");
                 // Agarar todas las clinicas
                 ArrayList<Clinica> clinicasParaMostrarAlUsuario = this.storageHandler.getAllClinicas();
                 Doctor newDoctor;
                 if (clinicasParaMostrarAlUsuario.size() > 0) {
-                    System.out.println("0. Sin especialidad");
+                    System.out.println("0. Without Speciality");
                     for (int i = 0; i < clinicasParaMostrarAlUsuario.size(); i++) {
                         System.out.println((i+1) + ": " + clinicasParaMostrarAlUsuario.get(i).getEspecialidad());
                     }
@@ -530,13 +530,13 @@ public class Main {
 
                     // Check for input out of range
                     if (userInputIdClinica < -1 || userInputIdClinica >= clinicasParaMostrarAlUsuario.size()) {
-                        System.out.println("Error: El ID de la clinica no es valido.");
+                        System.out.println("Error: The ID from the clinic can't be empty.");
                         break;
                     }
 
                     if (userInputIdClinica == -1) { //This exists so that if the admin decides to create a Doc without a speciality.
                         newDoctor = new Doctor(nombreDoc);
-                        System.out.println("Dr." + newDoctor.getNombre() + " no fue asignado a una clinca.");
+                        System.out.println("Dr." + newDoctor.getNombre() + " was not added to a clinic.");
                     } else {
                         newDoctor = new Doctor(nombreDoc, clinicasParaMostrarAlUsuario.get(userInputIdClinica).getEspecialidad());
                     }
@@ -545,31 +545,31 @@ public class Main {
                     newDoctor = new Doctor(nombreDoc);
                 }
                 if (this.storageHandler.createDoctor(newDoctor)) {
-                    System.out.println("Doctor agregado, con ID: " + newDoctor.getId());
+                    System.out.println("Doctor added with ID: " + newDoctor.getId());
                 } else {
-                    System.out.println("El doctor ya existe o hubo un error al agregar.");
+                    System.out.println("The Doctor already exists or there was an error.");
                 }
                 break;
             case 2:
-                System.out.println("ID del Doctor a eliminar:");
+                System.out.println("The ID to eliminate the Doctor");
                 try {
                     int doctorId = scanner.nextInt();
                     scanner.nextLine();
                     this.storageHandler.deleteDoctor(doctorId);
-                    System.out.println("Doctor con ID " + doctorId + " eliminado.");
+                    System.out.println("Doctor with ID " + doctorId + " Exterminated.");
                 } catch (Exception e) {
-                    System.out.println("ID inválido. Por favor, ingrese un número.");
+                    System.out.println("ID not valid. Please enter a number.");
                     scanner.nextLine();
                 }
                 break;
             case 3:
-                System.out.println("Funcionalidad Editar a un Doctor no implementada");
+                System.out.println("The functionality to edit a Doctor attributes hasn't been implemented yet.");
                 break;
             case 0:
-                System.out.println("Regresando al Menu Administrador..");
+                System.out.println("Returning to the admin menu..");
                 return;
             default:
-                System.out.println("Solo ingrese los numeros en la pantalla.");
+                System.out.println("Only enter the numbers on the terminal.");
         }
         } while (input != 0);
     }
@@ -578,52 +578,52 @@ public class Main {
         int input = -1;
         do {
             try {
-                System.out.println("Administracion para Clinicas  \n1. Agregar Clinca \n2. Eliminar Clinica \n3. Mover a un Doctor \n0. regresar");
+                System.out.println("Menu to Administrate Clinics  \n1. Add Clinic \n2. Remove Clinic \n3. Move a Doctor to a Clinic \n0. Return to the admin menu");
                 input = scanner.nextInt();
                 scanner.nextLine();
                 switch (input) {
                     case 1:
                         // Agregar Clinica
-                        System.out.println("Agregar Clinica Especialidad: ");
+                        System.out.println("Add the Speciality of the clinic: ");
                         String especialidad = scanner.nextLine();
                         Clinica newClinca = new Clinica(especialidad);
                         boolean isClinicaCreated = this.storageHandler.createNewClinic(newClinca);
                         if (isClinicaCreated) {
-                            System.out.println("Clinica creada con exito.");
+                            System.out.println("Clinic created without error. With ID: " + newClinca.getId());
                         } else {
-                            System.out.println("Error al crear la clinica.");
+                            System.out.println("Error in creating the clinic.");
                         }
                         break;
                     case 2:
                         // Eliminar Clinica
-                        System.out.println("ID de la Clinica a Eliminar: ");
+                        System.out.println("The ID from the clinic to remove ");
                         int idClinica = Integer.parseInt(scanner.nextLine());
                         this.storageHandler.eliminarClinica(idClinica);
-                        System.out.println("Clinica con ID " + idClinica + " eliminada.");
+                        System.out.println("Clinic with ID " + idClinica + " eliminated.");
                         break;
                     case 3:
                         // Add Doctor to clinic
-                        System.out.println("ID de la clinica: ");
+                        System.out.println("The ID of the clinic to move the Doctor.");
                         int idClinicaDoc = Integer.parseInt(scanner.nextLine());
-                        System.out.println("ID del doctor a mover: ");
+                        System.out.println("The ID of the doctor to move to: ");
                         int idDoctorClinica = Integer.parseInt(scanner.nextLine());
                         boolean isDocMoved = this.storageHandler.addClinicToDoctor(idDoctorClinica, idClinicaDoc);
                         if (isDocMoved) {
-                            System.out.println("El doctor se movio de clinica con exito.");
+                            System.out.println("The doctor was moved without problem.");
                         } else {
-                            System.out.println("Error al mover el doctor");
+                            System.out.println("Error in moving the doctor.");
                         }
                         break;
                     case 0:
-                        System.out.println("Regresando al Menu Administrador..");
+                        System.out.println("Returning to the admin menu..");
                         return;
                     default:
-                        System.out.println("Solo ingrese los numeros en la pantalla.");
+                        System.out.println("Only enter the numbers on the terminal.");
                 }
             } catch (NullPointerException e) {
-                System.out.println("Error: No se encontraron los datos de las clinicas.");
+                System.out.println("Error: Error the numbers in the clinics wheren't found.");
             } catch (InputMismatchException e) {
-                System.out.println("Error: Debe ingresar un numero entero.");
+                System.out.println("Error: must enter a valid whole number.");
                 input = -1;
                 scanner.nextLine(); // clear the invalid input
             } catch (Exception e) {
@@ -632,17 +632,17 @@ public class Main {
         } while (input != 0);
     }
     private void changeNameHospital() {
-        System.out.println("Escriba el nombre del Hospital: ");
+        System.out.println("Enter the New name of the hospital: ");
         String newName = scanner.nextLine();
 
         config.changeHospitalName(newName);
-        System.out.println("El nuevo nombre del Hospital es: " + config.getHospitalName());
+        System.out.println("The new name of the hostpital is " + config.getHospitalName());
     }
     private void changeUserPass() {
-        System.out.println("Ingrese el nuevo username del admin: ");
+        System.out.println("Enter the new username for the admin: ");
         String newUsername = scanner.nextLine();
         
-        System.out.println("Ingrese el nuevo password del admin: ");
+        System.out.println("Enter the new password for the admin: ");
         String newPassword = scanner.nextLine();
         config.changeUsername(newUsername);
         config.changePassword(newPassword);
