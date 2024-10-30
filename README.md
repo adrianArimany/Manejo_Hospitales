@@ -1,10 +1,10 @@
-# UVG PROYECT - Hospital Management System (userbased.)
+# UVG PROYECT - Hospital Management System
 
-## Creado por
+## Contributors:
 - Adrian Arimany 
 
 
-## Configuracion
+## Configurations:
 1. Have version: [java version 21](https://www.oracle.com/java/technologies/downloads/) (Important!!)
 
 2. Clone repository:
