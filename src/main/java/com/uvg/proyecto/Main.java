@@ -521,7 +521,7 @@ public class Main {
                         break;
                     }
 
-                    if (userInputIdClinica == -1) {
+                    if (userInputIdClinica == -1) { //This exists so that if the admin decides to create a Doc without a speciality.
                         newDoctor = new Doctor(nombreDoc);
                         System.out.println("Dr." + newDoctor.getNombre() + " no fue asignado a una clinca.");
                     } else {
