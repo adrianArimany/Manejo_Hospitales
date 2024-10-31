@@ -33,21 +33,6 @@
     ]
   },
   {
-    "id": 2,
-    "nombre": "Erick Marroquin",
-    "clinica": "General",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": [
-      {
-        "id": 36,
-        "doctor": 2,
-        "paciente": 1,
-        "medicines": "paracetamol"
-      }
-    ]
-  },
-  {
     "id": 3,
     "nombre": "Fatima Del Toro",
     "clinica": "Pediatra",
@@ -77,5 +62,26 @@
     "pacientesId": [],
     "citas": [],
     "prescriptions": []
+  },
+  {
+    "id": 2,
+    "nombre": "Erick Marroquin",
+    "clinica": "General",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": [
+      {
+        "id": 36,
+        "doctor": 2,
+        "paciente": 1,
+        "medicines": "paracetamol"
+      },
+      {
+        "id": 35,
+        "doctor": 2,
+        "paciente": 2,
+        "medicines": "glog"
+      }
+    ]
   }
 ]

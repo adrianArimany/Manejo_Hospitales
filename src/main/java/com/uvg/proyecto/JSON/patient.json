@@ -1,15 +1,5 @@
 [
   {
-    "id": 2,
-    "nombre": "Adrian",
-    "historialMedico": [
-      "refwe wefewfwe"
-    ],
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
     "id": 3,
     "nombre": "Alejandro Rodriguez",
     "doctoresId": [],
@@ -64,5 +54,22 @@
     "doctoresId": [],
     "citas": [],
     "prescriptions": []
+  },
+  {
+    "id": 2,
+    "nombre": "Adrian",
+    "historialMedico": [
+      "refwe wefewfwe"
+    ],
+    "doctoresId": [],
+    "citas": [],
+    "prescriptions": [
+      {
+        "id": 35,
+        "doctor": 2,
+        "paciente": 2,
+        "medicines": "glog"
+      }
+    ]
   }
 ]

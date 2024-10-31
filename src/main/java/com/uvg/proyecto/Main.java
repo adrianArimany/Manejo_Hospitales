@@ -310,7 +310,7 @@ public class Main {
         int input = -1;
         do {
             System.out.println("Welcome Dr." + loginDoc.getNombre() + " (ID: " + loginDoc.getId() + ")");
-            System.out.println("\n1. Check pending appointments \n2. Check medical history of a patient \n3. Check prestion from a patient \n4. Add a presction to the patient \n5. Check all your patients \n0. Return to original menu");
+            System.out.println("\n1. Check pending appointments \n2. Check medical history of a patient \n3. Check presction from a patient \n4. Add a presction to the patient \n5. Check all your patients \n0. Return to original menu");
             try {
                 input = scanner.nextInt();
                 scanner.nextLine();
@@ -396,6 +396,7 @@ public class Main {
                     }
                     break;
                 case 5:
+                //this checks all the patients from the doc, but is currently just printing the prescrptions. check dataHandler.
                     System.out.println("Patient:");
                     try {
                         ArrayList<Paciente> pacientes = this.storageHandler.getDrPacientes(loginDoc);
