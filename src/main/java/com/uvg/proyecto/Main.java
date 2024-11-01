@@ -2,9 +2,8 @@ package com.uvg.proyecto;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
+//import java.util.List;
 import java.util.Scanner;
-//import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger; //Gives a better detail about where the error was found (i.e. class or method)
 
@@ -40,6 +39,7 @@ import com.uvg.proyecto.Data.StorageHandler;
  * - Add a more in-depth Logger to the program, especially that captures any potential error, (  )
  * - Use logger.info, logger.fine, logger.error to better control the errors in the system. (  )
  */
+
 public class Main {
 
     public enum UserType {
