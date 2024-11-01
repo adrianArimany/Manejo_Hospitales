@@ -15,14 +15,6 @@
     "prescriptions": []
   },
   {
-    "id": 3,
-    "nombre": "Santiago Kong",
-    "clinica": "General Practioner",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
     "id": 4,
     "nombre": "Diego Rodriguez",
     "clinica": "Pediatrician",
@@ -35,7 +27,41 @@
     "nombre": "Ariel Manelo",
     "clinica": "Pediatrician",
     "pacientesId": [],
-    "citas": [],
+    "citas": [
+      {
+        "id": 0,
+        "doctor": 5,
+        "doctorName": "Ariel Manelo",
+        "paciente": 2,
+        "pacienteName": "Felipe",
+        "enfermedades": "none",
+        "date": "1111",
+        "clinica": 0,
+        "clinicaSpeciality": "Pediatrician"
+      }
+    ],
+    "prescriptions": []
+  },
+  {
+    "id": 3,
+    "nombre": "Santiago Kong",
+    "clinica": "General Practioner",
+    "pacientesId": [
+      4
+    ],
+    "citas": [
+      {
+        "id": 0,
+        "doctor": 3,
+        "doctorName": "Santiago Kong",
+        "paciente": 4,
+        "pacienteName": "Jose Carlos",
+        "enfermedades": "Boredom",
+        "date": "12-12-200",
+        "clinica": 0,
+        "clinicaSpeciality": "General Practioner"
+      }
+    ],
     "prescriptions": []
   }
 ]

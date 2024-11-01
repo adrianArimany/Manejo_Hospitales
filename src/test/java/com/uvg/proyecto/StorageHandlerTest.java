@@ -24,6 +24,7 @@ public class StorageHandlerTest {
     private StorageHandler storageHandler;
     private Doctor testDoc;
     private Paciente testPaciente;
+    @SuppressWarnings("unused")
     private Clinica testClinica;
     private Prescription testPrescription;
 
@@ -241,22 +242,4 @@ public class StorageHandlerTest {
 
     }
 
-    @Test
-    public void clinicaToDocToCita() {
-        //Create cita to document
-        Clinica testClinic = new Clinica("testClinic");
-        Cita newCita = new Cita(0, 0, "", "", "testClinic", "", "");
-
-        //created cita and adds to clinica testClinic then looks for a doctor in clinica usng the method  docAddedtoCita in StorageHandler.
-        storageHandler.createNewClinic(testClinic);
-        storageHandler.addCitaToClinic(newCita);
-        List<Doctor> doctorsInClinic = storageHandler.getAllDoctorsFromClinic(testClinic.getId());
-        if (!doctorsInClinic.isEmpty()) {
-            Doctor docInClinic = doctorsInClinic.get(ThreadLocalRandom.current().nextInt(0, doctorsInClinic.size()));
-            //Adds the doctor to cita
-            newCita.setDoctor(docInClinic.getId());
-            //the doctor added to cita is then added to paciente attribute List<Integer> doctoresId
-            testPaciente.addDocToPaciente(docInClinic.getId());
-        }
-    }
 }

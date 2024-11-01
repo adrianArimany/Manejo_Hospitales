@@ -8,19 +8,53 @@
     "prescriptions": []
   },
   {
-    "id": 2,
-    "nombre": "Felipe",
+    "id": 3,
+    "nombre": "Viktor Kakaon",
     "historialMedico": [],
     "doctoresId": [],
     "citas": [],
     "prescriptions": []
   },
   {
-    "id": 3,
-    "nombre": "Viktor Kakaon",
+    "id": 2,
+    "nombre": "Felipe",
     "historialMedico": [],
     "doctoresId": [],
-    "citas": [],
+    "citas": [
+      {
+        "id": 0,
+        "doctor": 5,
+        "doctorName": "Ariel Manelo",
+        "paciente": 2,
+        "pacienteName": "Felipe",
+        "enfermedades": "none",
+        "date": "1111",
+        "clinica": 0,
+        "clinicaSpeciality": "Pediatrician"
+      }
+    ],
+    "prescriptions": []
+  },
+  {
+    "id": 4,
+    "nombre": "Jose Carlos",
+    "historialMedico": [],
+    "doctoresId": [
+      3
+    ],
+    "citas": [
+      {
+        "id": 0,
+        "doctor": 3,
+        "doctorName": "Santiago Kong",
+        "paciente": 4,
+        "pacienteName": "Jose Carlos",
+        "enfermedades": "Boredom",
+        "date": "12-12-200",
+        "clinica": 0,
+        "clinicaSpeciality": "General Practioner"
+      }
+    ],
     "prescriptions": []
   }
 ]

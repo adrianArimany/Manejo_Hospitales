@@ -250,7 +250,6 @@ public class Main {
             }
             switch (input) {
                 case 1:
-                //Getting some wierd logical error, but the gist is that it shows that no doctors are in the clinic (that is for pediatrician) but for (general practioner) after symptons the code shuts down.
                     System.out.println("When would you want to have this appointment: ");
                     String date = scanner.nextLine();
                     System.out.println("Choose the clinic that relates to your sickness: ");
@@ -267,30 +266,21 @@ public class Main {
                             System.out.println("Error: The ID from the clinic can't be empty.");
                             break;
                         }
-                        //There might be an issue where if the user types 1 (general Practioner) the code breaks. This is probably because clinic 1 doesn't have any clinic, but isn't sending the correct error massage...
                         Doctor doctor = this.storageHandler.docAddedtoCita(listSpecialityClinic.get(userInputIdClinica).getEspecialidad());
                         if (doctor == null) {
-                            System.out.println("An unexpected error occurred. Please try again.");
+                            System.out.println("Unfortunely " + config.getHospitalName() + ". Doesn't have any doctors in that clinic."); 
                             break;
                         }
-                        List<Doctor> doctorsInClinic = storageHandler.getAllDoctorsFromClinic(doctor.getId());
-                        if (!doctorsInClinic.isEmpty()) {
                             System.out.println("What Symptoms do you feel? ");
                             String symptoms = scanner.nextLine();
                             // Create a new appointment and add it to the clinic
-                            Cita newCita = new Cita(doctor.getId(), loginPac.getId(), doctor.getNombre(), loginPac.getNombre(), listSpecialityClinic.get(userInputIdClinica).getEspecialidad(), date, symptoms);
-                            boolean isCitaAdded = this.storageHandler.addCitaToClinic(newCita); //returning a false when everything above works...
+                            boolean isCitaAdded = this.storageHandler.drAddCita(doctor, loginPac, listSpecialityClinic.get(userInputIdClinica).getEspecialidad(), date, symptoms); //returning a false when everything above works...
                             if (!isCitaAdded) {
                                 System.out.println("Failed to add appointment. Please try again.");
                             } else {
-                                loginPac.addCita(newCita);
-                                System.out.println("Appointment successfully added.");
+                                System.out.println("Appointment successfully added. With Doctor: " + doctor.getNombre() + "(ID: " + doctor.getId() +")");
                             }
-                        } else {
-                            System.out.println("Unfortunely " + config.getHospitalName() + ". Doesn't have any doctors in that clinic.");
                         }
-                    } 
-                    
                     break;
                 case 2:
                     //revisar citas (todavia falta)
