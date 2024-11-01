@@ -9,6 +9,10 @@ public class Prescription {
     public int doctor;
     public int paciente;
     public String medicines;
+    public String pacienteName;
+    public String doctorName;
+
+
 
     public Prescription(){
         this.id = IdGenerator.generateId(UserTypes.Prescription);
@@ -27,6 +31,14 @@ public class Prescription {
     }
 
     public Prescription(int doctor, int paciente, String medicines) {
+        this.id = IdGenerator.generateId(UserTypes.Prescription);
+        this.doctor = doctor;
+        this.paciente = paciente;
+        this.medicines = medicines;
+    }
+    
+    
+    public Prescription(int doctor, int paciente, String doctorName , String pacienteName , String medicines) {
         this.id = IdGenerator.generateId(UserTypes.Prescription);
         this.doctor = doctor;
         this.paciente = paciente;

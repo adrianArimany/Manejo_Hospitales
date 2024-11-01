@@ -51,15 +51,14 @@ public class Paciente {
 
     public Paciente(String nombre, String doctor, String clinica, List<String> historialMedico,
             List<String> enfermedades, List<Integer> doctoresId, List<Cita> citas) {
-                this.id = IdGenerator.generateId(UserTypes.Paciente);
-
+        this.id = IdGenerator.generateId(UserTypes.Paciente);
         this.nombre = nombre;
         this.doctor = doctor;
         this.clinica = clinica;
-        this.historialMedico = historialMedico;
-        this.enfermedades = enfermedades;
-        this.doctoresId = doctoresId;
-        this.citas = citas;
+        this.historialMedico = new ArrayList<>();
+        this.enfermedades = new ArrayList<>();
+        this.doctoresId = new ArrayList<>();
+        this.citas = new ArrayList<>();
         this.prescriptions = new ArrayList<>();
     }
 

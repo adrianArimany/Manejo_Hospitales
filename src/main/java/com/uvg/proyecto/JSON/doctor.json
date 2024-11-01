@@ -1,87 +1,41 @@
 [
   {
     "id": 1,
-    "nombre": "Pedro",
-    "clinica": "Pediatra",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": [
-      {
-        "id": 0,
-        "doctor": 1,
-        "paciente": 1,
-        "medicines": "medicina"
-      },
-      {
-        "id": 2,
-        "doctor": 1,
-        "paciente": 1,
-        "medicines": "tailenol"
-      },
-      {
-        "id": 9,
-        "doctor": 1,
-        "paciente": 1,
-        "medicines": "flewjflejwlfew jfew "
-      },
-      {
-        "id": 15,
-        "doctor": 1,
-        "paciente": 1,
-        "medicines": "Cocaina"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "nombre": "Fatima Del Toro",
-    "clinica": "Pediatra",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
-    "id": 4,
-    "nombre": "Felipe",
-    "clinica": "Pediatra",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
-    "id": 5,
-    "nombre": "Rodirgo Arimany",
-    "clinica": "General",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
-    "id": 6,
-    "nombre": "bobby fisher",
+    "nombre": "Samaul Felicnik",
     "pacientesId": [],
     "citas": [],
     "prescriptions": []
   },
   {
     "id": 2,
-    "nombre": "Erick Marroquin",
-    "clinica": "General",
+    "nombre": "Felipe Gonzales",
+    "clinica": "General Practioner",
     "pacientesId": [],
     "citas": [],
-    "prescriptions": [
-      {
-        "id": 36,
-        "doctor": 2,
-        "paciente": 1,
-        "medicines": "paracetamol"
-      },
-      {
-        "id": 35,
-        "doctor": 2,
-        "paciente": 2,
-        "medicines": "glog"
-      }
-    ]
+    "prescriptions": []
+  },
+  {
+    "id": 3,
+    "nombre": "Santiago Kong",
+    "clinica": "General Practioner",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 4,
+    "nombre": "Diego Rodriguez",
+    "clinica": "Pediatrician",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 5,
+    "nombre": "Ariel Manelo",
+    "clinica": "Pediatrician",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
   }
 ]

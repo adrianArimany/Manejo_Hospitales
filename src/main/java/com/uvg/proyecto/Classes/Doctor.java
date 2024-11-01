@@ -40,8 +40,8 @@ public class Doctor {
         this.id = id;
         this.nombre = nombre;
         this.clinica = clinica;
-        this.pacientesId = pacientesId;
-        this.citas = citas;
+        this.pacientesId = new ArrayList<>();
+        this.citas = new ArrayList<>();
         this.prescriptions = new ArrayList<>();
     }
 

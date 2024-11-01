@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +19,12 @@ import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
 import com.uvg.proyecto.Classes.Prescription;
 import com.uvg.proyecto.Data.StorageHandler;
-import com.uvg.proyecto.Utils.IdGenerator;
 
 public class StorageHandlerTest {
     private StorageHandler storageHandler;
     private Doctor testDoc;
     private Paciente testPaciente;
+    private Clinica testClinica;
     private Prescription testPrescription;
 
 
@@ -33,6 +33,7 @@ public class StorageHandlerTest {
         storageHandler = new StorageHandler();
         testDoc = new Doctor("dr me", "clinica1");
         testPaciente = new Paciente("patient me");
+        testClinica = new Clinica("My speciality");
         testPrescription = new Prescription(testDoc.getId(), testPaciente.getId(), "prescription me");
     }
 
@@ -141,7 +142,7 @@ public class StorageHandlerTest {
 
     @Test
     public void drAddCita() {
-        boolean isCitaAdded = storageHandler.drAddCita(testDoc, testPaciente, "2021-06-01");
+        boolean isCitaAdded = storageHandler.drAddCita(testDoc, testPaciente,"testClinic" ,"2021-06-01", "Dolor de cabeza");
         assertTrue(isCitaAdded, "Cita must be added to the doctor");
 
         
@@ -153,7 +154,7 @@ public class StorageHandlerTest {
         storageHandler.createPaciente(testPaciente);
 
         storageHandler.addPacienteToDoctor(testDoc, testPaciente);
-        storageHandler.drAddCita(testDoc, testPaciente, "2021-06-01");
+        storageHandler.drAddCita(testDoc, testPaciente, "" ,"2021-06-01", "dolor the cabeza");
 
         ArrayList<Cita> citas = storageHandler.drViewCitas(testDoc);
         assertNotNull(citas, "citas must not be null");
@@ -185,7 +186,7 @@ public class StorageHandlerTest {
     @Test
     public void getPacienteCitas() {
         storageHandler.addPacienteToDoctor(testDoc, testPaciente);
-        storageHandler.drAddCita(testDoc, testPaciente, "2021-06-01");
+        storageHandler.drAddCita(testDoc, testPaciente,"testClinic" ,"2021-06-01", "Dolor de cabeza y mocos");
 
         List<Cita> citas = storageHandler.getPacienteCitas(testPaciente.getId());
         assertNotNull(citas, "citas must not be null");
@@ -218,7 +219,7 @@ public class StorageHandlerTest {
         assertTrue(isClinicAdded, "Clinic must be added to the doctor");
 
         // Check si la clinica esta en el doctor
-        ArrayList<Doctor> doctors = storageHandler.getAllDoctorsFromClinic(newClinic.getId()); // terminar esta funcion
+        ArrayList<Doctor> doctors = storageHandler.getAllDoctorsFromClinic(newClinic.getId()); 
         
         assertTrue(doctors.stream().anyMatch(doctor -> doctor.getId() == testDoc.getId()),
                 "Doctor must be added to the clinic");
@@ -230,5 +231,32 @@ public class StorageHandlerTest {
         //storageHandler.createHistorialMedico(paciente, );
         //Create 
         
+    }
+    
+    //Citas:
+
+
+    @Test
+    public void addCitaPaciente() {
+
+    }
+
+    @Test
+    public void clinicaToDocToCita() {
+        //Create cita to document
+        Clinica testClinic = new Clinica("testClinic");
+        Cita newCita = new Cita(0, 0, "", "", "testClinic", "", "");
+
+        //created cita and adds to clinica testClinic then looks for a doctor in clinica usng the method  docAddedtoCita in StorageHandler.
+        storageHandler.createNewClinic(testClinic);
+        storageHandler.addCitaToClinic(newCita);
+        List<Doctor> doctorsInClinic = storageHandler.getAllDoctorsFromClinic(testClinic.getId());
+        if (!doctorsInClinic.isEmpty()) {
+            Doctor docInClinic = doctorsInClinic.get(ThreadLocalRandom.current().nextInt(0, doctorsInClinic.size()));
+            //Adds the doctor to cita
+            newCita.setDoctor(docInClinic.getId());
+            //the doctor added to cita is then added to paciente attribute List<Integer> doctoresId
+            testPaciente.addDocToPaciente(docInClinic.getId());
+        }
     }
 }

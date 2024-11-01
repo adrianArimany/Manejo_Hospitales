@@ -2,9 +2,11 @@ package com.uvg.proyecto;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger; //Gives a better detail about where the error was found (i.e. class or method)
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
+import java.util.logging.Logger; //Gives a better detail about where the error was found (i.e. class or method)
 
 import com.uvg.proyecto.Authenticator.Authenticator;
 import com.uvg.proyecto.Classes.Cita;
@@ -12,8 +14,8 @@ import com.uvg.proyecto.Classes.Clinica;
 import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
 import com.uvg.proyecto.Classes.Prescription;
-import com.uvg.proyecto.Data.StorageHandler;
 import com.uvg.proyecto.Data.PropertiesFile;
+import com.uvg.proyecto.Data.StorageHandler;
 
 
 
@@ -248,7 +250,47 @@ public class Main {
             }
             switch (input) {
                 case 1:
-                    //Agendar Citas
+                //Getting some wierd logical error, but the gist is that it shows that no doctors are in the clinic (that is for pediatrician) but for (general practioner) after symptons the code shuts down.
+                    System.out.println("When would you want to have this appointment: ");
+                    String date = scanner.nextLine();
+                    System.out.println("Choose the clinic that relates to your sickness: ");
+                    ArrayList<Clinica> listSpecialityClinic = this.storageHandler.getAllClinicas();
+                    if (listSpecialityClinic.size() > 0) {
+                        for (int i = 0; i < listSpecialityClinic.size(); i++) {
+                            System.out.println((i+1) + ": " + listSpecialityClinic.get(i).getEspecialidad());
+                        }
+        
+                        // user pone el input una especialidad
+                        int userInputIdClinica = Integer.parseInt(scanner.nextLine()) -1 ;
+                        
+                        if (userInputIdClinica < 0 || userInputIdClinica >= listSpecialityClinic.size()) {
+                            System.out.println("Error: The ID from the clinic can't be empty.");
+                            break;
+                        }
+                        //There might be an issue where if the user types 1 (general Practioner) the code breaks. This is probably because clinic 1 doesn't have any clinic, but isn't sending the correct error massage...
+                        Doctor doctor = this.storageHandler.docAddedtoCita(listSpecialityClinic.get(userInputIdClinica).getEspecialidad());
+                        if (doctor == null) {
+                            System.out.println("An unexpected error occurred. Please try again.");
+                            break;
+                        }
+                        List<Doctor> doctorsInClinic = storageHandler.getAllDoctorsFromClinic(doctor.getId());
+                        if (!doctorsInClinic.isEmpty()) {
+                            System.out.println("What Symptoms do you feel? ");
+                            String symptoms = scanner.nextLine();
+                            // Create a new appointment and add it to the clinic
+                            Cita newCita = new Cita(doctor.getId(), loginPac.getId(), doctor.getNombre(), loginPac.getNombre(), listSpecialityClinic.get(userInputIdClinica).getEspecialidad(), date, symptoms);
+                            boolean isCitaAdded = this.storageHandler.addCitaToClinic(newCita); //returning a false when everything above works...
+                            if (!isCitaAdded) {
+                                System.out.println("Failed to add appointment. Please try again.");
+                            } else {
+                                loginPac.addCita(newCita);
+                                System.out.println("Appointment successfully added.");
+                            }
+                        } else {
+                            System.out.println("Unfortunely " + config.getHospitalName() + ". Doesn't have any doctors in that clinic.");
+                        }
+                    } 
+                    
                     break;
                 case 2:
                     //revisar citas (todavia falta)
@@ -288,6 +330,7 @@ public class Main {
             }
         } while (input != 0);
     }
+
 
     /**
      * Handles the menu for a doctor user.

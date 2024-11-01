@@ -1,55 +1,7 @@
 [
   {
-    "id": 3,
-    "nombre": "Alejandro Rodriguez",
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
     "id": 1,
-    "nombre": "Pedro",
-    "historialMedico": [
-      "fweewio fowi weij foiwej oiweoif jweoifje woi"
-    ],
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": [
-      {
-        "id": 0,
-        "doctor": 1,
-        "paciente": 1,
-        "medicines": "medicina"
-      },
-      {
-        "id": 2,
-        "doctor": 1,
-        "paciente": 1,
-        "medicines": "tailenol"
-      },
-      {
-        "id": 9,
-        "doctor": 1,
-        "paciente": 1,
-        "medicines": "flewjflejwlfew jfew "
-      },
-      {
-        "id": 15,
-        "doctor": 1,
-        "paciente": 1,
-        "medicines": "Cocaina"
-      },
-      {
-        "id": 36,
-        "doctor": 2,
-        "paciente": 1,
-        "medicines": "paracetamol"
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "nombre": "Richie Lemon",
+    "nombre": "Alejandro Ramirez",
     "historialMedico": [],
     "doctoresId": [],
     "citas": [],
@@ -57,19 +9,18 @@
   },
   {
     "id": 2,
-    "nombre": "Adrian",
-    "historialMedico": [
-      "refwe wefewfwe"
-    ],
+    "nombre": "Felipe",
+    "historialMedico": [],
     "doctoresId": [],
     "citas": [],
-    "prescriptions": [
-      {
-        "id": 35,
-        "doctor": 2,
-        "paciente": 2,
-        "medicines": "glog"
-      }
-    ]
+    "prescriptions": []
+  },
+  {
+    "id": 3,
+    "nombre": "Viktor Kakaon",
+    "historialMedico": [],
+    "doctoresId": [],
+    "citas": [],
+    "prescriptions": []
   }
 ]

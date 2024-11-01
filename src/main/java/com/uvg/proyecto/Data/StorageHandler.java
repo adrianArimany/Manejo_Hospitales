@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,6 +18,7 @@ import com.uvg.proyecto.Classes.Doctor;
 import com.uvg.proyecto.Classes.Paciente;
 import com.uvg.proyecto.Classes.Prescription;
 import com.uvg.proyecto.Utils.IdGenerator;
+import java.util.Random;
 
 public class StorageHandler {
     private final String PATIENT_FILE = "src/main/java/com/uvg/proyecto/JSON/patient.json";
@@ -402,8 +404,10 @@ public class StorageHandler {
      * 
      * @Todo Esto pero los parametros son id
      */
-    public boolean drAddCita(Doctor doc, Paciente paciente, String date) {
-        Cita cita = new Cita(doc.getId(), paciente.getId(), date);
+    public boolean drAddCita(Doctor doc, Paciente paciente,String clinicaSpeciality, String date, String enfermedades) {
+        
+        
+        Cita cita = new Cita(doc.getId(), paciente.getId(), doc.getNombre() , paciente.getNombre(), clinicaSpeciality,  date, enfermedades);
         doc.addCita(cita);
         this.updateDoctor(doc);
         paciente.addCita(cita);
@@ -412,6 +416,68 @@ public class StorageHandler {
         return true;
     }
 
+    /**
+     * This method adds a doc to the appointment that the patient enters into the code.
+     * @return
+     */
+    public Doctor docAddedtoCita(String clinicaSpeciality) {
+        // Add all the doctors.
+        ArrayList<Doctor> doctors = this.getAllDoctors();
+        // Filter the doctors in a clinic, ensuring getClinica() is not null
+        List<Doctor> doctorsInClinic = doctors.stream()
+            .filter(doc -> doc.getClinica() != null && doc.getClinica().equals(clinicaSpeciality))
+            .toList();
+        System.out.println("Total doctors found: " + doctors.size());
+        System.out.println("Doctors in clinic matching " + clinicaSpeciality + ": " + doctorsInClinic.size());
+        // Check if there are doctors available in the clinic
+        if (doctorsInClinic.isEmpty()) {
+            throw new IllegalArgumentException("No doctors available in the selected clinic.");
+        }
+        
+        
+        // Generate a random index for the list of doctors in the clinic
+        Random random = new Random();
+        //int randomIndex = ThreadLocalRandom.current().nextInt(0, doctorsInClinic.size());
+        int randomIndex = random.nextInt(doctorsInClinic.size());
+        System.out.println("Random index selected: " + randomIndex);
+        Doctor randomDoc = doctorsInClinic.get(randomIndex);
+        System.out.println("Doctor selected: " + randomDoc.getNombre()); // Assuming getName() exists
+    
+        // Return the selected doctor
+        return randomDoc;
+    }
+    
+
+    /**
+     * This method takes a cita and then trasnfers that cita to a doctor
+     * @param cita
+     * @return
+     */
+    public boolean addCitaToClinic(Cita cita) {
+        //Add all the clincis
+
+        ArrayList<Clinica> clinicas = this.getAllClinicas();
+        // get the clinic with the same id as the cita
+        Clinica clinica = clinicas.stream().filter(c -> c.getId() == cita.getId()).findFirst().orElse(null); //this is returning a null???
+        //perhaps is creating a null because cita doesn't have defined id???
+        if (clinica == null) {
+            return false;
+        }
+        // filter the doctors in a clinic
+        List<Doctor> doctorsInClinic = clinica.getDoctorId().stream().map(id -> this.getDoctorById(id)).filter(doc -> doc.getClinica() == clinica.getEspecialidad()).toList();
+        
+
+        //Do a random number from 1 to the size of the list of doctors in the clinic
+        int randomIndex = ThreadLocalRandom.current().nextInt(0, doctorsInClinic.size());
+        Doctor randomDoc = doctorsInClinic.get(randomIndex);
+
+        // add the cita to the doctor
+        randomDoc.addCita(cita);
+        this.updateDoctor(randomDoc);
+
+        // return doc
+        return true;
+    }
     /**
      * Retrieves a Paciente object by ID.
      *
