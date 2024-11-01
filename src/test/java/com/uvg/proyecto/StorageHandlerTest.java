@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -200,6 +199,7 @@ public class StorageHandlerTest {
     // Clinicas
     @Test
     public void createClinic() {
+        @SuppressWarnings("unused")
         ArrayList<Integer> doctorId = new ArrayList<>();
         Clinica newClinic = new Clinica("prueva 1");
         
