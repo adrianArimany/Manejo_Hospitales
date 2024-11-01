@@ -80,19 +80,39 @@ public class Clinica {
         this.especialidad = especialidad;
     }
 
+    /**
+     * Obtiene una lista de IDs de doctores asociados con la clínica.
+     *
+     * @return Una lista de IDs de doctores.
+     */
     public ArrayList<Integer> getDoctorId() {
         return doctorId;
     }
 
+    /**
+     * Adds a doctor ID to the list of IDs of doctors associated with the clinic.
+     * 
+     * @param doctorId The ID of the doctor to add.
+     */
     public void setDoctorId(int doctorId) {
         this.doctorId.add(doctorId);
     }
 
+    /**
+     * Establece la lista de IDs de doctores asociados con la clínica.
+     * 
+     * @param doctorId La lista de IDs de doctores.
+     */
     public void setArrayDoctorId(ArrayList<Integer> doctorId) {
         this.doctorId = doctorId;
     }
 
 
+    /**
+     * Devuelve una representaci n en cadena de la cl nica.
+     * 
+     * @return una cadena que describe la cl nica.
+     */
     @Override
     public String toString() {
         return "Clinica [especialidad=" + especialidad + ", id=" + id + ", doctorId=" + doctorId + "]";

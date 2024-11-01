@@ -20,8 +20,18 @@ import com.uvg.proyecto.Utils.IdGenerator;
 import java.util.Random;
 
 public class StorageHandler {
+    
+    /**
+     * This is the path for the patient.json file.
+     */
     private final String PATIENT_FILE = "src/main/java/com/uvg/proyecto/JSON/patient.json";
+    /**
+     * This is the path for the doctor.json file.
+     */
     private final String DOCTOR_FILE = "src/main/java/com/uvg/proyecto/JSON/doctor.json";
+    /**
+     * This is the path for the clinica.json file.
+     */
     private final String CLINICA_FILE = "src/main/java/com/uvg/proyecto/JSON/clinica.json";
     private Random random = new Random();
     private Gson gson;
@@ -34,6 +44,10 @@ public class StorageHandler {
         this.initIds();
     }
 
+    /**
+     * Verifies if the json files for patients, doctors and clinics exist,
+     * if not, creates them and save an empty list of each.
+     */
     private void checkFilesOrCreatesThem() {
         try {
             File patientFile = new File(PATIENT_FILE);
@@ -59,6 +73,12 @@ public class StorageHandler {
         }
     }
 
+    /**
+     * Saves the given list of Pacientes to the json file.
+     * 
+     * @param pacientes The list of Pacientes to save.
+     * @return true if the save is successful, false otherwise.
+     */
     public boolean savePacientes(ArrayList<Paciente> pacientes) {
         try (Writer writer = new FileWriter(PATIENT_FILE)) {
             gson.toJson(pacientes, writer);
@@ -69,6 +89,12 @@ public class StorageHandler {
         return true;
     }
 
+    /**
+     * Saves the given list of Doctors to the json file.
+     * 
+     * @param doctors The list of Doctors to save.
+     * @return true if the save is successful, false otherwise.
+     */
     public boolean saveDoctors(ArrayList<Doctor> doctors) {
         try (Writer writer = new FileWriter(DOCTOR_FILE)) {
             gson.toJson(doctors, writer);
@@ -79,6 +105,12 @@ public class StorageHandler {
         return true;
     }
 
+    /**
+     * Saves the given list of Clinicas to the json file.
+     * 
+     * @param clinicas The list of Clinicas to save.
+     * @return true if the save is successful, false otherwise.
+     */
     public boolean saveClinica(ArrayList<Clinica> clinicas) {
         try (Writer writer = new FileWriter(CLINICA_FILE)) {
             gson.toJson(clinicas, writer);
@@ -118,6 +150,18 @@ public class StorageHandler {
         return false;
     }
 
+    /**
+     * Removes a Paciente with the given ID from the storage if it exists.
+     * 
+     * This method first retrieves all existing Paciente records and checks if a
+     * Paciente with the given ID exists. If the Paciente exists, it removes the
+     * Paciente from the list, releases its ID for future use, and saves the
+     * updated list to the file.
+     * 
+     * @param id The ID of the Paciente to be removed.
+     * @return true if the Paciente was successfully removed and saved, false if
+     *         a Paciente with the given ID does not exist or if saving failed.
+     */
     public boolean deletePatient(int id) {
         // Get all pacientes
         ArrayList<Paciente> pacientes = this.getAllPatients();
@@ -134,6 +178,15 @@ public class StorageHandler {
         return false; // Return false if no paciente was removed
     }
 
+    /**
+     * Gets the list of Paciente objects associated with a Doctor.
+     * 
+     * Given a Doctor object, it returns the list of Paciente objects
+     * associated with that doctor by their IDs.
+     * 
+     * @param doc the Doctor object
+     * @return the list of Paciente objects associated with the doctor
+     */
     public ArrayList<Paciente> getDrPacientes(Doctor doc) {
         ArrayList<Integer> pacientesIds = doc.getPacientesId();
 
@@ -187,6 +240,19 @@ public class StorageHandler {
     }
 
 
+    /**
+     * Adds a new medical record to the patient.
+     * 
+     * This method first checks if the patient exists and if the medical record is not null.
+     * If the patient does not have a medical record, it creates a new list and adds the
+     * record to it. Then it updates the patient's record.
+     * 
+     * @param pacienteId the ID of the patient to add the medical record to.
+     * @param historialMedico the medical record to add.
+     * @return true if the medical record was successfully added to the patient and the
+     *         record was updated, false if the patient does not exist or if the medical
+     *         record is null.
+     */
     public boolean createHistorialMedico(int pacienteId, String historialMedico) {
         // Find the paciente to update
         Paciente paciente = this.getPacienteById(pacienteId);
@@ -221,6 +287,18 @@ public class StorageHandler {
 
         return false;
     }
+
+    
+    /**
+     * Allows a doctor to prescribe a medicine to a patient.
+     * 
+     * Given a Prescription object, this method will find the corresponding patient and doctor in the database and associate the prescription with both.
+     * 
+     * @param prescription
+     *            the Prescription object to be associated with the doctor and patient.
+     * 
+     * @return true if the prescription was successfully associated with the doctor and patient and both were updated, false if the doctor or patient do not exist.
+     */
     public boolean drPrescribeMedicineToPatient(Prescription prescription) {
         // get pacciente from presciption
         ArrayList<Paciente> pacientes = this.getAllPatients();
@@ -240,10 +318,21 @@ public class StorageHandler {
         return isDoctorUpdated && isPacienteUpdated;
     }
 
+    /**
+     * Retrieves the list of appointments (citas) associated with the given doctor.
+     *
+     * @param testDoc the Doctor object for which to retrieve the list of appointments.
+     * @return an ArrayList of Cita objects representing the doctor's appointments.
+     */
     public ArrayList<Cita> drViewCitas(Doctor testDoc) {
         return testDoc.getCitas();
     }
 
+    /**
+     * Reads the list of patients from the JSON file.
+     * 
+     * @return an ArrayList of Paciente objects representing all the patients in the database.
+     */
     private ArrayList<Paciente> getAllPatients() {
         File file = new File(PATIENT_FILE);
         if (!file.exists()) {
@@ -262,6 +351,11 @@ public class StorageHandler {
         }
     }
 
+    /**
+     * Reads the list of doctors from the JSON file.
+     * 
+     * @return an ArrayList of Doctor objects representing all the doctors in the database.
+     */
     private ArrayList<Doctor> getAllDoctors() {
         File file = new File(DOCTOR_FILE);
         if (!file.exists()) {
@@ -280,6 +374,11 @@ public class StorageHandler {
         }
     }
 
+    /**
+     * Reads the list of clinics from the JSON file.
+     * 
+     * @return an ArrayList of Clinica objects representing all the clinics in the database.
+     */
     private ArrayList<Clinica> getAllClinics() {
         File file = new File(CLINICA_FILE);
         if (!file.exists()) {
@@ -298,6 +397,13 @@ public class StorageHandler {
         }
     }
 
+    /**
+     * Checks if a paciente exists in the given list of pacientes.
+     * 
+     * @param pacientes the list of pacientes to search in.
+     * @param id        the id of the paciente to search for.
+     * @return true if the paciente exists, false otherwise.
+     */
     private boolean pacienteExists(ArrayList<Paciente> pacientes, int id) {
         return pacientes.stream()
                 .filter(patient -> patient.getId() == id)
@@ -305,6 +411,15 @@ public class StorageHandler {
                 .isPresent();
     }
 
+    /**
+     * Removes a patient from the doctor's list of patients and updates the doctor
+     * and patient records in the database.
+     *
+     * @param doc      the Doctor object from which the patient is to be removed.
+     * @param paciente the Paciente object to be removed from the doctor's list.
+     * @return true if the patient is successfully removed and the records are updated,
+     *         false otherwise.
+     */
     public boolean removePacienteFromDoc(Doctor doc, Paciente paciente) {
         // Check if paciente already exists under the doctor
         ArrayList<Paciente> pacientesDelDoc = this.getDrPacientes(doc);
@@ -327,6 +442,17 @@ public class StorageHandler {
         return true;
     }
 
+    /**
+     * Adds a new Doctor to the storage if it does not already exist.
+     * 
+     * This method first retrieves all existing Doctor records and checks if a
+     * Doctor with the given ID already exists. If the Doctor does not exist,
+     * it adds the new Doctor to the list and saves the updated list to the file.
+     * 
+     * @param doc The Doctor object to be added.
+     * @return true if the Doctor was successfully added and saved, false if
+     *         a Doctor with the same ID already exists or if saving failed.
+     */
     public boolean createDoctor(Doctor doc) {
         // Get all doctors
         ArrayList<Doctor> doctors = this.getAllDoctors();
@@ -350,6 +476,18 @@ public class StorageHandler {
         return false;
     }
 
+    /**
+     * Deletes a Doctor from the storage if it exists.
+     * 
+     * This method first retrieves all existing Doctor records and checks if a
+     * Doctor with the given ID exists. If the Doctor exists, it removes the
+     * Doctor from the list, releases its ID for future use, and saves the
+     * updated list to the file.
+     * 
+     * @param id The ID of the Doctor to be removed.
+     * @return true if the Doctor was successfully removed and saved, false if
+     *         a Doctor with the given ID does not exist or if saving failed.
+     */
     public boolean deleteDoctor(int id) {
         // Get all doctors
         ArrayList<Doctor> doctors = this.getAllDoctors();
@@ -366,6 +504,17 @@ public class StorageHandler {
         return false; // Return false if no doctor was removed
     }
 
+    /**
+     * Updates a Doctor in the storage.
+     * 
+     * This method first retrieves all existing Doctor records, removes the
+     * Doctor with the same ID as the given Doctor, and adds the given Doctor
+     * to the list. Then it saves the updated list to the file.
+     * 
+     * @param doc The Doctor object to be updated.
+     * @return true if the Doctor was successfully updated and saved, false if
+     *         saving failed.
+     */
     private boolean updateDoctor(Doctor doc) {
         // Get all doctors
         ArrayList<Doctor> doctors = this.getAllDoctors();
@@ -382,6 +531,17 @@ public class StorageHandler {
         return false;
     }
 
+    /**
+     * Updates a Paciente in the storage.
+     * 
+     * This method first retrieves all existing Paciente records, removes the
+     * Paciente with the same ID as the given Paciente, and adds the given 
+     * Paciente to the list. Then it saves the updated list to the file.
+     * 
+     * @param paciente The Paciente object to be updated.
+     * @return true if the Paciente was successfully updated and saved, false if
+     *         saving failed.
+     */
     private boolean updatePatient(Paciente paciente) {
         // Get all pacientes
         ArrayList<Paciente> pacientes = this.getAllPatients();
@@ -399,10 +559,21 @@ public class StorageHandler {
     }
 
 
-    /**
-     * 
-     * @Todo Esto pero los parametros son id
-     */
+    
+/**
+ * Adds an appointment (cita) to both the Doctor's and Paciente's list of appointments.
+ * 
+ * This method creates a new Cita object based on the provided parameters and adds it to
+ * the Doctor's and Paciente's records. It updates both records and associates the Paciente
+ * with the Doctor if not already associated.
+ * 
+ * @param doc The Doctor who will have the appointment added to their schedule.
+ * @param paciente The Paciente who will have the appointment added to their schedule.
+ * @param clinicaSpeciality The specialty of the clinic where the appointment is scheduled.
+ * @param date The date of the appointment.
+ * @param enfermedades The medical conditions related to the appointment.
+ * @return true if the appointment was successfully added to both the Doctor's and Paciente's records.
+ */
     public boolean drAddCita(Doctor doc, Paciente paciente,String clinicaSpeciality, String date, String enfermedades) {
         //Creates new cita based on the parameters.
         Cita cita = new Cita(doc.getId(), paciente.getId(), doc.getNombre() , paciente.getNombre(), clinicaSpeciality,  date, enfermedades);
@@ -421,9 +592,13 @@ public class StorageHandler {
         return true;
     }
 
+    
     /**
-     * This method adds a doc to the appointment that the patient enters into the code.
-     * @return
+     * Finds a random doctor from the given clinic speciality.
+     * 
+     * @param clinicaSpeciality The speciality of the clinic to select a doctor from.
+     * @return A random doctor from the given clinic speciality.
+     * @throws IllegalArgumentException if no doctors are available in the selected clinic.
      */
     public Doctor docAddedtoCita(String clinicaSpeciality) {
         // Add all the doctors.
@@ -464,17 +639,39 @@ public class StorageHandler {
         return doctors.stream().filter(doctor -> doctor.getId() == id).findFirst().orElse(null);
     }
 
+    /**
+     * Retrieves the list of prescriptions associated with a patient.
+     *
+     * @param pacienteId the ID of the patient to retrieve the prescriptions for
+     * @return the list of prescriptions associated with the patient
+     */
     public ArrayList<Prescription> getPrescriptionsFromPatient(int pacienteId) {
         Paciente paciente = this.getPacienteById(pacienteId);
         return paciente.getPrescriptions();
     }
 
+    /**
+     * Retrieves the list of appointments (citas) associated with a patient.
+     *
+     * @param pacienteId The ID of the patient to retrieve the appointments for.
+     * @return The list of appointments associated with the patient.
+     */
     public List<Cita> getPacienteCitas(int pacienteId) {
         Paciente paciente = this.getPacienteById(pacienteId);
         List<Cita> citas = paciente.getCitas();
         return citas;
     }
 
+    /**
+     * Initializes the ID counters for patients, doctors, and clinics.
+     * 
+     * This method should be called when the storage handler is first initialized.
+     * It scans the existing data and finds the highest existing IDs for patients,
+     * doctors, and clinics. It then initializes the {@link IdGenerator} class
+     * with the highest existing IDs + 1.
+     * 
+     * @return true if the ID counters were successfully initialized, false otherwise.
+     */
     public boolean initIds() {
         ArrayList<Paciente> pacientes = this.getAllPatients();
         ArrayList<Doctor> doctors = this.getAllDoctors();
@@ -505,14 +702,32 @@ public class StorageHandler {
         return true;
     }
 
+    /**
+     * Returns a list of all patients in the storage.
+     * 
+     * @return a list of Paciente objects representing all patients in the storage.
+     */
     public ArrayList<Paciente> showAllPacientes() {
         return this.getAllPatients();
     }
 
+    /**
+     * Returns a list of all doctors in the storage.
+     * 
+     * @return an ArrayList of Doctor objects representing all doctors in the storage.
+     */
     public ArrayList<Doctor> showAllDoctors() {
         return this.getAllDoctors();
     }
 
+    /**
+     * Adds a doctor to a clinic. If the doctor is already in another clinic,
+     * it will be removed from that clinic before being added to the new one.
+     * 
+     * @param testDocId The ID of the doctor to add to the clinic.
+     * @param clinicaId The ID of the clinic to add the doctor to.
+     * @return true if the doctor was successfully added to the clinic, false otherwise.
+     */
     public boolean addClinicToDoctor(int testDocId, int clinicaId) {
         // read all doctors
         ArrayList<Doctor> doctores = this.getAllDoctors();
@@ -553,6 +768,17 @@ public class StorageHandler {
         return (isClinicaSaved && isDoctorSaved);
     }
 
+/**
+ * Retrieves a list of Doctors associated with a specific clinic.
+ *
+ * This method takes a clinic ID, finds the corresponding Clinica object,
+ * and returns a list of Doctor objects whose IDs are associated with that
+ * clinic. If the clinic ID is not found, it returns an empty list.
+ *
+ * @param clinicaId The ID of the clinic.
+ * @return An ArrayList of Doctor objects associated with the specified clinic,
+ *         or an empty list if the clinic is not found.
+ */
     public ArrayList<Doctor> getAllDoctorsFromClinic(int clinicaId) {
         // read all clinics
         ArrayList<Clinica> clinicas = this.getAllClinics();
@@ -572,6 +798,12 @@ public class StorageHandler {
         return new ArrayList<>(doctorsFoundInClinca);
     }
 
+    /**
+     * Adds a new Clinica to the storage.
+     * 
+     * @param clinica The Clinica object to add.
+     * @return true if the Clinica was successfully added, false otherwise.
+     */
     public boolean createNewClinic(Clinica clinica) {
         // Read all clinics from file
         ArrayList<Clinica> clinicas = this.getAllClinics();
@@ -582,15 +814,31 @@ public class StorageHandler {
         return this.saveClinica(clinicas);
     }
 
+    /**
+     * Elimina una clinica de la lista de clinicas.
+     * 
+     * @param idClinica El id de la clinica a eliminar.
+     * @return true si se elimino correctamente la clinica, false de lo contrario.
+     */
     public boolean eliminarClinica(int idClinica){
         ArrayList<Clinica> clinicas = this.getAllClinics();
         clinicas.removeIf(clinica -> clinica.getId() == idClinica);
         return this.saveClinica(clinicas);
     }
 
+    /**
+     * Retrieves a list of all Clinicas stored in the system.
+     * 
+     * @return An ArrayList of Clinica objects representing all clinics.
+     */
     public ArrayList<Clinica> getAllClinicas() {
         return this.getAllClinics();
     } 
+    /**
+     * Retrieves a list of all Doctor objects available for a user.
+     * 
+     * @return An ArrayList of Doctor objects representing all doctors.
+     */
     public ArrayList<Doctor> getAllDoctorForUser() {
         return this.getAllDoctors();
     }  

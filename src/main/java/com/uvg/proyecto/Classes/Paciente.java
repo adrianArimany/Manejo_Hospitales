@@ -71,11 +71,8 @@ public class Paciente {
         this.prescriptions = new ArrayList<>();
         this.historialMedico = new ArrayList<>();
     }
-    // public Paciente(String nombre, String historialMedico) {
-    //     this.id = IdGenerator.generateId(UserTypes.Paciente);
-    //     this.nombre = nombre;
-    //     this.historialMedico = new ArrayList<>();
-    // }
+    
+    
     /**
      * Obtiene el ID del paciente.
      *
@@ -148,52 +145,121 @@ public class Paciente {
         this.clinica = clinica;
     }
 
+    /**
+     * Retrieves the medical history of the patient.
+     *
+     * @return A list of strings where each string represents a medical record or
+     *         diagnosis of the patient.
+     */
     public List<String> getHistorialMedico() {
         return historialMedico;
     }
+    /**
+     * Sets the medical history of the patient.
+     *
+     * @param historialMedico A list of strings where each string represents a
+     *                        medical record or diagnosis of the patient.
+     */
     public void  setHistorialMedico(List<String>  historialMedico) {
         this.historialMedico = historialMedico;
     }
+    /**
+     * Agrega un nuevo historial medico al paciente.
+     *
+     * @param historial El nuevo historial medico a agregar.
+     */
     public void agregarHistorialMedico(String historial) {
         this.historialMedico.add(historial);
     }
 
+    /**
+     * Retrieves the list of diseases associated with the patient.
+     *
+     * @return A list of strings representing the diseases associated with the patient.
+     */
     public List<String> getEnfermedades() {
         return enfermedades;
     }
 
+    /**
+     * Adds a new disease to the patient's list of diseases.
+     * 
+     * @param enfermedad The name of the disease to add.
+     */
     public void agregarEnfermedad(String enfermedad) {
         this.enfermedades.add(enfermedad);
     }
 
+    /**
+     * Adds a doctor's ID to the list of doctors associated with the patient.
+     *
+     * @param doc The ID of the doctor to add.
+     */
     public void addDocToPaciente(int doc) {
         this.doctoresId.add(doc);
     }
 
+    /**
+     * Removes a doctor's ID from the list of doctors associated with the patient.
+     *
+     * @param id The ID of the doctor to remove.
+     */
     public void removeDocFromPaciente(int id) {
         this.doctoresId.removeIf(docId -> docId == id);
     }
 
+    /**
+     * Adds an appointment (cita) to the patient's list of appointments.
+     *
+     * @param cita The appointment to be added.
+     */
     public void addCita(Cita cita) {
         this.citas.add(cita);
     }
 
+
+    /**
+     * Retrieves the list of prescriptions associated with the patient.
+     *
+     * @return An ArrayList of Prescription objects representing the patient's prescriptions.
+     */
     public ArrayList<Prescription> getPrescriptions() {
         return prescriptions;
     }
 
+    /**
+     * Sets the list of prescriptions associated with this patient.
+     * 
+     * @param prescriptions An ArrayList of Prescription objects representing the patient's prescriptions.
+     */
     public void setPrescriptions(ArrayList<Prescription> prescriptions) {
         this.prescriptions = prescriptions;
     }
 
+
+    /**
+     * Adds a prescription to the patient's list of prescriptions.
+     * 
+     * @param prescription The Prescription object to be added.
+     */
     public void addPrescription(Prescription prescription) {
         this.prescriptions.add(prescription);
     }
 
+    /**
+     * Sets the list of appointments (citas) associated with the patient.
+     * 
+     * @param citas The list of appointments to associate with the patient.
+     */
     public void setCitas(List<Cita> citas) {
         this.citas = citas;
     }
 
+    /**
+     * Retrieves the list of appointments (citas) associated with the patient.
+     * 
+     * @return a list of Cita objects representing the patient's appointments.
+     */
     public List<Cita> getCitas() {
         return citas;
     }

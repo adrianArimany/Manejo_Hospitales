@@ -45,14 +45,32 @@ public class Doctor {
         this.prescriptions = new ArrayList<>();
     }
 
+    /**
+     * Sets the IDs of the patients treated by this doctor.
+     * 
+     * @param pacientesId
+     *            the IDs of the patients treated by this doctor
+     */
     public void setPacientesId(ArrayList<Integer> pacientesId) {
         this.pacientesId = pacientesId;
     }
 
+    /**
+     * Retrieves the list of appointments (citas) associated with the doctor.
+     *
+     * @return an ArrayList of Cita objects representing the doctor's appointments.
+     */
     public ArrayList<Cita> getCitas() {
         return citas;
     }
 
+    /**
+     * Retrieves a specific appointment (cita) associated with the doctor by its ID.
+     * 
+     * @param id
+     *            the ID of the appointment to retrieve
+     * @return the appointment associated with the given ID, or null if no such appointment exists
+     */
     public Cita getCitaById(int id) {
         for (Cita cita : citas) {
             if (cita.getId() == id) {
@@ -62,6 +80,12 @@ public class Doctor {
         return null;
     }
 
+    /**
+     * Sets the list of appointments (citas) associated with the doctor.
+     * 
+     * @param citas
+     *            the list of appointments to associate with the doctor
+     */
     public void setCitas(ArrayList<Cita> citas) {
         this.citas = citas;
     }
@@ -139,39 +163,86 @@ public class Doctor {
         return stringBuilder.toString(); // regresa el historial medico como un string.
     }
 
+    /**
+     * Returns a string representation of the doctor.
+     * <p>
+     * The representation includes the doctor's ID, name, and clinic.
+     * 
+     * @return a string representation of the doctor
+     */
     @Override
     public String toString() {
         return "Doctor [id=" + id + ", nombre=" + nombre + ", clinica=" + clinica + "]";
     }
 
+    /**
+     * Gets the list of patients associated with this doctor.
+     * 
+     * @return the list of patients associated with this doctor.
+     */
     public ArrayList<Integer> getPacientesId() {
         return pacientesId;
     }
 
+    /**
+     * Sets the list of patient IDs associated with this doctor.
+     * 
+     * @param pacientes the new list of patient IDs to be associated with this doctor
+     */
     public void setPacientes(ArrayList<Integer> pacientes) {
         this.pacientesId = pacientes;
     }
 
+    /**
+     * Adds a patient to the doctor's list of patients.
+     * 
+     * @param pacienteId the ID of the patient to add
+     */
     public void addPacienteToDoc(int pacienteId) {
         this.pacientesId.add(pacienteId);
     }
 
+    /**
+     * Removes a patient from the doctor's list of patients.
+     * 
+     * @param id the ID of the patient to remove
+     */
     public void removePacienteFromDoc(int id) {
         this.pacientesId.removeIf(pacienteId -> pacienteId == id);
     }
 
+    /**
+     * Adds an appointment to the doctor's list of appointments.
+     * 
+     * @param cita the appointment to be added
+     */
     public void addCita(Cita cita) {
         this.citas.add(cita);
     }
 
+    /**
+     * Gets the list of prescriptions associated with this doctor.
+     * 
+     * @return the list of prescriptions associated with this doctor
+     */
     public ArrayList<Prescription> getPrescriptions() {
         return prescriptions;
     }
 
+    /**
+     * Sets the list of prescriptions associated with this doctor.
+     * 
+     * @param prescriptions the new list of prescriptions associated with this doctor
+     */
     public void setPrescriptions(ArrayList<Prescription> prescriptions) {
         this.prescriptions = prescriptions;
     }
     
+    /**
+     * Adds a prescription to the doctor's list of prescriptions.
+     * 
+     * @param prescription the prescription to be added
+     */
     public void addPrescription(Prescription prescription) {
         this.prescriptions.add(prescription);
     }

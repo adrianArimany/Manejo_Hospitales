@@ -12,6 +12,9 @@ public class IdGenerator {
     public static int citaId = 0;
     public static int prescriptionId = 0;
 
+    /**
+     * These priorityQueue aren't properly implemented....
+     */
     private static PriorityQueue<Integer> availablePatientIds = new PriorityQueue<>();
     private static PriorityQueue<Integer> availableDoctorIds = new PriorityQueue<>();
     private static PriorityQueue<Integer> availableClinicIds = new PriorityQueue<>();
@@ -58,7 +61,7 @@ public class IdGenerator {
         //return -1;
     }
 
-     // Methods to release deleted IDs back into the available pool for reuse
+     // Methods to release deleted IDs back into the available pool for reuse (not properly working...)
      public static void releasePatientId(int id) {
         availablePatientIds.offer(id);
     }
