@@ -626,5 +626,8 @@ public class StorageHandler {
 
     public ArrayList<Clinica> getAllClinicas() {
         return this.getAllClinics();
-    }   
+    } 
+    public ArrayList<Doctor> getAllDoctorForUser() {
+        return this.getAllDoctors();
+    }  
 }

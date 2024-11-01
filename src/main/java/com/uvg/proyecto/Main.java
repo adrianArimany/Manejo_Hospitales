@@ -559,7 +559,7 @@ public class Main {
                     break;
                 }
                 //scanner lista de clinicas a elejir.
-                System.out.println("The Speciality of the Doctor: ");
+                System.out.println("The Specialities that the Doctor can choose from: ");
                 // Agarar todas las clinicas
                 ArrayList<Clinica> clinicasParaMostrarAlUsuario = this.storageHandler.getAllClinicas();
                 Doctor newDoctor;
@@ -623,6 +623,7 @@ public class Main {
         do {
             try {
                 System.out.println("Menu to Administrate Clinics  \n1. Add Clinic \n2. Remove Clinic \n3. Move a Doctor to a Clinic \n0. Return to the admin menu");
+                ArrayList<Clinica> idClinica = this.storageHandler.getAllClinicas();
                 input = scanner.nextInt();
                 scanner.nextLine();
                 switch (input) {
@@ -641,17 +642,62 @@ public class Main {
                     case 2:
                         // Eliminar Clinica
                         System.out.println("The ID from the clinic to remove ");
-                        int idClinica = Integer.parseInt(scanner.nextLine());
-                        this.storageHandler.eliminarClinica(idClinica);
-                        System.out.println("Clinic with ID " + idClinica + " eliminated.");
+                        if (idClinica.size() > 0) {
+                            System.out.println("0. return to previous menu");
+                            for (int i = 0; i < idClinica.size(); i++) {
+                                System.out.println((i+1) + ": " + idClinica.get(i).getEspecialidad());
+                            }
+                            
+                            // user pone el input una especialidad
+                            int userIdClinica = Integer.parseInt(scanner.nextLine()) - 1;
+
+                            if (userIdClinica == -1) { //This exists so that if the admin decides to create a Doc without a speciality.
+                                System.out.println("No Clinic removed. Returning...");
+                                return;
+                            }
+
+                            this.storageHandler.eliminarClinica(userIdClinica);
+                            System.out.println("Clinic with ID " + userIdClinica + " eliminated.");    
+                        }
                         break;
                     case 3:
                         // Add Doctor to clinic
                         System.out.println("The ID of the clinic to move the Doctor.");
-                        int idClinicaDoc = Integer.parseInt(scanner.nextLine());
+                        ArrayList<Doctor> idoctors = this.storageHandler.getAllDoctorForUser();
+                        int idDoctorClinica = -1;
+                        int userIdDoc = -1;
+
+                        if (idClinica.size() > 0) {
+                            System.out.println("0. return to previous menu");
+                            for (int i = 0; i < idClinica.size(); i++) {
+                                System.out.println((i+1) + ": " + idClinica.get(i).getEspecialidad());
+                            }
+                            
+                            // user pone el input una especialidad
+                            idDoctorClinica = Integer.parseInt(scanner.nextLine()) - 1;
+
+                            if (idDoctorClinica == -1) { //This exists so that if the admin decides to create a Doc without a speciality.
+                                System.out.println("No Clinic removed. Returning...");
+                                return;
+                            }
+                            
+                        }
                         System.out.println("The ID of the doctor to move to: ");
-                        int idDoctorClinica = Integer.parseInt(scanner.nextLine());
-                        boolean isDocMoved = this.storageHandler.addClinicToDoctor(idDoctorClinica, idClinicaDoc);
+                        if (idoctors.size() > 0) {
+                            System.out.println("0. return to previous menu");
+                            for (int i = 0; i < idoctors.size(); i++) {
+                                System.out.println((i+1) + ": " + idoctors.get(i).getNombre() + ". Currently at: " + idoctors.get(i).getClinica());
+                            }
+                            
+                            // user pone el input una especialidad
+                            userIdDoc = Integer.parseInt(scanner.nextLine()) - 1;
+
+                            if (userIdDoc == -1) { //This exists so that if the admin decides to create a Doc without a speciality.
+                                System.out.println("No Clinic removed. Returning...");
+                                return;
+                            }  
+                        }
+                        boolean isDocMoved = this.storageHandler.addClinicToDoctor(idClinica.get(idDoctorClinica).getId(), idoctors.get(userIdDoc).getId());
                         if (isDocMoved) {
                             System.out.println("The doctor was moved without problem.");
                         } else {
