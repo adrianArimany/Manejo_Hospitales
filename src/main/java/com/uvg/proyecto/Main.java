@@ -315,6 +315,10 @@ public class Main {
                             System.out.println(loginPac.getNombre() + " doesn't have any prescrition.");
                         } else {
                             for (Prescription p : prescriptions) {
+                                Doctor doctor = this.storageHandler.getDoctorById(p.getDoctor()); //calls the name of the doctor
+                                Paciente paciente = this.storageHandler.getPacienteById(p.getPaciente()); //calls the name of the patient.
+                                p.setDoctorName(doctor.getNombre());
+                                p.setPacienteName(paciente.getNombre());
                                 System.out.println(p.toString());
                             }
                         }
