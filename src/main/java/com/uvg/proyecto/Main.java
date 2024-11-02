@@ -440,9 +440,11 @@ public class Main {
                             System.out.println("No presctiptions found for this patient.");
                         } else {
                             for (Prescription prescription : prescriptions) {
-                                Doctor doctor = this.storageHandler.getDoctorById(prescription.getDoctor());
-                                Paciente paciente = this.storageHandler.getPacienteById(prescription.getPaciente());
-                                System.out.println(new Prescription(doctor.getId(), paciente.getId(), prescription.getMedicines()).toString()); //@TODO somehow make the names show up
+                                Doctor doctor = this.storageHandler.getDoctorById(prescription.getDoctor()); //calls the name of the doctor
+                                Paciente paciente = this.storageHandler.getPacienteById(prescription.getPaciente()); //calls the name of the patient.
+                                prescription.doctorName = doctor.getNombre();
+                                prescription.pacienteName = paciente.getNombre();
+                                System.out.println(prescription.toString()); 
                             }
                         }
                     } catch (NumberFormatException e) {
@@ -475,7 +477,7 @@ public class Main {
                     }
                     System.out.println("Enter Prescription: ");
                     String prescripcion = scanner.nextLine();
-                    Prescription newPrescription = new Prescription(loginDoc.getId(), paciente.getId(), prescripcion);
+                    Prescription newPrescription = new Prescription(loginDoc.getId(), paciente.getId(), loginDoc.getNombre() , paciente.getNombre() , prescripcion);
                     boolean result = this.storageHandler.drPrescribeMedicineToPatient(newPrescription); //you also have to make sure a date is atteached with this prescription...
                     if (result == false) {
                         System.out.println("Error: Presctiption not found.");

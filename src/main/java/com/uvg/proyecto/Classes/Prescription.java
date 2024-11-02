@@ -3,6 +3,8 @@ package com.uvg.proyecto.Classes;
 
 import com.uvg.proyecto.Data.UserTypes;
 import com.uvg.proyecto.Utils.IdGenerator;
+import java.time.LocalDate; //currently throwing a error with a gson depedency. So can't use it unless I fix that.
+import java.time.format.DateTimeFormatter;
 
 public class Prescription {
     public int id;
@@ -11,16 +13,19 @@ public class Prescription {
     public String medicines;
     public String pacienteName;
     public String doctorName;
+    public LocalDate date;
 
 
 
     public Prescription(){
         this.id = IdGenerator.generateId(UserTypes.Prescription);
+        this.date = LocalDate.now();
     }
 
     public Prescription(int doctor, int paciente) {
         this.doctor = doctor;
         this.paciente = paciente;
+        this.date = LocalDate.now();
     }
 
     public Prescription(int id, int doctor, int paciente, String medicines) {
@@ -43,6 +48,7 @@ public class Prescription {
         this.doctor = doctor;
         this.paciente = paciente;
         this.medicines = medicines;
+        this.date = LocalDate.now();
     }
     
 
@@ -161,11 +167,14 @@ public class Prescription {
      */
     @Override
     public String toString() {
-        return "Prescription: [Token: " + this.id + 
-        ".\n Name of Doctor: " + this.doctorName + " (ID: " + this.doctor + " )" + 
-        ".\n Name of Patient: " + this.pacienteName + " (ID: " + this.paciente + " )" + 
-        ".\n Medicines: " + this.medicines + " ]";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    return "Prescription: [Token: " + this.id + 
+           ".\n Name of Doctor: " + this.doctorName + " (ID: " + this.doctor + " )" + 
+           ".\n Name of Patient: " + this.pacienteName + " (ID: " + this.paciente + " )" + 
+           ".\n Medicines: " + this.medicines + 
+           ".\n Date: " + this.date.format(formatter) + " ]";
     }
+
 
     
 

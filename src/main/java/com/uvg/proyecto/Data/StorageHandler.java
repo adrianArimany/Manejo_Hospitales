@@ -6,11 +6,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.uvg.proyecto.Adapters.LocalDateAdapter;
 import com.uvg.proyecto.Classes.Cita;
 import com.uvg.proyecto.Classes.Clinica;
 import com.uvg.proyecto.Classes.Doctor;
@@ -38,7 +40,7 @@ public class StorageHandler {
 
     public StorageHandler() {
         GsonBuilder builder = new GsonBuilder().setDateFormat("yyyy-MM-dd").setPrettyPrinting();
-        gson = builder.create();
+        gson = builder.registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
         // Check if files exist or create them
         this.checkFilesOrCreatesThem();
         this.initIds();

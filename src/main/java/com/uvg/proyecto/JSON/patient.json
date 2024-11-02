@@ -55,19 +55,36 @@
         "id": 0,
         "doctor": 3,
         "paciente": 4,
-        "medicines": "please live"
+        "medicines": "please live",
+        "date": "2024-11-02"
       },
       {
         "id": 8,
         "doctor": 3,
         "paciente": 4,
-        "medicines": "please work"
+        "medicines": "please work",
+        "date": "2024-11-02"
       },
       {
         "id": 36,
         "doctor": 3,
         "paciente": 4,
-        "medicines": "Why does the names do not show UP!!!"
+        "medicines": "Why does the names do not show UP!!!",
+        "date": "2024-11-02"
+      },
+      {
+        "id": 30,
+        "doctor": 3,
+        "paciente": 4,
+        "medicines": "Does the date work now?",
+        "date": "2024-11-02"
+      },
+      {
+        "id": 36,
+        "doctor": 3,
+        "paciente": 4,
+        "medicines": "Does the date really works now",
+        "date": "2024-11-02"
       }
     ]
   }
