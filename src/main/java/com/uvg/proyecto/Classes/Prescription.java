@@ -63,7 +63,7 @@ public class Prescription {
     public void setId(int id) {
         this.id = id;
     }
-
+    
     /**
      * Returns the ID of the doctor who prescribed the medicines associated with this prescription.
      * 
@@ -81,8 +81,41 @@ public class Prescription {
     public void setDoctor(int doctor) {
         this.doctor = doctor;
     }
+    /**
+     * Returns the name of the doctor associated with this prescription.
+     * 
+     * @return the name of the doctor
+     */
+    public String getDoctorName() {
+        return doctorName;
+    }
+    /**
+     * Sets the name of the doctor associated with this prescription.
+     * 
+     * @param doctorName the name of the doctor
+     */
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+    
+    /**
+     * Returns the name of the patient associated with this prescription.
+     * 
+     * @return the name of the patient
+     */
+    public String getPacienteName( ) {
+        return pacienteName;
+    }
 
     /**
+     * Sets the name of the patient associated with this prescription.
+     * 
+     * @param pacienteName the name of the patient
+     */
+    public void setPacienteName(String pacienteName) {
+        this.pacienteName = pacienteName;
+    }
+    /** 
      * Returns the ID of the patient associated with this prescription.
      * 
      * @return the ID of the patient
@@ -128,8 +161,10 @@ public class Prescription {
      */
     @Override
     public String toString() {
-        return "Prescription [id=" + id + ", doctor=" + doctor + ", paciente=" + paciente + ", medicines=" + medicines
-                + "]";
+        return "Prescription: [Token: " + this.id + 
+        ".\n Name of Doctor: " + this.doctorName + " (ID: " + this.doctor + " )" + 
+        ".\n Name of Patient: " + this.pacienteName + " (ID: " + this.paciente + " )" + 
+        ".\n Medicines: " + this.medicines + " ]";
     }
 
     

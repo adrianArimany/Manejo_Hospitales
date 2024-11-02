@@ -841,5 +841,14 @@ public class StorageHandler {
      */
     public ArrayList<Doctor> getAllDoctorForUser() {
         return this.getAllDoctors();
-    }  
+    } 
+    
+/**
+ * Retrieves a list of all Paciente objects available for a user.
+ * 
+ * @return An ArrayList of Paciente objects representing all patients.
+ */
+    public ArrayList<Paciente> getAllPacientesForUser() {
+        return this.getAllPatients();
+    }
 }

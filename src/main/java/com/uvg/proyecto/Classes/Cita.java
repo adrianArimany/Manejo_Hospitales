@@ -64,7 +64,13 @@ public class Cita {
 
     @Override
     public String toString() {
-        return "Cita [Token:" + this.id + ", doctor Name: " + this.doctorName + "(ID: " + this.doctor + ")" + ", patient Name: " + this.pacienteName + "(ID: " + this.paciente + ")" + ".\n Appointment date: " + this.date + ", symptoms= " + this.enfermedades + "]";
+        return "Cita [Token: " + this.id + 
+        ".\n doctor Name: " + this.doctorName + " (ID: " + this.doctor + ")" + 
+        ".\n patient Name: " + this.pacienteName + " (ID: " + this.paciente + ")" + 
+        ".\n Appointment date: " + this.date + 
+        ".\n Symptoms: " + this.enfermedades + " ]";
+        
+
     }
 
     /**

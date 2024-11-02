@@ -8,17 +8,12 @@
     "prescriptions": []
   },
   {
-    "id": 3,
-    "nombre": "Viktor Kakaon",
-    "historialMedico": [],
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
     "id": 2,
     "nombre": "Felipe",
-    "historialMedico": [],
+    "historialMedico": [
+      "fwfew wef wef wef wefwef wfwqefq f",
+      "fwefewf wef ewfwe fwe fwe"
+    ],
     "doctoresId": [],
     "citas": [
       {
@@ -55,6 +50,25 @@
         "clinicaSpeciality": "General Practioner"
       }
     ],
-    "prescriptions": []
+    "prescriptions": [
+      {
+        "id": 0,
+        "doctor": 3,
+        "paciente": 4,
+        "medicines": "please live"
+      },
+      {
+        "id": 8,
+        "doctor": 3,
+        "paciente": 4,
+        "medicines": "please work"
+      },
+      {
+        "id": 36,
+        "doctor": 3,
+        "paciente": 4,
+        "medicines": "Why does the names do not show UP!!!"
+      }
+    ]
   }
 ]
