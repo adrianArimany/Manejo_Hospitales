@@ -7,7 +7,7 @@
 ## Configurations:
 1. Have version: [java version 21](https://www.oracle.com/java/technologies/downloads/) (Important!!)
 
-If you are in VS Code, run the following line in terminal to install java version 21
+If you are in Linux-based Debian, run the following line in terminal to install java version 21
 
 ```bash
 sudo apt install openjdk-21-jdk -y
