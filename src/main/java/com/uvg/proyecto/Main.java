@@ -133,24 +133,40 @@ public class Main {
                         return loginPaciente();
                     case 2:
                         boolean validInput = false;
-                        System.out.println("Write down the ID of the doctor: ");
                         do {
-                        try {
-                            int idDoctor = Integer.parseInt(scanner.nextLine());  // Use parseInt for this specific case
-                            this.loginDoc = this.storageHandler.getDoctorById(idDoctor);
-                            if (this.loginDoc == null) {
-                                System.out.println("No doctor was found with ID: " + idDoctor);
-                                System.out.print("Write down the ID of the doctor: ");
-                            } else {
-                                validInput = true;
+                            try {
+                                if (doctoresToShow.size() > 0) {
+                                    doctoresToShow.sort((d1, d2) -> Integer.compare(d1.getId(), d2.getId()));
+                                    for (Doctor doctor : doctoresToShow) {
+                                        System.out.println("ID: " + doctor.getId() + ".\n Dr. " + doctor.getNombre() + ".\n Clinic: " + doctor.getClinica());
+                                    }
+                                    System.out.println("0. Return to Main Menu");
+                                    System.out.println("Write down the ID of the doctor: ");
+                                }
+                                int userInputIdDoctor = Integer.parseInt(scanner.nextLine());
+                                if (userInputIdDoctor == 0) {
+                                    System.out.println("Returning to previous menu...");
+                                    break;
+                                }
+                                if (userInputIdDoctor < -1 || userInputIdDoctor >= doctoresToShow.size()) {
+                                    System.out.println("Error: The ID from the doctor can't be empty.");
+                                    break;
+                                }
+                                this.loginDoc = this.storageHandler.getDoctorById(userInputIdDoctor);
+                                if (this.loginDoc == null) {
+                                    System.out.println("No doctor was found with ID: " + userInputIdDoctor);
+                                    System.out.print("Write down the ID of the doctor: ");
+                                } else {
+                                    validInput = true;
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Error: only whole numbers allowed.");
+                                System.out.print("Write down your ID: ");
                             }
-                        } catch (NumberFormatException e) {
-                            System.out.println("Error: only whole numbers allowed.");
-                            System.out.print("Write down your ID: "); 
-                        } if (validInput) {
-                            return UserType.Doctor;  // Return if a valid ID and doctor are found
-                        }
                         } while (!validInput && this.loginDoc == null);
+                        if (validInput) {
+                            return UserType.Doctor;
+                        }
                         break;
                     case 3:
                         System.out.println("\n[Denied Access] Enter the admin username and password: ");
