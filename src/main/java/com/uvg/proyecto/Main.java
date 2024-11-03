@@ -132,7 +132,7 @@ public class Main {
                     case 1:
                         return loginPaciente();
                     case 2:
-                        boolean validInput = false;
+                        int userInputIdDoctor = -1;
                         do {
                             try {
                                 if (doctoresToShow.size() > 0) {
@@ -143,29 +143,25 @@ public class Main {
                                     System.out.println("0. Return to Main Menu");
                                     System.out.println("Write down the ID of the doctor: ");
                                 }
-                                int userInputIdDoctor = Integer.parseInt(scanner.nextLine());
+                                userInputIdDoctor = Integer.parseInt(scanner.nextLine());
                                 if (userInputIdDoctor == 0) {
                                     System.out.println("Returning to previous menu...");
                                     break;
                                 }
-                                if (userInputIdDoctor < -1 || userInputIdDoctor >= doctoresToShow.size()) {
-                                    System.out.println("Error: The ID from the doctor can't be empty.");
-                                    break;
+                                if (userInputIdDoctor < 0 || userInputIdDoctor > doctoresToShow.size()) {
+                                    System.out.println("Error: Doctor with ID: " + userInputIdDoctor + " not found on the system.");
                                 }
-                                this.loginDoc = this.storageHandler.getDoctorById(userInputIdDoctor);
-                                if (this.loginDoc == null) {
-                                    System.out.println("No doctor was found with ID: " + userInputIdDoctor);
-                                    System.out.print("Write down the ID of the doctor: ");
-                                } else {
-                                    validInput = true;
-                                }
+
                             } catch (NumberFormatException e) {
                                 System.out.println("Error: only whole numbers allowed.");
-                                System.out.print("Write down your ID: ");
+                                userInputIdDoctor = -1; // Reset the value so the loop continues
                             }
-                        } while (!validInput && this.loginDoc == null);
-                        if (validInput) {
+                        } while (userInputIdDoctor < 0 || userInputIdDoctor > doctoresToShow.size());
+                        this.loginDoc = this.storageHandler.getDoctorById(userInputIdDoctor);
+                        if (this.loginDoc != null) {
                             return UserType.Doctor;
+                        } else {
+                            System.out.println("No doctor was found with ID: " + userInputIdDoctor);
                         }
                         break;
                     case 3:
