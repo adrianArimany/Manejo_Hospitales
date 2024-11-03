@@ -1,6 +1,11 @@
 package com.uvg.proyecto.Authenticator;
 
 import com.uvg.proyecto.Data.PropertiesFile;
+/**
+ * This class is meant to create the method so that a user can log in to the admin menu only.
+ * 
+ * There is another class that will handle the authentication for each doctor seperately from this class.
+ */
 
 public class Authenticator {
     PropertiesFile propertiesFile = new PropertiesFile();
