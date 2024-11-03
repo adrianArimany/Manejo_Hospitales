@@ -204,8 +204,10 @@ public class Main {
         int input = -1;
         try {
             System.out.println("1. New Patient \n2. Registered Patient\n0. return to previous menu");
-            input = scanner.nextInt();
-            scanner.nextLine();
+            String inputStr = scanner.nextLine();
+            if (!inputStr.isEmpty()) {
+                input = Integer.parseInt(inputStr);
+            }
             switch (input) {
                 case 1:
                     System.out.println("Enter the full name of the patient: ");
@@ -219,16 +221,53 @@ public class Main {
                     }
                     break;
                 case 2:
-                    System.out.println("Write down the ID of the registered patient: ");
-                    int idPaciente = scanner.nextInt();
-                    this.loginPac = this.storageHandler.getPacienteById(idPaciente);
-                    if (this.loginPac != null) {
-                        System.out.println("Successful Login");
-                        return UserType.Paciente;
-                    } else {
-                        System.out.println("Patient not found.");
+                int userInputIdPaciente = -1;
+                boolean patientFound = false;
+                do {
+                    try {
+                        if (pacientesToShow.isEmpty()) {
+                            System.out.println("No patients registered.");
+                            break;
+                        }
+
+                        pacientesToShow.sort((d1, d2) -> Integer.compare(d1.getId(), d2.getId()));
+                        for (Paciente paciente : pacientesToShow) {
+                            System.out.println("Patient ID: " + paciente.getId() + 
+                                               ". \n   Patient Name: " + paciente.getNombre());
+                        }
+                        System.out.println("0. return to previous menu");
+                        System.out.println("Write down the ID of the registered patient: ");
+                        
+                        inputStr = scanner.nextLine();
+                        if (!inputStr.isEmpty()) {
+                            userInputIdPaciente = Integer.parseInt(inputStr);
+                        }
+
+                        if (userInputIdPaciente == 0) {
+                            System.out.println("Returning to previous menu...");
+                            return login();
+                        }
+                        
+                        patientFound = false;
+                        for (Paciente paciente : pacientesToShow) {
+                            if (paciente.getId() == userInputIdPaciente) {
+                                patientFound = true;
+                                this.loginPac = paciente;
+                                System.out.println("Patient found on the system, logging in.");
+                                return UserType.Paciente;
+                            }
+                        }
+                        
+                        if (!patientFound) {
+                            System.out.println("Error: the patient with the entered ID doesn't exist.");
+                        }
+                        
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: only whole numbers allowed.");
+                        userInputIdPaciente = -1;
                     }
-                    break;
+                } while (userInputIdPaciente != 0);
+                break;
                 case 0:
                     System.out.println("Returning to previous menu..");
                     return login();
