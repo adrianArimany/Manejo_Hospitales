@@ -59,5 +59,35 @@
         "date": "2024-11-02"
       }
     ]
+  },
+  {
+    "id": 5,
+    "nombre": "Richie Lemon",
+    "historialMedico": [],
+    "doctoresId": [
+      4
+    ],
+    "citas": [
+      {
+        "id": 0,
+        "doctor": 4,
+        "doctorName": "Diego Rodriguez",
+        "paciente": 5,
+        "pacienteName": "Richie Lemon",
+        "enfermedades": "Me muero",
+        "date": "1111-10-11",
+        "clinica": 0,
+        "clinicaSpeciality": "Pediatrician"
+      }
+    ],
+    "prescriptions": [
+      {
+        "id": 16,
+        "doctor": 4,
+        "paciente": 5,
+        "medicines": "Muerase",
+        "date": "2024-11-03"
+      }
+    ]
   }
 ]

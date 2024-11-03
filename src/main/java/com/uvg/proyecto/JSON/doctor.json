@@ -15,14 +15,6 @@
     "prescriptions": []
   },
   {
-    "id": 4,
-    "nombre": "Diego Rodriguez",
-    "clinica": "Pediatrician",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
     "id": 5,
     "nombre": "Ariel Manelo",
     "clinica": "Pediatrician",
@@ -78,5 +70,42 @@
         "date": "2024-11-02"
       }
     ]
+  },
+  {
+    "id": 4,
+    "nombre": "Diego Rodriguez",
+    "clinica": "Pediatrician",
+    "pacientesId": [
+      5
+    ],
+    "citas": [
+      {
+        "id": 0,
+        "doctor": 4,
+        "doctorName": "Diego Rodriguez",
+        "paciente": 5,
+        "pacienteName": "Richie Lemon",
+        "enfermedades": "Me muero",
+        "date": "1111-10-11",
+        "clinica": 0,
+        "clinicaSpeciality": "Pediatrician"
+      }
+    ],
+    "prescriptions": [
+      {
+        "id": 16,
+        "doctor": 4,
+        "paciente": 5,
+        "medicines": "Muerase",
+        "date": "2024-11-03"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "nombre": "Erick Montenegro",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
   }
 ]
