@@ -138,7 +138,7 @@ public class Main {
                                 if (doctoresToShow.size() > 0) {
                                     doctoresToShow.sort((d1, d2) -> Integer.compare(d1.getId(), d2.getId()));
                                     for (Doctor doctor : doctoresToShow) {
-                                        System.out.println("ID: " + doctor.getId() + ".\n Dr. " + doctor.getNombre() + ".\n Clinic: " + doctor.getClinica());
+                                        System.out.println("ID: " + doctor.getId() + ".\n   Dr. " + doctor.getNombre() + ".\n   Clinic: " + doctor.getClinica());
                                     }
                                     System.out.println("0. Return to Main Menu");
                                     System.out.println("Write down the ID of the doctor: ");
