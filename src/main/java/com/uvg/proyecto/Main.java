@@ -662,7 +662,7 @@ public class Main {
     public void adminDoc() {
         int input = -1;
         do {
-        System.out.println("Menu to Administrate Doctors \n1. Add Doctor \n2. Eliminate Doctor \n3. Edit the info of a Doctor \n0. Return");
+        System.out.println("Menu to Administrate Doctors \n1. Add Doctor \n2. Eliminate Doctor \n3. Change password from a doctor \n0. Return");
         input = scanner.nextInt();
         scanner.nextLine();
         switch (input) {
@@ -721,7 +721,7 @@ public class Main {
                 }
                 break;
             case 3:
-                System.out.println("The functionality to edit a Doctor attributes hasn't been implemented yet.");
+                System.out.println("The functionality to change the password from a doctor hasn't been implemented yet.");
                 break;
             case 0:
                 System.out.println("Returning to the admin menu..");
