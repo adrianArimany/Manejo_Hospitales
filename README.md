@@ -5,9 +5,11 @@
 
 
 ## Configurations:
-1. Have version: [java version 21](https://www.oracle.com/java/technologies/downloads/) (Important!!)
+1. Have version: [java version 21](https://www.oracle.com/java/technologies/downloads/) (If you don't have java 21 you can't run this program)
 
-If you are in Linux-based Debian, run the following line in terminal to install java version 21
+Make sure that you have Java 21, if you don't you can run the following lines depending on which Operating System you have.
+
+If you are in Linux-based Debian, run the following line in terminal to install java version 21:
 
 ```bash
 sudo apt install openjdk-21-jdk -y
@@ -17,6 +19,16 @@ Then to switch to this version run the following line,
 
 ```bash
 sudo update-alternatives --config java
+```
+If you are in macOS, note that you need homebrew installed, run the following line in terminal to install java version 21:
+
+```bash
+brew install openjdk@21
+```
+Then to define java 21 as the default version run the following line,
+
+```bash
+export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk
 ```
 
 2. Clone repository:
