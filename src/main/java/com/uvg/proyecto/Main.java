@@ -61,6 +61,14 @@ public class Main {
     private ArrayList<Paciente> pacientesToShow;
     public final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Starts the program by creating a new instance of Main and calling
+     * MenuBegins() on it. If any exception is thrown during the execution of
+     * MenuBegins(), it is caught and logged with a SEVERE level. The scanner is
+     * always closed in a finally block, and any error that occurs while closing
+     * it is logged with a WARNING level.
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         Logger logger = Logger.getLogger(Main.class.getName()); //used to catch any unprecented error that is in the program, especially useful when running by "real" users. 
         Main app = new Main();
@@ -80,6 +88,17 @@ public class Main {
         }
     }
 
+    /**
+     * Initializes and manages the main menu interaction for different user types.
+     *
+     * The method initializes necessary data from the storage handler and presents
+     * a menu for the user to log in as a Patient, Doctor, or Admin. Based on the user
+     * type, it directs the user to the appropriate menu handling method.
+     * 
+     * The method handles exceptions related to invalid input and number format,
+     * ensuring the program does not crash due to user errors. It continues to prompt
+     * for login until the user chooses to exit the system.
+     */
     public void MenuBegins() {
         UserType user = null;
         this.storageHandler = new StorageHandler();
@@ -126,6 +145,17 @@ public class Main {
         } while (user != null && !exitSystem);
     }
 
+    /**
+     * Handles the login process for the system.
+     * 
+     * Displays a menu with the options to login as a patient, doctor, or admin.
+     * For a patient, it displays a list of all registered patients and allows the user to select a patient to login as.
+     * For a doctor, it displays a list of all registered doctors and allows the user to select a doctor to login as.
+     * For an admin, it prompts the user to enter the admin username and password. If the credentials are correct, it logs the user into the admin menu.
+     * If the user enters 0, it exits the system.
+     * 
+     * @return UserType of the user that logged in, or null if the user exited the system.
+     */
     public UserType login() {
         int input = -1;
         do {
@@ -195,14 +225,22 @@ public class Main {
         return null; 
     }
 
+   
     /**
-     * Handles the login process for a patient.
+     * Shows the menu for the user to login as a patient.
      * 
-     * Displays a menu to either register a new patient or login as an existing patient. 
-     * For a new patient, prompts for the patient's name and creates a new Paciente object.
-     * For an existing patient, prompts for the patient ID and retrieves the corresponding Paciente object.
+     * This method shows a menu with the following options:
+     *  1. New Patient
+     *  2. Registered Patient
+     *  0. Return to the previous menu
      * 
-     * @return UserType.Paciente if the login or registration is successful, null otherwise.
+     * Depending on the user's choice this method will either:
+     *  - Create a new patient and login as that patient
+     *  - Show a list of registered patients and let the user choose one to login as
+     *  - Return to the login menu
+     * 
+     * @return UserType.Paciente if the user logged in as a patient, UserType.Admin if the user logged in as the admin,
+     *  UserType.Doctor if the user logged in as a doctor, or null if the user chose to return to the login menu.
      */
     public UserType loginPaciente() {
         int input = -1;
@@ -290,6 +328,21 @@ public class Main {
     
 
 
+/**
+ * Displays and manages the patient menu interaction.
+ *
+ * Provides options for the logged-in patient to:
+ *  1. Add an appointment with a specified date, clinic, and symptoms.
+ *  2. Check and list all current appointments.
+ *  3. Add to the patient's medical history.
+ *  4. Review current prescriptions and display them with doctor and patient names.
+ *  0. Return to the previous menu.
+ *
+ * Handles various exceptions related to input mismatches and null references.
+ * Ensures the menu keeps prompting until the patient chooses to return to the previous menu.
+ *
+ * @param loginPac the currently logged-in patient. If null, prints an error and returns to the original menu.
+ */
     public void pacienteMenu(Paciente loginPac) {
         if (loginPac == null) {
             System.out.println("Error: Patient not found. returning to the original menu.");
@@ -392,19 +445,24 @@ public class Main {
     }
 
 
-    /**
-     * Handles the menu for a doctor user.
-     * 
-     * Displays a menu with the following options:
-     *  1. Revisar Citas Pendientes
-     *  2. Ver historial Médico de un Paciente
-     *  3. Revisar Prescripciones de un Paciente
-     *  4. Agregar prescripción a un paciente
-     *  5. Ver a todos mis pacientes
-     *  0. Regresar
-     * 
-     * @param loginDoc the doctor object of the logged in doctor. If null, prints an error and returns.
-     */
+    
+/**
+ * Manages the interaction for a logged-in doctor.
+ *
+ * Provides a menu with the following options for the doctor:
+ *  1. Check pending appointments.
+ *  2. View the medical history of a patient.
+ *  3. Review prescriptions for a patient.
+ *  4. Add a prescription for a patient.
+ *  5. View all assigned patients.
+ *  0. Return to the original menu.
+ *
+ * Handles input mismatches and ensures that the menu continues to prompt
+ * until the doctor chooses to return to the original menu. It verifies if
+ * the logged-in doctor object is null and returns to the original menu if so.
+ *
+ * @param loginDoc the Doctor object representing the logged-in doctor.
+ */
     public void doctorMenu(Doctor loginDoc) {
         if (loginDoc == null) {
             System.out.println("Error: Doctor not found, returning to original menu.");
@@ -572,6 +630,19 @@ public class Main {
     }
 
 
+    /**
+     * Displays the menu for the administration and allows the admin to select an option:
+     * <ul>
+     * <li>1. Administrate Doctors</li>
+     * <li>2. Administrate Clinics</li>
+     * <li>3. Administrate the patients</li>
+     * <li>4. Change the name of the hospital</li>
+     * <li>5. Change the username and password of the admin</li>
+     * <li>0. Return</li>
+     * </ul>
+     * The method is a do-while loop and it will keep asking for input until a valid number is entered and the corresponding action is performed.
+     * If an invalid input is entered, the program will print an error message and ask for input again.
+     */
     public void adminMenu() {
         int input = -1;
         do {
@@ -614,6 +685,15 @@ public class Main {
         } while (input != 0);
     }
 
+    /**
+     * This method is used to administrate the patients. It provides a menu with the following options:
+     * <ul>
+     * <li>1. Eliminate the patient from the system</li>
+     * <li>0. Return to admin menu</li>
+     * </ul>
+     * The method is a do-while loop and it will keep asking for input until a valid number is entered and the corresponding action is performed.
+     * If an invalid input is entered, the program will print an error message and ask for input again.
+     */
     public void adminPaciente() {
         boolean inAdminPaciente = true;
         while (inAdminPaciente) {
@@ -664,6 +744,17 @@ public class Main {
     }
 
 
+    /**
+     * This method is used to administrate the doctors. It provides a menu with the following options:
+     * <ul>
+     * <li>1. Add Doctor</li>
+     * <li>2. Eliminate Doctor</li>
+     * <li>3. Change password from a doctor</li>
+     * <li>0. Return to admin menu</li>
+     * </ul>
+     * The method is a do-while loop and it will keep asking for input until a valid number is entered and the corresponding action is performed.
+     * If an invalid input is entered, the program will print an error message and ask for input again.
+     */
     public void adminDoc() {
         int input = -1;
         do {
@@ -737,6 +828,13 @@ public class Main {
         } while (input != 0);
     }
 
+    /**
+     * Admin menu for managing clinics.
+     * 
+     * This menu allows the admin to add a clinic, remove a clinic, or move a doctor to a clinic.
+     * 
+     * The menu continues to loop until the user chooses to return to the admin menu.
+     */
     public void adminClinica() {
         int input = -1;
         do {
@@ -839,6 +937,10 @@ public class Main {
             }
         } while (input != 0);
     }
+    /**
+     * Asks the user to enter the new name of the hospital and then updates
+     * the configuration file with the new name.
+     */
     private void changeNameHospital() {
         System.out.println("Enter the New name of the hospital: ");
         String newName = scanner.nextLine();
