@@ -33,8 +33,9 @@ import com.uvg.proyecto.Data.StorageHandler;
  * - When NumberFormatException is caught in pacienteMenu or doctorMenu the system returns the user to the previous menu rather than keeping him on the current menu (fixed) added input = -1 in the catch.
  * - There is a odd bug where in the show prescription, the name of the doctor and patient do not appear, instead it shows null (  ).
  * 
- * - Sometimes when a doctor is moved to a clinic, isn't added successfully, it occured with Erick Montenegro couldn't be added to clinica Psychiatry (  )
- * - If a patient wants a new appointment with a new clinic, and that clinic doesn't have a doctor, the program shuts down. (occurs more often than not) (  )
+ * - Sometimes when a doctor is moved to a clinic, isn't added successfully, it occured with Erick Montenegro couldn't be added to clinica Psychiatry. (occurs more often than not) (  )
+ * Likely the error above is caused for doctors that don't have a clinic already registered, i.e. doctors with clinic = null.
+ * - If a patient wants a new appointment with a new clinic, and that clinic doesn't have a doctor, the program shuts down.  (  )
  * - There should be an option to remove an appointment without having to remove the patient. (  )
  * - 
  * Extras:
