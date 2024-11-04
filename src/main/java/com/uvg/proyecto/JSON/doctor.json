@@ -42,36 +42,6 @@
     "prescriptions": []
   },
   {
-    "id": 3,
-    "nombre": "Santiago Kong",
-    "clinica": "General Practioner",
-    "pacientesId": [
-      4
-    ],
-    "citas": [
-      {
-        "id": 0,
-        "doctor": 3,
-        "doctorName": "Santiago Kong",
-        "paciente": 4,
-        "pacienteName": "Jose Carlos",
-        "enfermedades": "Boredom",
-        "date": "12-12-200",
-        "clinica": 0,
-        "clinicaSpeciality": "General Practioner"
-      }
-    ],
-    "prescriptions": [
-      {
-        "id": 0,
-        "doctor": 3,
-        "paciente": 4,
-        "medicines": "please live",
-        "date": "2024-11-02"
-      }
-    ]
-  },
-  {
     "id": 4,
     "nombre": "Diego Rodriguez",
     "clinica": "Pediatrician",
@@ -104,6 +74,86 @@
   {
     "id": 7,
     "nombre": "Erick Montenegro",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 3,
+    "nombre": "Santiago Kong",
+    "clinica": "General Practioner",
+    "pacientesId": [
+      4,
+      6,
+      7
+    ],
+    "citas": [
+      {
+        "id": 0,
+        "doctor": 3,
+        "doctorName": "Santiago Kong",
+        "paciente": 4,
+        "pacienteName": "Jose Carlos",
+        "enfermedades": "Boredom",
+        "date": "12-12-200",
+        "clinica": 0,
+        "clinicaSpeciality": "General Practioner"
+      },
+      {
+        "id": 0,
+        "doctor": 3,
+        "doctorName": "Santiago Kong",
+        "paciente": 6,
+        "pacienteName": "Pablo Arimany",
+        "enfermedades": "Dolor de garganta",
+        "date": "10/11/2024",
+        "clinica": 0,
+        "clinicaSpeciality": "General Practioner"
+      },
+      {
+        "id": 0,
+        "doctor": 3,
+        "doctorName": "Santiago Kong",
+        "paciente": 6,
+        "pacienteName": "Pablo Arimany",
+        "enfermedades": "Arm hurt",
+        "date": "10/11/2024",
+        "clinica": 0,
+        "clinicaSpeciality": "General Practioner"
+      },
+      {
+        "id": 0,
+        "doctor": 3,
+        "doctorName": "Santiago Kong",
+        "paciente": 7,
+        "pacienteName": "Mariana de Arimany",
+        "enfermedades": "stomach ache",
+        "date": "november 7",
+        "clinica": 0,
+        "clinicaSpeciality": "General Practioner"
+      }
+    ],
+    "prescriptions": [
+      {
+        "id": 0,
+        "doctor": 3,
+        "paciente": 4,
+        "medicines": "please live",
+        "date": "2024-11-02"
+      },
+      {
+        "id": 32,
+        "doctor": 3,
+        "paciente": 6,
+        "medicines": "Medicina de para el dolor",
+        "date": "2024-11-03"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "nombre": "adiv rodriguez",
+    "clinica": "Pediatrician",
     "pacientesId": [],
     "citas": [],
     "prescriptions": []

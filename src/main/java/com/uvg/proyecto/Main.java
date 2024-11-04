@@ -17,7 +17,6 @@ import com.uvg.proyecto.Data.PropertiesFile;
 import com.uvg.proyecto.Data.StorageHandler;
 
 
-
 /**
  * Clase principal para gestionar pacientes, doctores y clínicas
  * a través de un menú interactivo.
@@ -34,6 +33,10 @@ import com.uvg.proyecto.Data.StorageHandler;
  * - When NumberFormatException is caught in pacienteMenu or doctorMenu the system returns the user to the previous menu rather than keeping him on the current menu (fixed) added input = -1 in the catch.
  * - There is a odd bug where in the show prescription, the name of the doctor and patient do not appear, instead it shows null (  ).
  * 
+ * - Sometimes when a doctor is moved to a clinic, isn't added successfully, it occured with Erick Montenegro couldn't be added to clinica Psychiatry (  )
+ * - If a patient wants a new appointment with a new clinic, and that clinic doesn't have a doctor, the program shuts down. (occurs more often than not) (  )
+ * - There should be an option to remove an appointment without having to remove the patient. (  )
+ * - 
  * Extras:
  * -When the Admin for some reason don't elminates a doctor for whatever reason, allow the admin to have another attempt. (add a while loop [not done yet])
  * - Add a more in-depth Logger to the program, especially that captures any potential error, (  )

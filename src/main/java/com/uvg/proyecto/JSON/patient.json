@@ -89,5 +89,70 @@
         "date": "2024-11-03"
       }
     ]
+  },
+  {
+    "id": 6,
+    "nombre": "Pablo Arimany",
+    "historialMedico": [],
+    "doctoresId": [
+      3
+    ],
+    "citas": [
+      {
+        "id": 0,
+        "doctor": 3,
+        "doctorName": "Santiago Kong",
+        "paciente": 6,
+        "pacienteName": "Pablo Arimany",
+        "enfermedades": "Dolor de garganta",
+        "date": "10/11/2024",
+        "clinica": 0,
+        "clinicaSpeciality": "General Practioner"
+      },
+      {
+        "id": 0,
+        "doctor": 3,
+        "doctorName": "Santiago Kong",
+        "paciente": 6,
+        "pacienteName": "Pablo Arimany",
+        "enfermedades": "Arm hurt",
+        "date": "10/11/2024",
+        "clinica": 0,
+        "clinicaSpeciality": "General Practioner"
+      }
+    ],
+    "prescriptions": [
+      {
+        "id": 32,
+        "doctor": 3,
+        "paciente": 6,
+        "medicines": "Medicina de para el dolor",
+        "date": "2024-11-03"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "nombre": "Mariana de Arimany",
+    "historialMedico": [
+      "edad 45"
+    ],
+    "doctoresId": [
+      3
+    ],
+    "citas": [
+      {
+        "id": 0,
+        "doctor": 3,
+        "doctorName": "Santiago Kong",
+        "paciente": 7,
+        "pacienteName": "Mariana de Arimany",
+        "enfermedades": "stomach ache",
+        "date": "november 7",
+        "clinica": 0,
+        "clinicaSpeciality": "General Practioner"
+      }
+    ],
+    "prescriptions": []
   }
 ]
