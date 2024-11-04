@@ -327,18 +327,19 @@ public class Main {
                         }
                         Doctor doctor = this.storageHandler.docAddedtoCita(clinicToShow.get(userInputIdClinica).getEspecialidad());
                         if (doctor == null) {
-                            System.out.println("Unfortunely " + config.getHospitalName() + ". Doesn't have any doctors in that clinic."); 
+                            System.out.println("The clinic: " + clinicToShow.get(userInputIdClinica).getEspecialidad() + " doesn't have any doctors. Operation cancelled.");
                             break;
                         }
-                            System.out.println("What Symptoms do you feel? ");
-                            String symptoms = scanner.nextLine();
-                            // Create a new appointment and add it to the clinic
-                            boolean isCitaAdded = this.storageHandler.drAddCita(doctor, loginPac, clinicToShow.get(userInputIdClinica).getEspecialidad(), date, symptoms);                             if (!isCitaAdded) {
-                                System.out.println("Failed to add appointment. Please try again.");
-                            } else {
-                                System.out.println("Appointment successfully added. With Doctor: " + doctor.getNombre() + "(ID: " + doctor.getId() +")");
-                            }
+                        System.out.println("What Symptoms do you feel? ");
+                        String symptoms = scanner.nextLine();
+                        // Create a new appointment and add it to the clinic
+                        boolean isCitaAdded = this.storageHandler.drAddCita(doctor, loginPac, clinicToShow.get(userInputIdClinica).getEspecialidad(), date, symptoms);                             
+                        if (!isCitaAdded) {
+                            System.out.println("Failed to add appointment. Please try again.");
+                        } else {
+                            System.out.println("Appointment successfully added. With Doctor: " + doctor.getNombre() + "(ID: " + doctor.getId() +")");
                         }
+                    }
                     break;
                 case 2:
                     //checks the patient appointments.
