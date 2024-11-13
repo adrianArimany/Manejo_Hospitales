@@ -1,0 +1,115 @@
+<mxfile host="65bd71144e">
+    <diagram id="KXJf-vmhRTCUgZO2Uw-9" name="Page-1">
+        <mxGraphModel dx="1580" dy="753" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="How Clinic-Doctor logic works?" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="30" width="350" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=20;" parent="1" source="4" target="12" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="339" y="223" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4" value="&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;Admin" style="shape=actor;whiteSpace=wrap;html=1;fontSize=20;" parent="1" vertex="1">
+                    <mxGeometry x="130" y="205" width="40" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=20;" parent="1" source="5" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="New Clinic" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fontSize=20;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="75" width="165" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" parent="1" source="12" target="13" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="New Clinic(Especiality, ArrayList&amp;lt;doctor&amp;gt; docId)" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="190" width="410" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" style="edgeStyle=none;html=1;fontSize=18;entryX=0.9;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="13" target="18" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="220" y="420" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="44" style="edgeStyle=none;html=1;fontSize=18;startArrow=none;startFill=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="13" target="48" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="620.0000000000002" y="620" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="Any Doctor in Clinic?" style="rhombus;whiteSpace=wrap;html=1;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="340" width="240" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="Find Doctors" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="530" y="300" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="NO" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="385" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" style="edgeStyle=none;html=1;fontSize=18;exitX=0.1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="18" target="21" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="210" y="550" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="120" y="415"/>
+                            <mxPoint x="120" y="550"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;Admin" style="shape=actor;whiteSpace=wrap;html=1;fontSize=20;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="385" width="40" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;html=1;fontSize=18;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" source="21" target="13" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="590" y="645" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="49" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;startArrow=none;startFill=0;" parent="1" source="21" target="28" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="Move Doctor to&lt;br&gt;&amp;nbsp;Clinic" style="rhombus;whiteSpace=wrap;html=1;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="550" width="200" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="NO" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="532.5" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="Finding Doctors..." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="510" width="100" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="YES!!" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="212.5" y="760" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" style="edgeStyle=none;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;fontSize=18;startArrow=none;startFill=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="1" source="28" target="48" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="Moving Doctor to&amp;nbsp; Clinic" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="810" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="Doctor gets New Appointment" style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="950" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="41" target="32" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="687.1565886053827" y="762.915938483048" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="40" value="Check &lt;b&gt;LogicPatientDoctor.drawio&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="750" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="New appointment in clinic" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="418.75" y="830" width="192.5" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;startArrow=classic;startFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="48" target="41" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="609.4117647058827" y="680" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="46" value="YES!!" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="540" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="Doctor in clinic" style="shape=internalStorage;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="630" width="170" height="100" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

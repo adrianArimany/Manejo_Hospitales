@@ -76,7 +76,8 @@ public class Cita {
         ".\n doctor Name: " + this.doctorName + " (ID: " + this.doctor + ")" + 
         ".\n patient Name: " + this.pacienteName + " (ID: " + this.paciente + ")" + 
         ".\n Appointment date: " + this.date + 
-        ".\n Symptoms: " + this.enfermedades + " ]";
+        ".\n Symptoms: " + this.enfermedades +
+        ".\n Clinic: " + this.clinicaSpeciality +  " ]";
         
 
     }
