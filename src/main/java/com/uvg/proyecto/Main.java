@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
-import java.util.logging.Logger; //Gives a better detail about where the error was found (i.e. class or method)
+import java.util.logging.Logger; 
 
 import com.uvg.proyecto.Authenticator.Authenticator;
 import com.uvg.proyecto.Classes.Cita;
@@ -18,40 +18,39 @@ import com.uvg.proyecto.Data.StorageHandler;
 
 
 /**
- * Clase principal para gestionar pacientes, doctores y clínicas
- * a través de un menú interactivo.
+ * Main Class that runs the program. It provides a menu for the user to interact.
+ * It uses the StorageHandler class to read and write data from and to the file.
+ * It also uses the PropertiesFile class to read and write data from the properties file.
+ * 
+ * @version 1.0
  * -------------------------------------
  * @Todo
- * Priority:
- * - The system only runs one iterriation, then it quits!!! (fixed) 
- * - The system doesn't create new patients or doctors (fixed) change the storageHandler.initIds() now returns +1 to whatever was the highest.
- * - When I run method in admin, rather than returning the previous menu, it send me back to the MenuBegins().  (fixed) added a while loop.
- * - I need to double exit the menu of the admin to fully exit that menu (fixed) I recalled the adminMenu every time I exited a submenu.
- * - When a patient/doctor is removed, its id is removed, but when you create a new doctor/patient rather than refilling the deleted id, it generates the highest id. (  )
- * - Error: Null reference encountered. When enter as a Doctor. (fixed) the issue was in a system.out.println I was calling a loginPac rather than loginDoc.
- * - The try-catch in the menuBegins is not working when the user types something that is not a number (fixed) login() was not closing properly hence I couldn't catch the error.
- * - When NumberFormatException is caught in pacienteMenu or doctorMenu the system returns the user to the previous menu rather than keeping him on the current menu (fixed) added input = -1 in the catch.
- * - There is a odd bug where in the show prescription, the name of the doctor and patient do not appear, instead it shows null (  ).
- * 
- * - Sometimes when a doctor is moved to a clinic, isn't added successfully, it occured with Erick Montenegro couldn't be added to clinica Psychiatry. (occurs more often than not) (  )
- * Likely the error above is caused for doctors that don't have a clinic already registered, i.e. doctors with clinic = null.
- * - If a patient wants a new appointment with a new clinic, and that clinic doesn't have a doctor, the program shuts down.  (  )
- * - There should be an option to remove an appointment without having to remove the patient. (  )
- * - 
- * Extras:
- * -When the Admin for some reason don't elminates a doctor for whatever reason, allow the admin to have another attempt. (add a while loop [not done yet])
- * - Add a more in-depth Logger to the program, especially that captures any potential error, (  )
- * - Use logger.info, logger.fine, logger.error to better control the errors in the system. (  )
+ * Currently no tasks for this version.
  */
 
 public class Main {
-
+    /**
+     * Enum UserType is used to represent different user types in the program.
+     * It contains three possible values: Paciente, Doctor, and Admin.
+     * 
+     */
     public enum UserType {
         Paciente,
         Doctor,
         Admin,
     }
-    private Paciente loginPac;
+
+    /**
+     * The loginPac variable is a Paciente object that is used to store the currently logged-in Paciente.
+     * exitSystem is a boolean variable that is used to determine if the program should exit.
+     * loginDoc is a Doctor object that is used to store the currently logged-in Doctor.
+     * 
+     * clinicToShow is an ArrayList of Clinica objects that are used to store the clinics that are displayed in the menu.
+     * doctoresToShow is an ArrayList of Doctor objects that are used to store the doctors that are displayed in the menu.
+     * pacientesToShow is an ArrayList of Paciente objects that are used to store the patients that are displayed in the menu.
+     * 
+     */
+    private Paciente loginPac; 
     private boolean exitSystem = false;
     private Doctor loginDoc;
     private StorageHandler storageHandler;
@@ -73,22 +72,19 @@ public class Main {
         Main app = new Main();
         app.storageHandler = new StorageHandler();
         app.storageHandler.initIds();
-        //app.pacientesToShow = app.storageHandler.getAllPacientesForUser();
-        //app.doctoresToShow = app.storageHandler.getAllDoctorForUser(); I hoped that these lines would allow me to avoid having to forcebly update in every method the json file, but it just doesn't work this way.
-        //app.clinicToShow = app.storageHandler.getAllClinicas();
         try {
             app.MenuBegins();
         } catch (Exception e) {
             System.out.println("An unexpected error occurred: " + e.getMessage());
             Logger logger = Logger.getLogger(Main.class.getName());
-            logger.log(Level.SEVERE, "Unexpected error in main method", e); //In case a SEVERE error is counter, (i.e. one that requires immidiate attention.)
+            logger.log(Level.SEVERE, "Unexpected error in main method", e); 
         } finally {
             if (app.scanner != null) {
                 try {
                     app.scanner.close();
                 } catch (Exception e) {
                     Logger logger = Logger.getLogger(Main.class.getName());
-                    logger.log(Level.WARNING, "Error closing scanner", e); //In case that the scanner isn't fully closed, this captures and logs the error for future fixing.
+                    logger.log(Level.WARNING, "Error closing scanner", e); 
                 }
             }
         }
@@ -329,7 +325,7 @@ public class Main {
         } catch (InputMismatchException e) {
             System.out.println("Error: only enter a whole number.");
             input = -1;
-            scanner.nextLine(); // clear the invalid input
+            scanner.nextLine(); 
         } catch (Exception e) {
             System.out.println("An unexpected error occurred: " + e.getMessage());
         } while (input != 0);
