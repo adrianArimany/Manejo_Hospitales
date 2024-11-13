@@ -14,7 +14,7 @@ public class Cita {
     public int clinica; //perhaps no need for this.
     public String clinicaSpeciality;
 
-
+    
     public Cita(int doctor, int paciente, String date, String enfermedades) {
         this.id = IdGenerator.generateId(UserTypes.Cita);
         this.doctor = doctor;
@@ -62,6 +62,14 @@ public class Cita {
         this.paciente = paciente;
     }
 
+/**
+ * Returns a string representation of the appointment (cita).
+ * 
+ * The representation includes the appointment's token, doctor name and ID,
+ * patient name and ID, appointment date, and symptoms.
+ * 
+ * @return a string representation of the appointment
+ */
     @Override
     public String toString() {
         return "Cita [Token: " + this.id + 

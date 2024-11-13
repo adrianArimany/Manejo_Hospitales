@@ -41,6 +41,17 @@
         "date": "2024-12-05",
         "clinica": 0,
         "clinicaSpeciality": "Clinic 4"
+      },
+      {
+        "id": 0,
+        "doctor": 4,
+        "doctorName": "Doctor 4",
+        "paciente": 2,
+        "pacienteName": "user 2",
+        "enfermedades": "Hunger Hunger Hunger",
+        "date": "2024-12-08",
+        "clinica": 0,
+        "clinicaSpeciality": "Clinic 4"
       }
     ],
     "prescriptions": [

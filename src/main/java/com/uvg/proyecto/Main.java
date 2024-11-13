@@ -373,20 +373,35 @@ public class Main {
             switch (input) {
                 case 1:
                     System.out.println("When would you want to have this appointment (YYYY-MM-DD): ");
-                    String date = scanner.nextLine();
+                    String date = "";
+                    boolean isDateValid = true;
+                    while (isDateValid) {
+                        date = scanner.nextLine();
+                        if (date.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                            isDateValid = false;
+                        } else {
+                            System.out.println("Invalid format. Please enter the date in YYYY-MM-DD format (do use \" - \" to seperate each date):");
+                        }
+                    }
                     System.out.println("Choose the clinic that relates to your sickness: ");
                     if (clinicToShow.size() > 0) {
                         for (int i = 0; i < clinicToShow.size(); i++) {
                             System.out.println((i+1) + ": " + clinicToShow.get(i).getEspecialidad());
                         }
-        
+                        System.out.println("0. To cancel the appointment.");
+                        
                         // user pone el input una especialidad
                         int userInputIdClinica = Integer.parseInt(scanner.nextLine()) - 1;
                         
                         if (userInputIdClinica < 0 || userInputIdClinica >= clinicToShow.size()) {
-                            System.out.println("Error: The ID from the clinic can't be empty.");
+                            if (userInputIdClinica == -1) {
+                                System.out.println("Cancelling appointment.");
+                            } else {
+                                System.out.println("Error: The ID from the clinic can't be empty.");
+                            }
                             break;
                         }
+                        
                         
                         try {
                             Doctor doctor = this.storageHandler.docAddedtoCita(clinicToShow.get(userInputIdClinica).getEspecialidad());
