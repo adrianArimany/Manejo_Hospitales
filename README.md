@@ -1,5 +1,8 @@
 # UVG PROYECT - Hospital Management System
 
+## Version:
+Currently at version 1.0
+
 ## Contributors:
 - Adrian Arimany 
 
