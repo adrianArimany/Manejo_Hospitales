@@ -107,6 +107,9 @@
                 <mxCell id="oKQT_UKOESX0N-_K5lHX-36" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="oKQT_UKOESX0N-_K5lHX-33" target="gASkY3hg7c3eQzyyl7-c-1" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
+                <mxCell id="11" value="" style="edgeStyle=none;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="1" source="oKQT_UKOESX0N-_K5lHX-33" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="oKQT_UKOESX0N-_K5lHX-33" value="Main Menu" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="330" y="60" width="120" height="60" as="geometry"/>
                 </mxCell>
@@ -151,7 +154,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="S9lJR4k2By5XDsyafu9G-1" value="Menu Admin &lt;br&gt;Hostpital" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="S9lJR4k2By5XDsyafu9G-1" value="Menu Admin &lt;br&gt;Clinica" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="430" y="660" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="S9lJR4k2By5XDsyafu9G-9" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="S9lJR4k2By5XDsyafu9G-4" target="S9lJR4k2By5XDsyafu9G-7" edge="1">
@@ -193,6 +196,20 @@
                 </mxCell>
                 <mxCell id="9" value="Start HERE" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
                     <mxGeometry x="780" y="10" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="System OFF" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;html=1;endArrow=none;endFill=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="12">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="400" y="660" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="400" y="760"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="Menu Admin &lt;br&gt;Hospital" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="430" y="750" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
