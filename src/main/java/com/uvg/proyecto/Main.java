@@ -56,9 +56,9 @@ public class Main {
     private Doctor loginDoc;
     private StorageHandler storageHandler;
     private PropertiesFile config = new PropertiesFile();
-    private ArrayList<Clinica> clinicToShow =  new ArrayList<>();
-    private ArrayList<Doctor> doctoresToShow = new ArrayList<>();
-    private ArrayList<Paciente> pacientesToShow = new ArrayList<>();
+    private ArrayList<Clinica> clinicToShow;
+    private ArrayList<Doctor> doctoresToShow;
+    private ArrayList<Paciente> pacientesToShow;
     public final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -73,9 +73,9 @@ public class Main {
         Main app = new Main();
         app.storageHandler = new StorageHandler();
         app.storageHandler.initIds();
-        app.clinicToShow = app.storageHandler.getAllClinicas();
-        app.doctoresToShow = app.storageHandler.getAllDoctorForUser();
-        app.pacientesToShow = app.storageHandler.getAllPacientesForUser(); 
+        //app.pacientesToShow = app.storageHandler.getAllPacientesForUser();
+        //app.doctoresToShow = app.storageHandler.getAllDoctorForUser(); I hoped that these lines would allow me to avoid having to forcebly update in every method the json file, but it just doesn't work this way.
+        //app.clinicToShow = app.storageHandler.getAllClinicas();
         try {
             app.MenuBegins();
         } catch (Exception e) {
@@ -107,6 +107,9 @@ public class Main {
      */
     public void MenuBegins() {
         UserType user = null;
+        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
+        this.doctoresToShow = this.storageHandler.getAllDoctorForUser();
+        this.clinicToShow = this.storageHandler.getAllClinicas();
         do {
         try {
             user = login();
@@ -159,6 +162,9 @@ public class Main {
      */
     public UserType login() {
         int input = -1;
+        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
+        this.doctoresToShow = this.storageHandler.getAllDoctorForUser();
+        this.clinicToShow = this.storageHandler.getAllClinicas();
         do {
             try {
                 System.out.println("Mangament for " + config.getHospitalName() +": \n1. Magamente a Patient \n2. Go to Doctor \n3. Go to Administration \n0. Exit System.");
@@ -245,6 +251,9 @@ public class Main {
      */
     public UserType loginPaciente() {
         int input = -1;
+        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
+        this.doctoresToShow = this.storageHandler.getAllDoctorForUser();
+        this.clinicToShow = this.storageHandler.getAllClinicas();
         try {
             System.out.println("1. New Patient \n2. Registered Patient\n0. return to previous menu");
             String inputStr = scanner.nextLine();
@@ -345,6 +354,9 @@ public class Main {
  * @param loginPac the currently logged-in patient. If null, prints an error and returns to the original menu.
  */
     public void pacienteMenu(Paciente loginPac) {
+        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
+        this.doctoresToShow = this.storageHandler.getAllDoctorForUser();
+        this.clinicToShow = this.storageHandler.getAllClinicas();
         if (loginPac == null) {
             System.out.println("Error: Patient not found. returning to the original menu.");
             return;
@@ -466,6 +478,9 @@ public class Main {
  * @param loginDoc the Doctor object representing the logged-in doctor.
  */
     public void doctorMenu(Doctor loginDoc) {
+        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
+        this.doctoresToShow = this.storageHandler.getAllDoctorForUser();
+        this.clinicToShow = this.storageHandler.getAllClinicas();
         if (loginDoc == null) {
             System.out.println("Error: Doctor not found, returning to original menu.");
             return;
@@ -646,6 +661,9 @@ public class Main {
      * If an invalid input is entered, the program will print an error message and ask for input again.
      */
     public void adminMenu() {
+        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
+        this.doctoresToShow = this.storageHandler.getAllDoctorForUser();
+        this.clinicToShow = this.storageHandler.getAllClinicas();
         int input = -1;
         do {
             try {
@@ -697,6 +715,9 @@ public class Main {
      * If an invalid input is entered, the program will print an error message and ask for input again.
      */
     public void adminPaciente() {
+        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
+        this.doctoresToShow = this.storageHandler.getAllDoctorForUser();
+        this.clinicToShow = this.storageHandler.getAllClinicas();
         boolean inAdminPaciente = true;
         while (inAdminPaciente) {
             System.out.println("Menu to administrate the Patient \n1. Eliminate the patient from the system \n0. Return to admin menu.");
@@ -705,7 +726,6 @@ public class Main {
             switch (input) {
                 case 1:
                     try {
-                        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
                         if (pacientesToShow.isEmpty()) {
                             System.out.println("No patients registered.");
                             break;
@@ -759,6 +779,9 @@ public class Main {
      * If an invalid input is entered, the program will print an error message and ask for input again.
      */
     public void adminDoc() {
+        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
+        this.doctoresToShow = this.storageHandler.getAllDoctorForUser();
+        this.clinicToShow = this.storageHandler.getAllClinicas();
         int input = -1;
         do {
         System.out.println("Menu to Administrate Doctors \n1. Add Doctor \n2. Eliminate Doctor \n3. Change password from a doctor \n0. Return");
@@ -840,6 +863,9 @@ public class Main {
      */
     public void adminClinica() {
         int input = -1;
+        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
+        this.doctoresToShow = this.storageHandler.getAllDoctorForUser();
+        this.clinicToShow = this.storageHandler.getAllClinicas();
         do {
             try {
                 System.out.println("Menu to Administrate Clinics  \n1. Add Clinic \n2. Remove Clinic \n3. Move a Doctor to a Clinic \n0. Return to the admin menu");
@@ -847,78 +873,100 @@ public class Main {
                 scanner.nextLine();
                 switch (input) {
                     case 1:
-                        // Agregar Clinica
+                        // Add Clinic
                         System.out.println("Add the Speciality of the clinic: ");
                         String especialidad = scanner.nextLine();
-                        Clinica newClinca = new Clinica(especialidad);
-                        boolean isClinicaCreated = this.storageHandler.createNewClinic(newClinca);
+                        if (especialidad == null || especialidad.trim().isEmpty()) {
+                            System.out.println("Speciality can't be empty.");
+                            break;
+                        }
+                        Clinica newClinica = new Clinica(especialidad);
+                        boolean isClinicaCreated = this.storageHandler.createNewClinic(newClinica);
                         if (isClinicaCreated) {
-                            System.out.println("Clinic created without error. With ID: " + newClinca.getId());
+                            System.out.println("Clinic created successfully. ID: " + newClinica.getId());
                         } else {
                             System.out.println("Error in creating the clinic.");
                         }
                         break;
                     case 2:
-                        // Eliminar Clinica
-                        System.out.println("The ID from the clinic to remove ");
-                        if (clinicToShow.size() > 0) {
-                            System.out.println("0. return to previous menu");
-                            for (int i = 0; i < clinicToShow.size(); i++) {
-                                System.out.println((i+1) + ": " + clinicToShow.get(i).getEspecialidad());
-                            }
-                            
-                            // user pone el input una especialidad
-                            int userIdClinica = Integer.parseInt(scanner.nextLine()) - 1;
+                        // Remove Clinic
+                        if (clinicToShow == null || clinicToShow.isEmpty()) {
+                            System.out.println("No clinics available to remove.");
+                            break;
+                        }
+                        System.out.println("Enter the ID of the clinic to remove (0 to cancel): ");
+                        for (int i = 0; i < clinicToShow.size(); i++) {
+                            System.out.println((i + 1) + ": " + clinicToShow.get(i).getEspecialidad());
+                        }
+                        int clinicIndex = scanner.nextInt() - 1;
+                        scanner.nextLine();
+                        
+                        if (clinicIndex == -1) {
+                            System.out.println("No Clinic removed. Returning...");
+                            break;
+                        }
 
-                            if (userIdClinica == -1) { //This exists so that if the admin decides to create a Doc without a speciality.
-                                System.out.println("No Clinic removed. Returning...");
-                                return;
-                            }
+                        if (clinicIndex < 0 || clinicIndex >= clinicToShow.size()) {
+                            System.out.println("Invalid clinic ID. Please try again.");
+                            break;
+                        }
 
-                            this.storageHandler.eliminarClinica(userIdClinica);
-                            System.out.println("Clinic with ID " + userIdClinica + " eliminated.");    
+                        boolean isClinicRemoved = this.storageHandler.eliminarClinica(clinicToShow.get(clinicIndex).getId());
+                        if (isClinicRemoved) {
+                            System.out.println("Clinic removed successfully.");
+                        } else {
+                            System.out.println("Error in removing the clinic.");
                         }
                         break;
                     case 3:
-                        // Add Doctor to clinic
-                        System.out.println("The ID of the clinic to move the Doctor.");
-                        
-                        int idDoctorClinica = -1;
-                        int userIdDoc = -1;
-
-                        if (clinicToShow.size() > 0) {
-                            System.out.println("0. return to previous menu");
-                            for (int i = 0; i < clinicToShow.size(); i++) {
-                                System.out.println((i+1) + ": " + clinicToShow.get(i).getEspecialidad());
-                            }
-                            
-                            // user pone el input una especialidad
-                            idDoctorClinica = Integer.parseInt(scanner.nextLine()) - 1;
-
-                            if (idDoctorClinica == -1) { //This exists so that if the admin decides to create a Doc without a speciality.
-                                System.out.println("No Clinic removed. Returning...");
-                                return;
-                            }
-                            
+                        // Move Doctor to Clinic
+                        if (clinicToShow == null || clinicToShow.isEmpty()) {
+                            System.out.println("No clinics available.");
+                            break;
                         }
-                        System.out.println("The ID of the doctor to move to: ");
-                        if (doctoresToShow.size() > 0) {
-                            System.out.println("0. return to previous menu");
-                            for (int i = 0; i < doctoresToShow.size(); i++) {
-                                System.out.println((i+1) + ": " + doctoresToShow.get(i).getNombre() + ". Currently at: " + doctoresToShow.get(i).getClinica());
-                            }
-                            
-                            // user pone el input una especialidad
-                            userIdDoc = Integer.parseInt(scanner.nextLine()) - 1;
-
-                            if (userIdDoc == -1) { //This exists so that if the admin decides to create a Doc without a speciality.
-                                System.out.println("No Clinic removed. Returning...");
-                                return;
-                            }  
+                        System.out.println("Enter the ID of the clinic to move the doctor: ");
+                        for (int i = 0; i < clinicToShow.size(); i++) {
+                            System.out.println((i + 1) + ": " + clinicToShow.get(i).getEspecialidad());
                         }
-                        boolean isDocMoved = this.storageHandler.addClinicToDoctor(clinicToShow.get(idDoctorClinica).getId(), doctoresToShow.get(userIdDoc).getId());
+                        System.out.println("0. Return to previous menu.");
+                        int clinicToMoveTo = scanner.nextInt() - 1;
+                        scanner.nextLine();
+
+                        if (clinicToMoveTo == -1) {
+                            System.out.println("Operation canceled. Returning...");
+                            break;
+                        }
+
+                        if (clinicToMoveTo < 0 || clinicToMoveTo >= clinicToShow.size()) {
+                            System.out.println("Invalid clinic ID. Please try again.");
+                            break;
+                        }
+
+                        if (doctoresToShow == null || doctoresToShow.isEmpty()) {
+                            System.out.println("No doctors available.");
+                            break;
+                        }
+                        System.out.println("Enter the ID of the doctor to move: ");
+                        for (int i = 0; i < doctoresToShow.size(); i++) {
+                            System.out.println((i + 1) + ": " + doctoresToShow.get(i).getNombre() + ". Currently at: " + doctoresToShow.get(i).getClinica());
+                        }
+                        System.out.println("0. Return to previous menu.");
+                        int doctorIndex = scanner.nextInt() - 1;
+                        scanner.nextLine();
+
+                        if (doctorIndex == -1) {
+                            System.out.println("Operation canceled. Returning...");
+                            break;
+                        }
+
+                        if (doctorIndex < 0 || doctorIndex >= doctoresToShow.size()) {
+                            System.out.println("Invalid doctor ID. Please try again.");
+                            break;
+                        }
+
+                        boolean isDocMoved = this.storageHandler.addClinicToDoctor(clinicToShow.get(clinicToMoveTo).getId(), doctoresToShow.get(doctorIndex).getId());
                         if (isDocMoved) {
-                            System.out.println("The doctor was moved without problem.");
+                            System.out.println("Doctor moved successfully.");
                         } else {
                             System.out.println("Error in moving the doctor.");
                         }
@@ -927,12 +975,12 @@ public class Main {
                         System.out.println("Returning to the admin menu..");
                         return;
                     default:
-                        System.out.println("Only enter the numbers on the terminal.");
+                        System.out.println("Please enter a valid option.");
                 }
             } catch (NullPointerException e) {
-                System.out.println("Error: Error the numbers in the clinics wheren't found.");
+                System.out.println("Error: Data not found.");
             } catch (InputMismatchException e) {
-                System.out.println("Error: must enter a valid whole number.");
+                System.out.println("Error: Must enter a valid whole number.");
                 input = -1;
                 scanner.nextLine(); // clear the invalid input
             } catch (Exception e) {

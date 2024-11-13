@@ -1,161 +1,56 @@
 [
   {
     "id": 1,
-    "nombre": "Samaul Felicnik",
+    "nombre": "Doctor1",
+    "clinica": "General Practioner",
     "pacientesId": [],
     "citas": [],
     "prescriptions": []
   },
   {
     "id": 2,
-    "nombre": "Felipe Gonzales",
-    "clinica": "General Practioner",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
-    "id": 5,
-    "nombre": "Ariel Manelo",
-    "clinica": "Pediatrician",
-    "pacientesId": [],
-    "citas": [
-      {
-        "id": 0,
-        "doctor": 5,
-        "doctorName": "Ariel Manelo",
-        "paciente": 2,
-        "pacienteName": "Felipe",
-        "enfermedades": "none",
-        "date": "1111",
-        "clinica": 0,
-        "clinicaSpeciality": "Pediatrician"
-      }
-    ],
-    "prescriptions": []
-  },
-  {
-    "id": 6,
-    "nombre": "Julian",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
-    "id": 4,
-    "nombre": "Diego Rodriguez",
-    "clinica": "Pediatrician",
-    "pacientesId": [
-      5
-    ],
-    "citas": [
-      {
-        "id": 0,
-        "doctor": 4,
-        "doctorName": "Diego Rodriguez",
-        "paciente": 5,
-        "pacienteName": "Richie Lemon",
-        "enfermedades": "Me muero",
-        "date": "1111-10-11",
-        "clinica": 0,
-        "clinicaSpeciality": "Pediatrician"
-      }
-    ],
-    "prescriptions": [
-      {
-        "id": 16,
-        "doctor": 4,
-        "paciente": 5,
-        "medicines": "Muerase",
-        "date": "2024-11-03"
-      }
-    ]
-  },
-  {
-    "id": 7,
-    "nombre": "Erick Montenegro",
+    "nombre": "Doctor 2",
+    "clinica": "Pedriatician",
     "pacientesId": [],
     "citas": [],
     "prescriptions": []
   },
   {
     "id": 3,
-    "nombre": "Santiago Kong",
-    "clinica": "General Practioner",
+    "nombre": "Doctor 3",
+    "clinica": "Clinic 3",
+    "pacientesId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 4,
+    "nombre": "Doctor 4",
+    "clinica": "Clinic 4",
     "pacientesId": [
-      4,
-      6,
-      7
+      2
     ],
     "citas": [
       {
         "id": 0,
-        "doctor": 3,
-        "doctorName": "Santiago Kong",
-        "paciente": 4,
-        "pacienteName": "Jose Carlos",
+        "doctor": 4,
+        "doctorName": "Doctor 4",
+        "paciente": 2,
+        "pacienteName": "user 2",
         "enfermedades": "Boredom",
-        "date": "12-12-200",
+        "date": "2024-12-05",
         "clinica": 0,
-        "clinicaSpeciality": "General Practioner"
-      },
-      {
-        "id": 0,
-        "doctor": 3,
-        "doctorName": "Santiago Kong",
-        "paciente": 6,
-        "pacienteName": "Pablo Arimany",
-        "enfermedades": "Dolor de garganta",
-        "date": "10/11/2024",
-        "clinica": 0,
-        "clinicaSpeciality": "General Practioner"
-      },
-      {
-        "id": 0,
-        "doctor": 3,
-        "doctorName": "Santiago Kong",
-        "paciente": 6,
-        "pacienteName": "Pablo Arimany",
-        "enfermedades": "Arm hurt",
-        "date": "10/11/2024",
-        "clinica": 0,
-        "clinicaSpeciality": "General Practioner"
-      },
-      {
-        "id": 0,
-        "doctor": 3,
-        "doctorName": "Santiago Kong",
-        "paciente": 7,
-        "pacienteName": "Mariana de Arimany",
-        "enfermedades": "stomach ache",
-        "date": "november 7",
-        "clinica": 0,
-        "clinicaSpeciality": "General Practioner"
+        "clinicaSpeciality": "Clinic 4"
       }
     ],
     "prescriptions": [
       {
         "id": 0,
-        "doctor": 3,
-        "paciente": 4,
-        "medicines": "please live",
-        "date": "2024-11-02"
-      },
-      {
-        "id": 32,
-        "doctor": 3,
-        "paciente": 6,
-        "medicines": "Medicina de para el dolor",
-        "date": "2024-11-03"
+        "doctor": 4,
+        "paciente": 2,
+        "medicines": "Die die die",
+        "date": "2024-11-12"
       }
     ]
-  },
-  {
-    "id": 8,
-    "nombre": "adiv rodriguez",
-    "clinica": "Pediatrician",
-    "pacientesId": [],
-    "citas": [],
-    "prescriptions": []
   }
 ]

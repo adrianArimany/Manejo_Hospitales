@@ -3,21 +3,28 @@
     "especialidad": "General Practioner",
     "id": 1,
     "doctorId": [
-      3,
+      1
+    ]
+  },
+  {
+    "especialidad": "Pedriatician",
+    "id": 2,
+    "doctorId": [
       2
     ]
   },
   {
-    "especialidad": "Pediatrician",
-    "id": 2,
+    "especialidad": "Clinic 3",
+    "id": 3,
     "doctorId": [
-      4,
-      5
+      3
     ]
   },
   {
-    "especialidad": "Psychiatry",
-    "id": 3,
-    "doctorId": []
+    "especialidad": "Clinic 4",
+    "id": 4,
+    "doctorId": [
+      4
+    ]
   }
 ]

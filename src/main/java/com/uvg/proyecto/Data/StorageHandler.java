@@ -814,7 +814,8 @@ public class StorageHandler {
      * @return An ArrayList of Clinica objects representing all clinics.
      */
     public ArrayList<Clinica> getAllClinicas() {
-        return this.getAllClinics();
+        ArrayList<Clinica> allClinicas = this.getAllClinics();
+        return allClinicas;
     } 
     /**
      * Retrieves a list of all Doctor objects available for a user.
@@ -822,7 +823,8 @@ public class StorageHandler {
      * @return An ArrayList of Doctor objects representing all doctors.
      */
     public ArrayList<Doctor> getAllDoctorForUser() {
-        return this.getAllDoctors();
+        ArrayList<Doctor> allDoctors = this.getAllDoctors();
+        return allDoctors;
     } 
     
     /**
@@ -831,6 +833,7 @@ public class StorageHandler {
      * @return An ArrayList of Paciente objects representing all patients.
      */
     public ArrayList<Paciente> getAllPacientesForUser() {
-        return this.getAllPatients();
+        ArrayList<Paciente> allPacientes = this.getAllPatients();
+        return allPacientes;
     }
 }

@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "nombre": "Alejandro Ramirez",
+    "nombre": "user1",
     "historialMedico": [],
     "doctoresId": [],
     "citas": [],
@@ -9,61 +9,10 @@
   },
   {
     "id": 2,
-    "nombre": "Felipe",
+    "nombre": "user 2",
     "historialMedico": [
-      "fwfew wef wef wef wefwef wfwqefq f",
-      "fwefewf wef ewfwe fwe fwe"
+      "Cancer cancer cancer"
     ],
-    "doctoresId": [],
-    "citas": [
-      {
-        "id": 0,
-        "doctor": 5,
-        "doctorName": "Ariel Manelo",
-        "paciente": 2,
-        "pacienteName": "Felipe",
-        "enfermedades": "none",
-        "date": "1111",
-        "clinica": 0,
-        "clinicaSpeciality": "Pediatrician"
-      }
-    ],
-    "prescriptions": []
-  },
-  {
-    "id": 4,
-    "nombre": "Jose Carlos",
-    "historialMedico": [],
-    "doctoresId": [
-      3
-    ],
-    "citas": [
-      {
-        "id": 0,
-        "doctor": 3,
-        "doctorName": "Santiago Kong",
-        "paciente": 4,
-        "pacienteName": "Jose Carlos",
-        "enfermedades": "Boredom",
-        "date": "12-12-200",
-        "clinica": 0,
-        "clinicaSpeciality": "General Practioner"
-      }
-    ],
-    "prescriptions": [
-      {
-        "id": 0,
-        "doctor": 3,
-        "paciente": 4,
-        "medicines": "please live",
-        "date": "2024-11-02"
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "nombre": "Richie Lemon",
-    "historialMedico": [],
     "doctoresId": [
       4
     ],
@@ -71,104 +20,23 @@
       {
         "id": 0,
         "doctor": 4,
-        "doctorName": "Diego Rodriguez",
-        "paciente": 5,
-        "pacienteName": "Richie Lemon",
-        "enfermedades": "Me muero",
-        "date": "1111-10-11",
+        "doctorName": "Doctor 4",
+        "paciente": 2,
+        "pacienteName": "user 2",
+        "enfermedades": "Boredom",
+        "date": "2024-12-05",
         "clinica": 0,
-        "clinicaSpeciality": "Pediatrician"
+        "clinicaSpeciality": "Clinic 4"
       }
     ],
     "prescriptions": [
       {
-        "id": 16,
+        "id": 0,
         "doctor": 4,
-        "paciente": 5,
-        "medicines": "Muerase",
-        "date": "2024-11-03"
+        "paciente": 2,
+        "medicines": "Die die die",
+        "date": "2024-11-12"
       }
     ]
-  },
-  {
-    "id": 6,
-    "nombre": "Pablo Arimany",
-    "historialMedico": [],
-    "doctoresId": [
-      3
-    ],
-    "citas": [
-      {
-        "id": 0,
-        "doctor": 3,
-        "doctorName": "Santiago Kong",
-        "paciente": 6,
-        "pacienteName": "Pablo Arimany",
-        "enfermedades": "Dolor de garganta",
-        "date": "10/11/2024",
-        "clinica": 0,
-        "clinicaSpeciality": "General Practioner"
-      },
-      {
-        "id": 0,
-        "doctor": 3,
-        "doctorName": "Santiago Kong",
-        "paciente": 6,
-        "pacienteName": "Pablo Arimany",
-        "enfermedades": "Arm hurt",
-        "date": "10/11/2024",
-        "clinica": 0,
-        "clinicaSpeciality": "General Practioner"
-      }
-    ],
-    "prescriptions": [
-      {
-        "id": 32,
-        "doctor": 3,
-        "paciente": 6,
-        "medicines": "Medicina de para el dolor",
-        "date": "2024-11-03"
-      }
-    ]
-  },
-  {
-    "id": 7,
-    "nombre": "Mariana de Arimany",
-    "historialMedico": [
-      "edad 45"
-    ],
-    "doctoresId": [
-      3
-    ],
-    "citas": [
-      {
-        "id": 0,
-        "doctor": 3,
-        "doctorName": "Santiago Kong",
-        "paciente": 7,
-        "pacienteName": "Mariana de Arimany",
-        "enfermedades": "stomach ache",
-        "date": "november 7",
-        "clinica": 0,
-        "clinicaSpeciality": "General Practioner"
-      }
-    ],
-    "prescriptions": []
-  },
-  {
-    "id": 8,
-    "nombre": "deleteme8",
-    "historialMedico": [],
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
-  },
-  {
-    "id": 9,
-    "nombre": "deleteme8",
-    "historialMedico": [],
-    "doctoresId": [],
-    "citas": [],
-    "prescriptions": []
   }
 ]
