@@ -855,6 +855,7 @@ public class Main {
                 break;
             case 3:
                 System.out.println("The functionality to change the password from a doctor hasn't been implemented yet.");
+                System.out.println("\nReturning to the admin menu..");
                 break;
             case 0:
                 System.out.println("Returning to the admin menu..");
