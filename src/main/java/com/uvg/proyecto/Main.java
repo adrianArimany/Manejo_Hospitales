@@ -56,9 +56,9 @@ public class Main {
     private Doctor loginDoc;
     private StorageHandler storageHandler;
     private PropertiesFile config = new PropertiesFile();
-    private ArrayList<Clinica> clinicToShow;
-    private ArrayList<Doctor> doctoresToShow;
-    private ArrayList<Paciente> pacientesToShow;
+    private ArrayList<Clinica> clinicToShow =  new ArrayList<>();
+    private ArrayList<Doctor> doctoresToShow = new ArrayList<>();
+    private ArrayList<Paciente> pacientesToShow = new ArrayList<>();
     public final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -70,18 +70,24 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Logger logger = Logger.getLogger(Main.class.getName()); //used to catch any unprecented error that is in the program, especially useful when running by "real" users. 
         Main app = new Main();
+        app.storageHandler = new StorageHandler();
+        app.storageHandler.initIds();
+        app.clinicToShow = app.storageHandler.getAllClinicas();
+        app.doctoresToShow = app.storageHandler.getAllDoctorForUser();
+        app.pacientesToShow = app.storageHandler.getAllPacientesForUser(); 
         try {
             app.MenuBegins();
         } catch (Exception e) {
             System.out.println("An unexpected error occurred: " + e.getMessage());
+            Logger logger = Logger.getLogger(Main.class.getName());
             logger.log(Level.SEVERE, "Unexpected error in main method", e); //In case a SEVERE error is counter, (i.e. one that requires immidiate attention.)
         } finally {
             if (app.scanner != null) {
                 try {
                     app.scanner.close();
                 } catch (Exception e) {
+                    Logger logger = Logger.getLogger(Main.class.getName());
                     logger.log(Level.WARNING, "Error closing scanner", e); //In case that the scanner isn't fully closed, this captures and logs the error for future fixing.
                 }
             }
@@ -101,11 +107,6 @@ public class Main {
      */
     public void MenuBegins() {
         UserType user = null;
-        this.storageHandler = new StorageHandler();
-        this.storageHandler.initIds();
-        clinicToShow = this.storageHandler.getAllClinicas();
-        doctoresToShow = this.storageHandler.getAllDoctorForUser();
-        pacientesToShow = this.storageHandler.getAllPacientesForUser();
         do {
         try {
             user = login();
@@ -363,7 +364,7 @@ public class Main {
             }
             switch (input) {
                 case 1:
-                    System.out.println("When would you want to have this appointment: ");
+                    System.out.println("When would you want to have this appointment (YYYY-MM-DD): ");
                     String date = scanner.nextLine();
                     System.out.println("Choose the clinic that relates to your sickness: ");
                     if (clinicToShow.size() > 0) {
@@ -372,25 +373,26 @@ public class Main {
                         }
         
                         // user pone el input una especialidad
-                        int userInputIdClinica = Integer.parseInt(scanner.nextLine()) -1 ;
+                        int userInputIdClinica = Integer.parseInt(scanner.nextLine()) - 1;
                         
                         if (userInputIdClinica < 0 || userInputIdClinica >= clinicToShow.size()) {
                             System.out.println("Error: The ID from the clinic can't be empty.");
                             break;
                         }
-                        Doctor doctor = this.storageHandler.docAddedtoCita(clinicToShow.get(userInputIdClinica).getEspecialidad());
-                        if (doctor == null) {
-                            System.out.println("The clinic: " + clinicToShow.get(userInputIdClinica).getEspecialidad() + " doesn't have any doctors. Operation cancelled.");
-                            break;
-                        }
-                        System.out.println("What Symptoms do you feel? ");
-                        String symptoms = scanner.nextLine();
-                        // Create a new appointment and add it to the clinic
-                        boolean isCitaAdded = this.storageHandler.drAddCita(doctor, loginPac, clinicToShow.get(userInputIdClinica).getEspecialidad(), date, symptoms);                             
-                        if (!isCitaAdded) {
-                            System.out.println("Failed to add appointment. Please try again.");
-                        } else {
-                            System.out.println("Appointment successfully added. With Doctor: " + doctor.getNombre() + "(ID: " + doctor.getId() +")");
+                        
+                        try {
+                            Doctor doctor = this.storageHandler.docAddedtoCita(clinicToShow.get(userInputIdClinica).getEspecialidad());
+                            System.out.println("What Symptoms do you feel? ");
+                            String symptoms = scanner.nextLine();
+                            // Create a new appointment and add it to the clinic
+                            boolean isCitaAdded = this.storageHandler.drAddCita(doctor, loginPac, clinicToShow.get(userInputIdClinica).getEspecialidad(), date, symptoms);                             
+                            if (!isCitaAdded) {
+                                System.out.println("Failed to add appointment. Please try again.");
+                            } else {
+                                System.out.println("Appointment successfully added. With Doctor: " + doctor.getNombre() + "(ID: " + doctor.getId() +")");
+                            }
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("The clinic: " + clinicToShow.get(userInputIdClinica).getEspecialidad() + " doesn't have any doctors. Unable to add an appointment.");
                         }
                     }
                     break;
@@ -703,6 +705,7 @@ public class Main {
             switch (input) {
                 case 1:
                     try {
+                        this.pacientesToShow = this.storageHandler.getAllPacientesForUser();
                         if (pacientesToShow.isEmpty()) {
                             System.out.println("No patients registered.");
                             break;
@@ -937,6 +940,7 @@ public class Main {
             }
         } while (input != 0);
     }
+
     /**
      * Asks the user to enter the new name of the hospital and then updates
      * the configuration file with the new name.

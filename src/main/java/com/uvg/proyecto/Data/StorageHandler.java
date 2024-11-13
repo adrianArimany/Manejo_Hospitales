@@ -270,26 +270,6 @@ public class StorageHandler {
         paciente.agregarHistorialMedico(historialMedico);
         return this.updatePatient(paciente);
     }
-
-    /**@Todo finish it. 
-     * This is suppose to edit the historial medico in case the patient already has one.
-     * @param pacienteId
-     * @param historialMedico
-     * @return
-     */
-    public boolean editHistorialMedico(int pacienteId, String historialMedico) {
-        // //finds the paciente to update
-        // Paciente paciente = this.getPacienteById(pacienteId);
-        
-        // if (paciente == null || paciente.getHistorialMedico().isEmpty())
-        //     return false;
-        
-            
-
-
-        return false;
-    }
-
     
     /**
      * Allows a doctor to prescribe a medicine to a patient.
@@ -845,11 +825,11 @@ public class StorageHandler {
         return this.getAllDoctors();
     } 
     
-/**
- * Retrieves a list of all Paciente objects available for a user.
- * 
- * @return An ArrayList of Paciente objects representing all patients.
- */
+    /**
+     * Retrieves a list of all Paciente objects available for a user.
+     *
+     * @return An ArrayList of Paciente objects representing all patients.
+     */
     public ArrayList<Paciente> getAllPacientesForUser() {
         return this.getAllPatients();
     }

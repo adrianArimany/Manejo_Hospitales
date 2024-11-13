@@ -154,5 +154,21 @@
       }
     ],
     "prescriptions": []
+  },
+  {
+    "id": 8,
+    "nombre": "deleteme8",
+    "historialMedico": [],
+    "doctoresId": [],
+    "citas": [],
+    "prescriptions": []
+  },
+  {
+    "id": 9,
+    "nombre": "deleteme8",
+    "historialMedico": [],
+    "doctoresId": [],
+    "citas": [],
+    "prescriptions": []
   }
 ]
